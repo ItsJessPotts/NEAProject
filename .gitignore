@@ -5,3 +5,8 @@
 /.vs/VSWorkspaceState.json
 /HardyWeinbergTest/.vs/HardyWeinbergTest/v15/sqlite3
 /.vs/slnx.sqlite
+/PedigreeObjectsTest/.vs/PedigreeObjectsTest/v15/sqlite3
+**/bin
+**/obj
+*dil
+**/packages
