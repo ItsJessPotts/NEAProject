@@ -1,0 +1,7 @@
+C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\bin\Debug\HardyWeinbergTest.exe.config
+C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\bin\Debug\HardyWeinbergTest.exe
+C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\bin\Debug\HardyWeinbergTest.pdb
+C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.csprojResolveAssemblyReference.cache
+C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.csproj.CoreCompileInputs.cache
+C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.exe
+C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.pdb
