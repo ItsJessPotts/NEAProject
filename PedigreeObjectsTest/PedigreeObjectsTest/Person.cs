@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace PedigreeObjects
 {
-    public class Person
+    public class Person //NEED TO: Create Constructor
     {
         public string Name { get; set; }// clarity's sake
-        public Sex Sex { get; set; } //male or female
+        public Sex Sex { get; set; } //male or female = circle or square
         public bool Living { get; set; } //dead or alive
-        public object Phenotype { get; set; }//is colourblind, heamophiliac, Has cystic fibrosis etc
-        public object Genotype { get; set; }// Aa,aa,AA
+        public Phenotype Phenotype { get; set; }//is colourblind, heamophiliac, Has cystic fibrosis etc
+        public Genotype Genotype { get; set; }// Aa,aa,AA
         public object Gametes { get; set; }// 'A, a, B, b'or ' A,b
         
                             
