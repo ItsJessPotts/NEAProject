@@ -11,8 +11,8 @@ namespace PedigreeObjects
     {
         private IRandomNumberGenerator RNG { get; set; }
         private char AlleleName { get; set; } //eg C for colourblindness or A for asthma
-        private Dominance Allele1 { get; set; } //If dominant- inputted here
-        private Dominance Allele2 { get; set; }
+        public Dominance Allele1 { get; set; } //If dominant- inputted here
+        public Dominance Allele2 { get; set; }
 
         public Genotype(char alleleName, Dominance allele1, Dominance allele2, IRandomNumberGenerator rng)
         {
