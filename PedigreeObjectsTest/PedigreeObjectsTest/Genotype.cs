@@ -83,11 +83,7 @@ namespace PedigreeObjects
         {
             return 0;
         }        
-        public Genotype ProduceCoDominantGenotype(Genotype other)
-        {
-            var gt = new Genotype(this.AlleleName, Allele1, Allele2, RNG);//Just to compile
-            return gt;//Just to compile
-        }
+        
 
     }
 
