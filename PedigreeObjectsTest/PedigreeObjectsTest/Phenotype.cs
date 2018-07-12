@@ -44,7 +44,7 @@ namespace PedigreeObjects
                     case 1:
                         resultingAllele1 = parent2.Allele2; //b
                         resultingAllele2 = parent1.Allele1; //A
-
+                        isHeterozygous++;
                         break;
 
                     case 2:
@@ -70,7 +70,8 @@ namespace PedigreeObjects
             }
             if (NumberOfPhenotypeOptions == 3)//CoDominant = has trait/doesn't/mixed
             {
-
+                var gcd = GCD(GCD(4 - isRecessive, isRecessive), isHeterozygous); ;
+                formattedRatio = string.Format("{0}:{1}:{2}",(isRecessive/gcd).ToString(), (4 - isRecessive / gcd).ToString(),(isHeterozygous/gcd).ToString());//not working
             }
             return formattedRatio;
         }

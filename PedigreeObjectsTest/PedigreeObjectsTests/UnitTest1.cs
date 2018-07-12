@@ -103,7 +103,8 @@ namespace PedigreeObjectsTests
             var rng = new PredictableRandomNumberGenerator();
             var gt = new Genotype('C', Dominance.Dominant, Dominance.Dominant,rng);
             var otherGt = new Genotype('C', Dominance.Recessive, Dominance.Recessive,rng);
-            string phenotypicRatio = CalculatePhenotypicRatio(otherGt, gt, 2); //Aa Bb
+            Phenotype p = new Phenotype(null, null,null);// TO DO: fill in
+            string phenotypicRatio = p.CalculatePhenotypicRatio(otherGt, gt, 2); //Aa Bb
             Assert.AreEqual("1:2", phenotypicRatio);
         }
 

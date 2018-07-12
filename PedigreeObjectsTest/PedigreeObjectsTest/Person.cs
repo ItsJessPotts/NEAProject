@@ -14,7 +14,17 @@ namespace PedigreeObjects
         public Phenotype Phenotype { get; set; }//is colourblind, heamophiliac, Has cystic fibrosis etc
         public Genotype Genotype { get; set; }// Aa,aa,AA
         public object Gametes { get; set; }// 'A, a, B, b'or ' A,b
-        
-                            
+
+        public Person(string name, Sex sex, bool living)
+        {
+            throw new NotImplementedException();
+        }
+        public override string ToString()
+        {
+            string summary = Name + Sex.ToString();
+            return summary;
+        }
+
     }
+    
 }
