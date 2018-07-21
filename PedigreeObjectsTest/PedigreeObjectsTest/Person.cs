@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PedigreeObjects
 {
-    public class Person //NEED TO: Create Constructor
+    public class Person
     {
         public string Name { get; set; }// clarity's sake
         public Sex Sex { get; set; } //male or female = circle or square
@@ -17,7 +17,9 @@ namespace PedigreeObjects
 
         public Person(string name, Sex sex, bool living)
         {
-            throw new NotImplementedException();
+            string Name = name;
+            Sex Sex = sex;
+            bool Living = living;
         }
         public override string ToString()
         {

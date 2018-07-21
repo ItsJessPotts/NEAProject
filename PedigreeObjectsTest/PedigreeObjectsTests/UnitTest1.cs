@@ -97,15 +97,15 @@ namespace PedigreeObjectsTests
             
             Assert.AreEqual(frequency,actual);
         }
-        [TestMethod]//NEED TO: Fix This
+        [TestMethod]//NEED TO: Add more tests
         public void TestCalculatePhenotypicRatio1()
         {
             var rng = new PredictableRandomNumberGenerator();
-            var gt = new Genotype('C', Dominance.Dominant, Dominance.Dominant,rng);
-            var otherGt = new Genotype('C', Dominance.Recessive, Dominance.Recessive,rng);
+            var gt = new Genotype('C', Dominance.Dominant, Dominance.Recessive,rng); //Cc
+            var otherGt = new Genotype('C', Dominance.Recessive, Dominance.Recessive,rng);//cc
             Phenotype p = new Phenotype(null, null,null);// TO DO: fill in
             string phenotypicRatio = p.CalculatePhenotypicRatio(otherGt, gt, 2); //Aa Bb
-            Assert.AreEqual("1:2", phenotypicRatio);
+            Assert.AreEqual("1:3", phenotypicRatio);
         }
 
     }

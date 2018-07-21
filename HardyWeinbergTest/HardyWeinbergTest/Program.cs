@@ -36,7 +36,7 @@ namespace HardyWeinbergTest
         }
         public static double AskUserForNoOfRecessiveSnails()
         {
-            Console.WriteLine("Please input the number or recessive individuals:");
+            Console.WriteLine("Please input the number of recessive individuals:");
             double NoOfRecessiveSnails = Convert.ToDouble(Console.ReadLine());
             return NoOfRecessiveSnails;
         }
