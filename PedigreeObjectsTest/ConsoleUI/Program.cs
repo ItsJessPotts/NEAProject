@@ -12,22 +12,31 @@ namespace ConsoleUI
         static PersonRepository PersonRepository = new PersonRepository(); 
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome");
-            Console.WriteLine("1) Genetic Counsellor");
-            Console.WriteLine("2) Hardy Weinberg Calculator");
-            int mainMenuChoice = MenuUserInputInt(2);
-
-            switch (mainMenuChoice)
+            bool MainMenuScreen = true;
+            while (MainMenuScreen == true)
             {
-                case 1:
-                    GeneticCounsellor();
-                    break;
-                case 2:
-                    HardyWeinbergCalculator();
-                    break;
-                default:
-                    throw new Exception("Invalid Menu input");
+                Console.WriteLine("Welcome");
+                Console.WriteLine("1) Genetic Counsellor");
+                Console.WriteLine("2) Hardy Weinberg Calculator");
+                int mainMenuChoice = MenuUserInputInt(2);
+
+                switch (mainMenuChoice)
+                {
+                    case 0:
+                        MainMenuScreen = true;
+                        break;
+                    case 1:
+                        GeneticCounsellor();
+                        break;
+                    case 2:
+                        HardyWeinbergCalculator();
+                        break;
+                    default:
+                        throw new Exception("Invalid Menu input");
+                }
+
             }
+            
         }
 
         private static void HardyWeinbergCalculator()
@@ -36,13 +45,11 @@ namespace ConsoleUI
         }
 
         private static void GeneticCounsellor()
-        {
-            Console.WriteLine("1) Add Alelle");
-            Console.WriteLine("2) List all alelles");
-            Console.WriteLine("3) Add Person");
-            Console.WriteLine("4) List all Persons");
+        {            
+            Console.WriteLine("1) Add Person");
+            Console.WriteLine("2) List all Persons");
 
-            int geneticCounsellorMenuOption = MenuUserInputInt(4);
+            int geneticCounsellorMenuOption = MenuUserInputInt(2);
         }
         private static void AddPersonScreen()
         {
@@ -51,11 +58,32 @@ namespace ConsoleUI
             PersonRepository.AddPerson(person);
         }
 
-        private static int MenuUserInputInt(int max)//TO DO: Guard against anything over the max or non integers.
+        private static int MenuUserInputInt(int max)//TO DO: Guard against non integers.
         {
-            Console.WriteLine("Please select an option:");
-            int menuoption = Convert.ToInt32(Console.ReadLine());
-            return menuoption;
+
+            
+            try
+            {
+                Console.WriteLine("Please select an option:");
+                int menuOption = Convert.ToInt32(Console.ReadLine());
+                if (menuOption > max)
+                {
+                    throw new Exception();
+                }
+                else
+                {
+                    return menuOption;
+                }
+                             
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Input was not valid");
+                return 0;
+            }
+           
+             
+            
         }
     }
 }
