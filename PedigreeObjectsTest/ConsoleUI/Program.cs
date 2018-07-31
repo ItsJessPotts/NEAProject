@@ -44,24 +44,29 @@ namespace ConsoleUI
             throw new NotImplementedException();
         }
 
-        private static void GeneticCounsellor()
+        private static void GeneticCounsellor()//TO DO: Finish menu
         {            
             Console.WriteLine("1) Add Person");
             Console.WriteLine("2) List all Persons");
 
             int geneticCounsellorMenuOption = MenuUserInputInt(2);
         }
-        private static void AddPersonScreen()
+        private static void AddPersonScreen()//TO DO: figure out how to get user inputs of booleans and sex
         {
-            //input Name and Sex
-            var person = new Person(null, Sex.Male, false);
+            Console.WriteLine("Name (first and last): ");
+            string inputName = Console.ReadLine();
+            Console.WriteLine("Sex (Male or Female): ");
+            string inputSex = Console.ReadLine();
+            Console.WriteLine("Living (true or false): ");
+            string inputLiving = Console.ReadLine();
+
+            var person = new Person(inputName,Sex.Male,false); //inputSex , inputLiving
             PersonRepository.AddPerson(person);
         }
 
         private static int MenuUserInputInt(int max)//TO DO: Guard against non integers.
         {
-
-            
+           
             try
             {
                 Console.WriteLine("Please select an option:");
