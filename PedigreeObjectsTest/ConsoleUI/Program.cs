@@ -64,7 +64,7 @@ namespace ConsoleUI
             PersonRepository.AddPerson(person);
         }
 
-        private static int MenuUserInputInt(int max)//TO DO: Guard against non integers.
+        private static int MenuUserInputInt(int max)
         {
            
             try
@@ -72,6 +72,10 @@ namespace ConsoleUI
                 Console.WriteLine("Please select an option:");
                 int menuOption = Convert.ToInt32(Console.ReadLine());
                 if (menuOption > max)
+                {
+                    throw new Exception();
+                }
+                if (int.TryParse(Console.ReadLine(), out menuOption))
                 {
                     throw new Exception();
                 }
