@@ -45,11 +45,39 @@ namespace ConsoleUI
         }
 
         private static void GeneticCounsellor()//TO DO: Finish menu
-        {            
-            Console.WriteLine("1) Add Person");
-            Console.WriteLine("2) List all Persons");
+        {
+            bool geneticCounsellorScreen = true;
 
-            int geneticCounsellorMenuOption = MenuUserInputInt(2);
+            while (geneticCounsellorScreen == true)
+            {
+                Console.WriteLine("1) Add Person");
+                Console.WriteLine("2) List all Persons");
+                Console.WriteLine("3) Create trait");
+                Console.WriteLine("4) List all traits");
+
+                int geneticCounsellorMenuOption = MenuUserInputInt(4);
+
+                switch (geneticCounsellorMenuOption)
+                {
+                    case 0:
+                     geneticCounsellorScreen = true;
+                        break;
+                    case 1:
+                        AddPersonScreen();
+                        break;
+                    case 2:
+                        ListAllPersons();
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        throw new Exception("Invalid Menu input");
+                }
+
+            }
+                
         }
         private static void AddPersonScreen()//TO DO: figure out how to get user inputs of booleans and sex
         {
@@ -62,6 +90,10 @@ namespace ConsoleUI
 
             var person = new Person(inputName,Sex.Male,false); //inputSex , inputLiving
             PersonRepository.AddPerson(person);
+        }
+        private static void ListAllPersons()
+        {
+            ListAllPersons();
         }
 
         private static int MenuUserInputInt(int max)

@@ -107,6 +107,15 @@ namespace PedigreeObjectsTests
             string phenotypicRatio = p.CalculatePhenotypicRatio(otherGt, gt, 2); //Aa Bb
             Assert.AreEqual("1:3", phenotypicRatio);
         }
+        [TestMethod]//TO DO: Test Person Functions
+        public void TestPersonToString()
+        {
+            var j = new Person("Jess Potts", Sex.Female, true);
+            string jess = j.ToString();
+            Assert.AreEqual("Jess PottsFemale", jess);
+        }
+        
+    
 
     }
 }
