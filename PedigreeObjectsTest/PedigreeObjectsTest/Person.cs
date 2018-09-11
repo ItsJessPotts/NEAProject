@@ -17,9 +17,9 @@ namespace PedigreeObjects
 
         public Person(string name, Sex sex, bool living)
         {
-            string Name = name;
-            Sex Sex = sex;
-            bool Living = living;
+            this.Name = name;
+            this.Sex = sex;
+            this.Living = living;
         }
         public override string ToString()
         {

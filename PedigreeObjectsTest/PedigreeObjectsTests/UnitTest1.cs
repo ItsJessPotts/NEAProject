@@ -114,8 +114,43 @@ namespace PedigreeObjectsTests
             string jess = j.ToString();
             Assert.AreEqual("Jess PottsFemale", jess);
         }
-        
-    
+        [TestMethod]
+        public void TestAddPerson()
+        {
+            var j = new Person("Jess Potts", Sex.Female, true);
+            var e = new Person("Erica Korner", Sex.Female, true);
+            var p = new Person("paul Korner", Sex.Female, true);
+            var rep = new PersonRepository();
+            rep.AddPerson(j);
+            rep.AddPerson(e);
+            var result = rep.ListPersons();
+
+            Assert.IsTrue(result.Contains(j));
+            Assert.IsTrue(result.Contains(e));
+            Assert.IsFalse(result.Contains(p));
+        }
+        [TestMethod]
+        public void TestReturnPerson()
+        {
+            var j = new Person("Jess Potts", Sex.Female, true);
+            var e = new Person("Erica Korner", Sex.Female, true);
+            var p = new Person("paul Korner", Sex.Female, true);
+            var rep = new PersonRepository();
+            rep.AddPerson(j);
+            rep.AddPerson(e);
+
+            var testList = new List<Person>();
+            testList.Add(j);
+            testList.Add(e);
+            var result = rep.ListPersons();
+                       
+            CollectionAssert.AreEqual(testList,result);
+            
+        }
+
+
+
+
 
     }
 }

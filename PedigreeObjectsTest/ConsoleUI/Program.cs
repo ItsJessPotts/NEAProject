@@ -102,24 +102,26 @@ namespace ConsoleUI
             try
             {
                 Console.WriteLine("Please select an option:");
-                int menuOption = Convert.ToInt32(Console.ReadLine());
-                if (menuOption > max)
+                string menuOption = Console.ReadLine();
+                int menuOptionInt = Convert.ToInt32(menuOption); 
+                int number;
+                if (menuOptionInt > max)
                 {
                     throw new Exception();
                 }
-                if (int.TryParse(Console.ReadLine(), out menuOption))
+                if (int.TryParse(menuOption, out number)== false)
                 {
                     throw new Exception();
                 }
                 else
                 {
-                    return menuOption;
+                    return menuOptionInt;
                 }
                              
             }
             catch (Exception)
             {
-                Console.WriteLine("Input was not valid");
+                Console.WriteLine("Input was not valid");//TO DO: Allow user to try again after inputing an invalid option.
                 return 0;
             }
            
