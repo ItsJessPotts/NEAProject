@@ -66,11 +66,13 @@ namespace ConsoleUI
                         AddPersonScreen();
                         break;
                     case 2:
-                        ListAllPersons();
+                        ListAllPersonsScreen();
                         break;
                     case 3:
+                        CreateTraitScreen();
                         break;
                     case 4:
+                        ListAllTraitsScreen();
                         break;
                     default:
                         throw new Exception("Invalid Menu input");
@@ -79,6 +81,23 @@ namespace ConsoleUI
             }
                 
         }
+
+        private static void ListAllTraitsScreen()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void CreateTraitScreen()
+        {
+            Console.WriteLine("Name of trait:");// Colourblindness
+            string inputName = Console.ReadLine();
+            Console.WriteLine("Dominant or Recessive:"); //Reccessive
+            string inputDominance = Console.ReadLine();
+            Console.WriteLine("What letter should represent it?");// C
+            string inputAlelleName = Console.ReadLine();
+
+        }
+
         private static void AddPersonScreen()//TO DO: figure out how to get user inputs of booleans and sex
         {
             Console.WriteLine("Name (first and last): ");
@@ -91,9 +110,20 @@ namespace ConsoleUI
             var person = new Person(inputName,Sex.Male,false); //inputSex , inputLiving
             PersonRepository.AddPerson(person);
         }
-        private static void ListAllPersons()
+        private static void ListAllPersonsScreen()
         {
-            ListAllPersons();
+            if (PersonRepository.ToString().Length == 0)
+            {
+                Console.WriteLine("There are no Persons in this system, please add one.");
+                Console.WriteLine("____________________________________________________");
+                AddPersonScreen();
+            }
+            else
+            {
+                PersonRepository.ListPersons();
+            }
+          
+
         }
 
         private static int MenuUserInputInt(int max)
@@ -121,7 +151,7 @@ namespace ConsoleUI
             }
             catch (Exception)
             {
-                Console.WriteLine("Input was not valid");//TO DO: Allow user to try again after inputing an invalid option.
+                Console.WriteLine("Input was not valid");
                 return 0;
             }
            

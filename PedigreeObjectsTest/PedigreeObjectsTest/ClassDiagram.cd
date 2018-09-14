@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PedigreeObjects.Person">
+    <Position X="3.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQBAAEAEAAAAQAAAAAAAAAAAQAEAAAAAA=</HashCode>
+      <FileName>Person.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Genotype" />
+      <Property Name="Phenotype" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PedigreeObjects.Phenotype">
+    <Position X="7" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAgQAAAAAAAAAAAAAAAAACAAIAAAA=</HashCode>
+      <FileName>Phenotype.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="TraitGenotypes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="PedigreeObjects.Genotype">
+    <Position X="0.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAAAAAAAAAAAAAAEAAAAAAASAAAAQgAAAAAAAAAAEAA=</HashCode>
+      <FileName>Genotype.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Allele1" />
+      <Property Name="Allele2" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="PedigreeObjects.Dominance" Collapsed="true">
+    <Position X="3.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dominance.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
