@@ -49,6 +49,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\HardyWeinbergTest\HardyWeinbergTest\HardyWeinbergTest.csproj">
+      <Project>{e64f7bdc-1b96-44fa-9f4e-911854d33e5b}</Project>
+      <Name>HardyWeinbergTest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PedigreeObjectsTest\PedigreeObjects.csproj">
       <Project>{11fca152-fefc-4765-b20f-e812212d8a25}</Project>
       <Name>PedigreeObjects</Name>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HardyWeinbergTest
 {
-    class Program
+    public class HardyWeinberg
     {
         static void Main(string[] args)
         {

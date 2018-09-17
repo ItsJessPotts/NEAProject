@@ -1,4 +1,5 @@
 ﻿using PedigreeObjects;
+using HardyWeinbergTest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,9 +40,10 @@ namespace ConsoleUI
             
         }
 
-        private static void HardyWeinbergCalculator()
+        private static object HardyWeinbergCalculator()
         {
-            throw new NotImplementedException();
+            var result = new HardyWeinberg();
+            return result;
         }
 
         private static void GeneticCounsellor()//TO DO: Finish menu

@@ -5,3 +5,10 @@ C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyW
 C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.csproj.CoreCompileInputs.cache
 C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.exe
 C:\Users\potts\source\repos\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.pdb
+C:\Users\potts\OneDrive\Documents\Subjects\Computer Science\NEA Project\HardyWeinbergTest\HardyWeinbergTest\bin\Debug\HardyWeinbergTest.exe.config
+C:\Users\potts\OneDrive\Documents\Subjects\Computer Science\NEA Project\HardyWeinbergTest\HardyWeinbergTest\bin\Debug\HardyWeinbergTest.exe
+C:\Users\potts\OneDrive\Documents\Subjects\Computer Science\NEA Project\HardyWeinbergTest\HardyWeinbergTest\bin\Debug\HardyWeinbergTest.pdb
+C:\Users\potts\OneDrive\Documents\Subjects\Computer Science\NEA Project\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.csprojAssemblyReference.cache
+C:\Users\potts\OneDrive\Documents\Subjects\Computer Science\NEA Project\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.csproj.CoreCompileInputs.cache
+C:\Users\potts\OneDrive\Documents\Subjects\Computer Science\NEA Project\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.exe
+C:\Users\potts\OneDrive\Documents\Subjects\Computer Science\NEA Project\HardyWeinbergTest\HardyWeinbergTest\obj\Debug\HardyWeinbergTest.pdb
