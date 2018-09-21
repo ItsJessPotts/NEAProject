@@ -112,7 +112,7 @@ namespace PedigreeObjectsTests
         {
             var j = new Person("Jess Potts", Sex.Female, true);
             string jess = j.ToString();
-            Assert.AreEqual("Jess PottsFemale", jess);
+            Assert.AreEqual("Jess Potts Female", jess);
         }
         [TestMethod]
         public void TestAddPerson()

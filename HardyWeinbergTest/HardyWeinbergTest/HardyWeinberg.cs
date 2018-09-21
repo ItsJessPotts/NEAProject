@@ -8,7 +8,7 @@ namespace HardyWeinbergTest
 {
     public class HardyWeinberg
     {
-        static void Main(string[] args)
+        public static void Main()
         {
             Console.WriteLine("======================================================================================");
             Console.WriteLine(" Hardy Weinberg Calculator ");

@@ -16,7 +16,7 @@ namespace PedigreeObjects
         public Phenotype( string[] traits, string[] environment, Genotype[] traitGenotypes)
         {
             
-            string[] Trait = traits;
+            string[] Traits = traits;
             string[] Environment = environment;
             Genotype[] TraitGenotypes = traitGenotypes;
         }
