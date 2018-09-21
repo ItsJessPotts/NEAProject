@@ -55,6 +55,7 @@
     <Compile Include="Sex.cs" />
     <Compile Include="GenotypeRepository.cs" />
     <Compile Include="Trait.cs" />
+    <Compile Include="TraitRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

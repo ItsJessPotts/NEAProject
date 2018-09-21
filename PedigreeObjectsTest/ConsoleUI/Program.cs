@@ -53,6 +53,7 @@ namespace ConsoleUI
             bool geneticCounsellorScreen = true;
             var personRepository = new PersonRepository();
             var genotypeRepository = new GenotypeRepository();
+            var traitRepository = new TraitRepository();
 
             while (geneticCounsellorScreen == true)
             {
@@ -78,11 +79,11 @@ namespace ConsoleUI
                         Console.Write(s);
                         break;
                     case 3:
-                        CreateTraitScreen();
+                        CreateTraitScreen(traitRepository);
                         break;
                     case 4:
                         StringBuilder sb2 = new StringBuilder();
-                        ListAllTraitsScreen(sb2,genotypeRepository);
+                        ListAllTraitsScreen(sb2,genotypeRepository, traitRepository);
                         string s2 = sb2.ToString();
                         Console.Write(s2);
                         break;
@@ -94,38 +95,40 @@ namespace ConsoleUI
                 
         }
 
-        private static void ListAllTraitsScreen(StringBuilder sb2, GenotypeRepository genotypeRepository)
+        private static void ListAllTraitsScreen(StringBuilder sb2, GenotypeRepository genotypeRepository, TraitRepository traitRepository)
         {
-            var listOfGenotypes = genotypeRepository.ListGenotypes();
+            var ListOfTraits = traitRepository.ListTraits();
 
-            if (listOfGenotypes.Count == 0)
+            if (ListOfTraits.Count == 0)
             {
-                sb2.AppendLine("There are no Persons in this system, please add one.");
+                sb2.AppendLine("There are no Traits in this system, please add one.");
                 sb2.AppendLine("____________________________________________________");
             }
             else
             {
-                foreach (var g in listOfGenotypes)
+                foreach (var t in ListOfTraits)
                 {
-                    sb2.AppendLine(g.ToString());
+                    sb2.AppendLine(t.ToString());
                 }
             }
         }
 
-        private static void CreateTraitScreen()//TO DO: ACTUALLY SWITCH TO TRAIT CLASS- EXPLAIN 
+        private static void CreateTraitScreen(TraitRepository traitRepository)//TO DO: Find way to input Dominance 
         {
             Console.WriteLine("Name of trait:");// Colourblindness
             string inputName = Console.ReadLine();
-            Console.WriteLine("Dominant or Recessive:"); //Reccessive
-            string inputDominance = Console.ReadLine();
+            //Console.WriteLine("Type of inheritance (currently Dominant or Recessive only)"); //Reccessive
+            //Dominance inputInheritanceType = Console.ReadLine(); //HELP
             Console.WriteLine("What letter should represent it?");// C
-            string inputAlelleName = Console.ReadLine();
+            char inputAlelleName = Convert.ToChar(Console.ReadLine());
 
-            //var genotype = new Genotype(inputAlelleName, null, null, null);
+            var trait = new Trait(inputName, inputAlelleName, Dominance.Dominant);
+            traitRepository.AddTrait(trait);
+            
 
         }
         
-        private static void AddPersonScreen(PersonRepository personRepository)//TO DO: figure out how to get user inputs of booleans and sex
+        private static void AddPersonScreen(PersonRepository personRepository)//TO DO: figure out how to get user inputs of enum sex
         {
             
             Console.WriteLine("Name (first and last): ");

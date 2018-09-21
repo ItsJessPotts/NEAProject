@@ -8,6 +8,22 @@ namespace PedigreeObjects
 {
     public class Trait
     {
+        private string TraitName { get; set; }// Colourblindness
+        private char AlleleName { get; set; }//eg C for colourblindness or A for asthma
+        private Dominance InheritanceType { get; set; }// Dominant/ Recessive/ Autosomal/ Dihybrid/ Epistasis
+
+        public Trait(string traitName, char alleleName, Dominance inheritanceType)
+        {
+            this.TraitName = traitName;
+            this.AlleleName = alleleName;
+            this.InheritanceType = inheritanceType;
+        }
+
+        public override string ToString()
+        {
+            string summary = TraitName + " " + InheritanceType.ToString();
+            return summary;
+        }
 
 
     }
