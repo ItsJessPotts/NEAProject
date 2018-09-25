@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ConsoleUI
 {
@@ -12,7 +13,7 @@ namespace ConsoleUI
     {
        
 
-        static void Main(string[] args)
+        static void Main()//To Do: Create Seed Data
         {
             
             bool MainMenuScreen = true;
@@ -40,6 +41,22 @@ namespace ConsoleUI
 
             }
             
+        }
+        private static void PersonsSeedData()
+        {
+            string[] lines = new string[1000];
+            using (StreamReader reader = new StreamReader("PersonsSeedData.txt"))
+            {
+                int i = 0;
+                while (!reader.EndOfStream)
+                {
+                    lines[i] = reader.ReadLine();
+                }
+            }
+            foreach (var line in lines)
+            {
+                Console.WriteLine(line);
+            }
         }
 
         private static void HardyWeinbergCalculator()
@@ -143,7 +160,7 @@ namespace ConsoleUI
             var person = new Person(inputName,inputSex,inputLiving); //inputSex , inputLiving
             personRepository.AddPerson(person);
         }
-        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)
+        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)// Implement ability to find person 
         {
             
             var listOfPersons = personRepository.ListPersons();
@@ -168,7 +185,7 @@ namespace ConsoleUI
           
 
         }
-        private static void PersonScreen(Person SelectedPerson)//TO DO: This screen
+        private static void PersonScreen(Person SelectedPerson)//To Do: Add options for methods
         {
             Console.WriteLine("Name: ",SelectedPerson.Name);
             Console.WriteLine("Sex: ",SelectedPerson.Sex);

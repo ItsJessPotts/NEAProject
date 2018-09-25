@@ -147,6 +147,12 @@ namespace PedigreeObjectsTests
             CollectionAssert.AreEqual(testList,result);
             
         }
+        [TestMethod]
+        public void TestReadingSeedData()
+        {
+
+        }
+
 
 
 
