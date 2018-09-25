@@ -160,31 +160,22 @@ namespace ConsoleUI
                     sb.AppendLine(person.ToString());
                 }             
             }
+
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("1) Select a Person");
+            Console.WriteLine("2) Delete a Person");
+            
           
 
         }
-        //private static void ListAllPersonsScreen()
-        //{
-        //    PersonRepository personRepository = new PersonRepository();
-        //    var listOfPersons = personRepository.ListPersons();
-
-        //    if (listOfPersons.Count == 0)
-        //    {
-        //        Console.WriteLine("There are no Persons in this system, please add one.");
-        //        Console.WriteLine("____________________________________________________");
-        //        AddPersonScreen();
-        //    }
-        //    else
-        //    {
-        //        foreach (var person in listOfPersons)
-        //        {
-        //            Console.WriteLine(person.ToString());
-        //        }
-        //    }
-
-
-        //}
-
+        private static void PersonScreen(Person SelectedPerson)//TO DO: This screen
+        {
+            Console.WriteLine("Name: ",SelectedPerson.Name);
+            Console.WriteLine("Sex: ",SelectedPerson.Sex);
+            Console.WriteLine("Traits: ",SelectedPerson.Traits);
+            Console.WriteLine("Genotypes: ", SelectedPerson.Genotypes);
+        }
+        
         private static int MenuUserInputInt(int max)
         {
            
