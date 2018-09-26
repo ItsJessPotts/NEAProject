@@ -13,7 +13,7 @@ namespace ConsoleUI
     {
        
 
-        static void Main()//To Do: Create Seed Data
+        static void Main()
         {
             
             bool MainMenuScreen = true;
@@ -23,6 +23,8 @@ namespace ConsoleUI
                 Console.WriteLine("1) Genetic Counsellor");
                 Console.WriteLine("2) Hardy Weinberg Calculator");
                 int mainMenuChoice = MenuUserInputInt(2);
+
+                
 
                 switch (mainMenuChoice)
                 {
@@ -42,21 +44,30 @@ namespace ConsoleUI
             }
             
         }
-        private static void PersonsSeedData()
+        public static string[] ReadFile(string[] records)
         {
-            string[] lines = new string[1000];
-            using (StreamReader reader = new StreamReader("PersonsSeedData.txt"))
+            try
             {
-                int i = 0;
-                while (!reader.EndOfStream)
+                
+                using (StreamReader reader = new StreamReader("PersonsSeedData.txt"))
                 {
-                    lines[i] = reader.ReadLine();
+                    int i = 0;
+                    while (!reader.EndOfStream)
+                    {
+                        records[i] = reader.ReadLine();
+                        
+                    }
                 }
+
+                return records;
             }
-            foreach (var line in lines)
+            catch (FileNotFoundException)
             {
-                Console.WriteLine(line);
+                Console.WriteLine("Unable to locate 'PersonsSeedData.txt'");
+                Console.ReadKey();
+                throw;
             }
+            
         }
 
         private static void HardyWeinbergCalculator()
@@ -78,7 +89,10 @@ namespace ConsoleUI
                 Console.WriteLine("2) List all Persons");
                 Console.WriteLine("3) Create trait");
                 Console.WriteLine("4) List all traits");
-       
+
+                string[] records = new string[1000];
+                ReadFile(records);
+
                 int geneticCounsellorMenuOption = MenuUserInputInt(4);
 
                 switch (geneticCounsellorMenuOption)
@@ -91,7 +105,7 @@ namespace ConsoleUI
                         break;
                     case 2:
                         StringBuilder sb = new StringBuilder();
-                        ListAllPersonsScreen(sb, personRepository);
+                        ListAllPersonsScreen(sb, personRepository, records);
                         string s = sb.ToString();
                         Console.Write(s);
                         break;
@@ -160,19 +174,19 @@ namespace ConsoleUI
             var person = new Person(inputName,inputSex,inputLiving); //inputSex , inputLiving
             personRepository.AddPerson(person);
         }
-        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)// Implement ability to find person 
+        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository, string[] records)// Implement ability to load file into list of persons.
         {
             
-            var listOfPersons = personRepository.ListPersons();
+            var ListOfPersons  = personRepository.ListPersons();//
 
-            if (listOfPersons.Count == 0)
+            if (ListOfPersons.Count == 0)
             {
                 sb.AppendLine("There are no Persons in this system, please add one.");
                 sb.AppendLine("____________________________________________________");                
             }
             else
             {
-                foreach (var person in listOfPersons)
+                foreach (var person in ListOfPersons)
                 {
                     sb.AppendLine(person.ToString());
                 }             
@@ -181,10 +195,32 @@ namespace ConsoleUI
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1) Select a Person");
             Console.WriteLine("2) Delete a Person");
-            
-          
+                      
 
         }
+        //static void FindRecordByIndex(string [] records)
+        //{
+        //    Console.Write("Enter Index No. :");
+        //    try
+        //    {
+        //        int index = Convert.ToInt32(Console.ReadLine());                          From Student Records
+        //        WriteRecordToConsole(records[index]);
+        //    }
+        //    catch (IndexOutOfRangeException)
+        //    {
+        //        Console.WriteLine("Not a valid index");
+        //    }
+        //    catch (FormatException)
+        //    {
+        //        Console.WriteLine("Not a number");
+        //    }
+        //}
+        //static void WriteRecordToConsole(string record)
+        //{
+        //    var formatted = record.Replace(",", "\t");
+        //    Console.WriteLine(formatted);
+        //}
+
         private static void PersonScreen(Person SelectedPerson)//To Do: Add options for methods
         {
             Console.WriteLine("Name: ",SelectedPerson.Name);

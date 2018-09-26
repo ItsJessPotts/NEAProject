@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PedigreeObjects;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace PedigreeObjectsTests
 {
@@ -150,6 +151,20 @@ namespace PedigreeObjectsTests
         [TestMethod]
         public void TestReadingSeedData()
         {
+            string[] lines = new string[1000];
+            using (StreamReader reader = new StreamReader("PersonsSeedData.txt"))
+            {
+                int i = 0;
+                while (!reader.EndOfStream)
+                {
+                    lines[i] = reader.ReadLine();
+                }
+            }
+            var expectedCollection = new string[1000];
+
+
+            Assert.AreEqual(lines[7], "Adams");
+
 
         }
 

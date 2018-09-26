@@ -1,0 +1,6 @@
+John,Adams,Male,true
+Eliza,Hamilton,Female,true
+Samuel,Adams,Male,true
+Paul,Revere,Male,true
+Crispis,Attucks,Male,false
+Abigail,Adams,Female,true
