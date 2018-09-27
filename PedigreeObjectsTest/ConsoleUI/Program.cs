@@ -44,31 +44,8 @@ namespace ConsoleUI
             }
             
         }
-        public static string[] ReadFile(string[] records)
-        {
-            try
-            {
-                
-                using (StreamReader reader = new StreamReader("PersonsSeedData.txt"))
-                {
-                    int i = 0;
-                    while (!reader.EndOfStream)
-                    {
-                        records[i] = reader.ReadLine();
-                        
-                    }
-                }
 
-                return records;
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("Unable to locate 'PersonsSeedData.txt'");
-                Console.ReadKey();
-                throw;
-            }
-            
-        }
+
 
         private static void HardyWeinbergCalculator()
         {
@@ -79,9 +56,10 @@ namespace ConsoleUI
         private static void GeneticCounsellor()
         {
             bool geneticCounsellorScreen = true;
-            var personRepository = new PersonRepository();
-            var genotypeRepository = new GenotypeRepository();
+            
+            var genotypeRepository = new GenotypeRepository(); //creating Repositories
             var traitRepository = new TraitRepository();
+            var personRepository = new PersonRepository();
 
             while (geneticCounsellorScreen == true)
             {
@@ -91,7 +69,9 @@ namespace ConsoleUI
                 Console.WriteLine("4) List all traits");
 
                 string[] records = new string[1000];
-                ReadFile(records);
+
+                records = PersonRepository.ReadFile(records);
+                personRepository = PersonRepository.TurnRecordsFileIntoPersonRepository(records, personRepository);
 
                 int geneticCounsellorMenuOption = MenuUserInputInt(4);
 
@@ -105,7 +85,7 @@ namespace ConsoleUI
                         break;
                     case 2:
                         StringBuilder sb = new StringBuilder();
-                        ListAllPersonsScreen(sb, personRepository, records);
+                        ListAllPersonsScreen(sb, records,personRepository);
                         string s = sb.ToString();
                         Console.Write(s);
                         break;
@@ -173,12 +153,13 @@ namespace ConsoleUI
 
             var person = new Person(inputName,inputSex,inputLiving); //inputSex , inputLiving
             personRepository.AddPerson(person);
-        }
-        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository, string[] records)// Implement ability to load file into list of persons.
-        {
             
-            var ListOfPersons  = personRepository.ListPersons();//
-
+        }
+        private static void ListAllPersonsScreen(StringBuilder sb, string[] records, PersonRepository personRepository)// Implement ability to load file into list of persons.
+        {
+            var ListOfPersons = personRepository.ListPersons();//records
+            
+            
             if (ListOfPersons.Count == 0)
             {
                 sb.AppendLine("There are no Persons in this system, please add one.");
@@ -188,16 +169,39 @@ namespace ConsoleUI
             {
                 foreach (var person in ListOfPersons)
                 {
-                    sb.AppendLine(person.ToString());
+                    sb.AppendLine(person.ToString()); 
                 }             
             }
 
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1) Select a Person");
             Console.WriteLine("2) Delete a Person");
-                      
-
+                    
         }
+        
+        //private static void ListAllPersonsScreen(StringBuilder sb, string[] records)//UNEDITED LIST ALL PERSONS
+        //{
+
+        //    records = personRepository.ListPersons();//records
+
+        //    if (records.Length == 0)
+        //    {
+        //        sb.AppendLine("There are no Persons in this system, please add one.");
+        //        sb.AppendLine("____________________________________________________");
+        //    }
+        //    else
+        //    {
+        //        foreach (var person in records)
+        //        {
+        //            sb.AppendLine(person.ToString());
+        //        }
+        //    }
+
+        //    Console.WriteLine("-----------------------------------------------------");
+        //    Console.WriteLine("1) Select a Person");
+        //    Console.WriteLine("2) Delete a Person");
+        //}
+
         //static void FindRecordByIndex(string [] records)
         //{
         //    Console.Write("Enter Index No. :");

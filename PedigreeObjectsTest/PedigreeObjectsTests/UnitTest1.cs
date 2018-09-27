@@ -135,7 +135,7 @@ namespace PedigreeObjectsTests
         {
             var j = new Person("Jess Potts", Sex.Female, true);
             var e = new Person("Erica Korner", Sex.Female, true);
-            var p = new Person("paul Korner", Sex.Female, true);
+            var p = new Person("Paul Korner", Sex.Female, true);
             var rep = new PersonRepository();
             rep.AddPerson(j);
             rep.AddPerson(e);
@@ -159,13 +159,24 @@ namespace PedigreeObjectsTests
                 {
                     lines[i] = reader.ReadLine();
                 }
+                Assert.AreEqual("Abigail Adams,Female,true", lines[i]);
             }
             var expectedCollection = new string[1000];
+           
+        }
+        [TestMethod]
+        public void TestTurnRecordsFileIntoPersonRepository()
+        {
+            PersonRepository personRepository = new PersonRepository();
+            string[] records = new string[1000];
+            records = PersonRepository.ReadFile(records);
+            PersonRepository myPersonRepository = PersonRepository.TurnRecordsFileIntoPersonRepository(records, personRepository);
 
+            var ListofPersons = new List<Person>();
+            ListofPersons = myPersonRepository.ListPersons();
+            var TestPerson = new Person("Abigail Adams",Sex.Female, true);
 
-            Assert.AreEqual(lines[7], "Adams");
-
-
+            Assert.AreEqual(ListofPersons[0], TestPerson);
         }
 
 
