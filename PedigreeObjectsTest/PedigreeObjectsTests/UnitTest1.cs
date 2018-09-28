@@ -158,8 +158,10 @@ namespace PedigreeObjectsTests
                 while (!reader.EndOfStream)
                 {
                     lines[i] = reader.ReadLine();
+                    i++;
                 }
-                Assert.AreEqual("Abigail Adams,Female,true", lines[i]);
+                Assert.AreEqual("Abigail Adams,Female,true", lines[5]);
+                Assert.AreEqual("John Adams,Male,true", lines[0]);
             }
             var expectedCollection = new string[1000];
            
@@ -167,7 +169,7 @@ namespace PedigreeObjectsTests
         [TestMethod]
         public void TestTurnRecordsFileIntoPersonRepository()
         {
-            PersonRepository personRepository = new PersonRepository();
+            var personRepository = new PersonRepository();
             string[] records = new string[1000];
             records = PersonRepository.ReadFile(records);
             PersonRepository myPersonRepository = PersonRepository.TurnRecordsFileIntoPersonRepository(records, personRepository);
@@ -176,7 +178,7 @@ namespace PedigreeObjectsTests
             ListofPersons = myPersonRepository.ListPersons();
             var TestPerson = new Person("Abigail Adams",Sex.Female, true);
 
-            Assert.AreEqual(ListofPersons[0], TestPerson);
+            Assert.AreEqual(ListofPersons[1], TestPerson);
         }
 
 

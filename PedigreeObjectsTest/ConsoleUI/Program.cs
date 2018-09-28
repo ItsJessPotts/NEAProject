@@ -68,7 +68,7 @@ namespace ConsoleUI
                 Console.WriteLine("3) Create trait");
                 Console.WriteLine("4) List all traits");
 
-                string[] records = new string[1000];
+                string[] records = new string[100];
 
                 records = PersonRepository.ReadFile(records);
                 personRepository = PersonRepository.TurnRecordsFileIntoPersonRepository(records, personRepository);
@@ -124,29 +124,29 @@ namespace ConsoleUI
             }
         }
 
-        private static void CreateTraitScreen(TraitRepository traitRepository)//TO DO: Find way to input Dominance 
+        private static void CreateTraitScreen(TraitRepository traitRepository) 
         {
             Console.WriteLine("Name of trait:");// Colourblindness
             string inputName = Console.ReadLine();
-            //Console.WriteLine("Type of inheritance (currently Dominant or Recessive only)"); //Reccessive
-            //Dominance inputInheritanceType = Console.ReadLine(); //HELP
+            Console.WriteLine("Type of inheritance (currently Dominant or Recessive only)"); //Reccessive
+            Dominance inputInheritanceType = (Dominance)Enum.Parse(typeof(Dominance),Console.ReadLine(),true); 
             Console.WriteLine("What letter should represent it?");// C
             char inputAlelleName = Convert.ToChar(Console.ReadLine());
 
-            var trait = new Trait(inputName, inputAlelleName, Dominance.Dominant);
+            var trait = new Trait(inputName, inputAlelleName, inputInheritanceType);
             traitRepository.AddTrait(trait);
             
 
         }
         
-        private static void AddPersonScreen(PersonRepository personRepository)//TO DO: figure out how to get user inputs of enum sex
+        private static void AddPersonScreen(PersonRepository personRepository)
         {
             
             Console.WriteLine("Name (first and last): ");
             string inputName = Console.ReadLine();
-            Console.WriteLine("Sex ( Male(0) or Female(1) ): ");
+            Console.WriteLine("Sex ( Male or Female ): ");
             string inputtedSex = Console.ReadLine();
-            Sex inputSex = (Sex)Convert.ToInt32(inputtedSex);
+            Sex inputSex = (Sex)Enum.Parse(typeof(Sex),inputtedSex,true);
             Console.WriteLine("Living (true or false): ");
             string inputtedLiving = Console.ReadLine();
             bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
@@ -157,7 +157,7 @@ namespace ConsoleUI
         }
         private static void ListAllPersonsScreen(StringBuilder sb, string[] records, PersonRepository personRepository)// Implement ability to load file into list of persons.
         {
-            var ListOfPersons = personRepository.ListPersons();//records
+            var ListOfPersons = personRepository.ListPersons();
             
             
             if (ListOfPersons.Count == 0)
@@ -179,29 +179,7 @@ namespace ConsoleUI
                     
         }
         
-        //private static void ListAllPersonsScreen(StringBuilder sb, string[] records)//UNEDITED LIST ALL PERSONS
-        //{
-
-        //    records = personRepository.ListPersons();//records
-
-        //    if (records.Length == 0)
-        //    {
-        //        sb.AppendLine("There are no Persons in this system, please add one.");
-        //        sb.AppendLine("____________________________________________________");
-        //    }
-        //    else
-        //    {
-        //        foreach (var person in records)
-        //        {
-        //            sb.AppendLine(person.ToString());
-        //        }
-        //    }
-
-        //    Console.WriteLine("-----------------------------------------------------");
-        //    Console.WriteLine("1) Select a Person");
-        //    Console.WriteLine("2) Delete a Person");
-        //}
-
+        
         //static void FindRecordByIndex(string [] records)
         //{
         //    Console.Write("Enter Index No. :");
@@ -219,6 +197,8 @@ namespace ConsoleUI
         //        Console.WriteLine("Not a number");
         //    }
         //}
+        
+        
         //static void WriteRecordToConsole(string record)
         //{
         //    var formatted = record.Replace(",", "\t");
@@ -260,10 +240,7 @@ namespace ConsoleUI
             {
                 Console.WriteLine("Input was not valid");
                 return 0;
-            }
-           
-             
-            
+            }                                   
         }
     }
 }
