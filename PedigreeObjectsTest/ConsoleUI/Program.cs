@@ -10,9 +10,7 @@ using System.IO;
 namespace ConsoleUI
 {
     class Program
-    {
-       
-
+    {       
         static void Main()
         {
             
@@ -44,9 +42,6 @@ namespace ConsoleUI
             }
             
         }
-
-
-
         private static void HardyWeinbergCalculator()
         {
 
@@ -71,7 +66,7 @@ namespace ConsoleUI
                 string[] records = new string[100];
 
                 records = PersonRepository.ReadFile(records);
-                personRepository = PersonRepository.TurnRecordsFileIntoPersonRepository(records, personRepository);
+                personRepository.LoadFile();
 
                 int geneticCounsellorMenuOption = MenuUserInputInt(4);
 
@@ -151,7 +146,7 @@ namespace ConsoleUI
             string inputtedLiving = Console.ReadLine();
             bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
 
-            var person = new Person(inputName,inputSex,inputLiving); //inputSex , inputLiving
+            var person = new Person(inputName,inputSex,inputLiving); //inputLiving? need to test this is working
             personRepository.AddPerson(person);
             
         }

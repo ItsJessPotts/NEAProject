@@ -19,7 +19,7 @@ namespace PedigreeObjects
         {
             return Persons;
         }
-        public static string[] ReadFile(string[] records)
+        public static ReadFile(string[] records)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace PedigreeObjects
                     }
                 }
 
-                return records;
+               
             }
             catch (FileNotFoundException)
             {
@@ -43,7 +43,7 @@ namespace PedigreeObjects
                 throw;
             }
         }
-        public static PersonRepository TurnRecordsFileIntoPersonRepository(string[] records, PersonRepository personRepository) 
+        public void LoadFile(string[] records) 
         {
             
             foreach (var line in records)
@@ -56,7 +56,7 @@ namespace PedigreeObjects
                 personRepository.AddPerson(person);
                                 
             }
-            return personRepository;
+            
         }
     }
 }
