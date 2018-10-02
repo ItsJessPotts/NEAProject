@@ -64,9 +64,10 @@ namespace ConsoleUI
                 Console.WriteLine("4) List all traits");
 
                 string[] records = new string[100];
+                string filename = "PersonsSeedData.txt";
 
-                records = PersonRepository.ReadFile(records);
-                personRepository.LoadFile();
+
+                personRepository.LoadFile(filename);
 
                 int geneticCounsellorMenuOption = MenuUserInputInt(4);
 
@@ -146,13 +147,14 @@ namespace ConsoleUI
             string inputtedLiving = Console.ReadLine();
             bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
 
-            var person = new Person(inputName,inputSex,inputLiving); //inputLiving? need to test this is working
+            var person = new Person(inputName,inputSex,inputLiving); 
             personRepository.AddPerson(person);
             
         }
         private static void ListAllPersonsScreen(StringBuilder sb, string[] records, PersonRepository personRepository)// Implement ability to load file into list of persons.
         {
             var ListOfPersons = personRepository.ListPersons();
+            int i = 1;
             
             
             if (ListOfPersons.Count == 0)
@@ -164,14 +166,16 @@ namespace ConsoleUI
             {
                 foreach (var person in ListOfPersons)
                 {
-                    sb.AppendLine(person.ToString()); 
+                    i++;
+                    sb.AppendLine(i + " " + person.ToString()); 
                 }             
             }
 
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1) Select a Person");
             Console.WriteLine("2) Delete a Person");
-                    
+            Console.WriteLine("-----------------------------------------------------");
+
         }
         
         

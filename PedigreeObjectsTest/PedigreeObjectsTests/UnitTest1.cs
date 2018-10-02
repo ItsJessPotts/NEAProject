@@ -167,18 +167,18 @@ namespace PedigreeObjectsTests
            
         }
         [TestMethod]
-        public void TestTurnRecordsFileIntoPersonRepository()
+        public void TestLoadFile()
         {
-            var personRepository = new PersonRepository();
+            var myPersonRepository = new PersonRepository();
             string[] records = new string[1000];
-            records = PersonRepository.ReadFile(records);
-            PersonRepository myPersonRepository = PersonRepository.TurnRecordsFileIntoPersonRepository(records, personRepository);
+            myPersonRepository.LoadFile("PersonsSeedData.txt");
 
             var ListofPersons = new List<Person>();
             ListofPersons = myPersonRepository.ListPersons();
+
             var TestPerson = new Person("Abigail Adams",Sex.Female, true);
 
-            Assert.AreEqual(ListofPersons[1], TestPerson);
+            Assert.AreEqual("Abigail Adams Female", ListofPersons[5].ToString());
         }
 
 

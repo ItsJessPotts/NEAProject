@@ -10,7 +10,7 @@ namespace PedigreeObjects
     {
         private string TraitName { get; set; }// Colourblindness
         private char AlleleName { get; set; }//eg C for colourblindness or A for asthma
-        private Dominance InheritanceType { get; set; }// Dominant/ Recessive/ Autosomal/ Dihybrid/ Epistasis
+        private Dominance InheritanceType { get; set; }// Dominant/ Recessive/ Autosomal/ Dihybrid/ Epistasis   // Maybe make it an enum
 
         public Trait(string traitName, char alleleName, Dominance inheritanceType)
         {

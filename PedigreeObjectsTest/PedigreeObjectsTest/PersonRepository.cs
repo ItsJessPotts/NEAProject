@@ -19,18 +19,25 @@ namespace PedigreeObjects
         {
             return Persons;
         }
-        public static ReadFile(string[] records)
+        public void LoadFile(string filename)
         {
             try
             {
 
-                using (StreamReader reader = new StreamReader("PersonsSeedData.txt"))
+                using (StreamReader reader = new StreamReader(filename))
                 {
+                    
                     int i = 0;
                     while (!reader.EndOfStream)
                     {
-                        records[i] = reader.ReadLine();
-                        i++;
+                        string line = reader.ReadLine();
+                                                
+                            var item = line.Split(',');
+                            string name = item[0];
+                            Sex sex = (Sex)Enum.Parse(typeof(Sex), item[1], true);
+                            bool living = Convert.ToBoolean(item[2]);
+                            var person = new Person(name, sex, living); //inputSex , inputLiving
+                            Persons.Add(person);                                                    
                     }
                 }
 
@@ -43,20 +50,6 @@ namespace PedigreeObjects
                 throw;
             }
         }
-        public void LoadFile(string[] records) 
-        {
-            
-            foreach (var line in records)
-            {
-                var item = line.Split(',');
-                string name = item[0];
-                Sex sex = (Sex)Enum.Parse(typeof(Sex),item[1],true);                
-                bool living = Convert.ToBoolean(item[2]);
-                var person = new Person(name, sex, living); //inputSex , inputLiving
-                personRepository.AddPerson(person);
-                                
-            }
-            
-        }
+       
     }
 }
