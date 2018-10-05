@@ -19,15 +19,15 @@ namespace PedigreeObjects
         {
             return Persons;
         }
-        public void LoadFile(string filename)
+        public void LoadFile(string personFilename)
         {
             try
             {
 
-                using (StreamReader reader = new StreamReader(filename))
+                using (StreamReader reader = new StreamReader(personFilename))
                 {
                     
-                    int i = 0;
+                    
                     while (!reader.EndOfStream)
                     {
                         string line = reader.ReadLine();
@@ -50,6 +50,10 @@ namespace PedigreeObjects
                 throw;
             }
         }
-       
+        public List<Person> FindPersonByIndex()
+        {
+            return Persons;
+        }
+
     }
 }

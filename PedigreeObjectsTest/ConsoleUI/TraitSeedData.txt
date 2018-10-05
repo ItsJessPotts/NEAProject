@@ -1,0 +1,6 @@
+Colourblindness,c,Recessive
+Cystic Fibrosis,f,Recessive
+Haemophilia,p,Recessive
+Huntington's Disease,H,Dominant
+Marfan's Syndrom,M,Dominant
+Tuberous Sclerosis,T,Dominant 

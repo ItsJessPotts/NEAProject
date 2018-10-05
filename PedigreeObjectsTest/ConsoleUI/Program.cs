@@ -63,11 +63,15 @@ namespace ConsoleUI
                 Console.WriteLine("3) Create trait");
                 Console.WriteLine("4) List all traits");
 
-                string[] records = new string[100];
-                string filename = "PersonsSeedData.txt";
+               
+                string personFilename = "PersonsSeedData.txt";
+                string traitFilename = "TraitSeedData.txt";
 
 
-                personRepository.LoadFile(filename);
+                personRepository.LoadFile(personFilename);
+                traitRepository.LoadFile(traitFilename);
+                
+
 
                 int geneticCounsellorMenuOption = MenuUserInputInt(4);
 
@@ -78,21 +82,25 @@ namespace ConsoleUI
                         break;
                     case 1:
                         AddPersonScreen(personRepository);
+                        
                         break;
                     case 2:
                         StringBuilder sb = new StringBuilder();
-                        ListAllPersonsScreen(sb, records,personRepository);
+                        ListAllPersonsScreen(sb,personRepository);
                         string s = sb.ToString();
                         Console.Write(s);
+                        
                         break;
                     case 3:
                         CreateTraitScreen(traitRepository);
+                        
                         break;
                     case 4:
                         StringBuilder sb2 = new StringBuilder();
                         ListAllTraitsScreen(sb2,genotypeRepository, traitRepository);
                         string s2 = sb2.ToString();
                         Console.Write(s2);
+                        
                         break;
                     default:
                         throw new Exception("Invalid Menu input");
@@ -151,12 +159,11 @@ namespace ConsoleUI
             personRepository.AddPerson(person);
             
         }
-        private static void ListAllPersonsScreen(StringBuilder sb, string[] records, PersonRepository personRepository)// Implement ability to load file into list of persons.
+        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)// Implement ability to load file into list of persons.
         {
             var ListOfPersons = personRepository.ListPersons();
-            int i = 1;
-            
-            
+            int i = 0;
+                        
             if (ListOfPersons.Count == 0)
             {
                 sb.AppendLine("There are no Persons in this system, please add one.");
@@ -168,17 +175,33 @@ namespace ConsoleUI
                 {
                     i++;
                     sb.AppendLine(i + " " + person.ToString()); 
-                }             
+                }
+                
             }
-
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1) Select a Person");
             Console.WriteLine("2) Delete a Person");
             Console.WriteLine("-----------------------------------------------------");
 
+            //int ListAllPersonsScreenOption = MenuUserInputInt(2); 
+
+            //switch (ListAllPersonsScreenOption)
+            //{
+            //    case 1:
+            //        FindPersonByIndex();
+            //        break;
+            //    default:
+            //        throw new Exception("Invalid Menu input"); 
+            //}
+
         }
-        
-        
+
+        private static void FindPersonByIndex()
+        {
+            throw new NotImplementedException();
+        }
+
+
         //static void FindRecordByIndex(string [] records)
         //{
         //    Console.Write("Enter Index No. :");
@@ -196,8 +219,8 @@ namespace ConsoleUI
         //        Console.WriteLine("Not a number");
         //    }
         //}
-        
-        
+
+
         //static void WriteRecordToConsole(string record)
         //{
         //    var formatted = record.Replace(",", "\t");
