@@ -52,7 +52,7 @@ namespace ConsoleUI
         {
             bool geneticCounsellorScreen = true;
             
-            var genotypeRepository = new GenotypeRepository(); //creating Repositories
+            var genotypeRepository = new GenotypeRepository(); 
             var traitRepository = new TraitRepository();
             var personRepository = new PersonRepository();
 
@@ -89,7 +89,8 @@ namespace ConsoleUI
                         ListAllPersonsScreen(sb,personRepository);
                         string s = sb.ToString();
                         Console.Write(s);
-                        
+                        Console.WriteLine("____________________________________________________");
+
                         break;
                     case 3:
                         CreateTraitScreen(traitRepository);
@@ -100,7 +101,8 @@ namespace ConsoleUI
                         ListAllTraitsScreen(sb2,genotypeRepository, traitRepository);
                         string s2 = sb2.ToString();
                         Console.Write(s2);
-                        
+                        Console.WriteLine("____________________________________________________");
+
                         break;
                     default:
                         throw new Exception("Invalid Menu input");
@@ -171,11 +173,13 @@ namespace ConsoleUI
             }
             else
             {
+                Console.WriteLine("____________________________________________________");
                 foreach (var person in ListOfPersons)
                 {
                     i++;
                     sb.AppendLine(i + " " + person.ToString()); 
                 }
+                
                 
             }
             Console.WriteLine("-----------------------------------------------------");
