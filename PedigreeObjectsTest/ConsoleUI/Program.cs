@@ -56,21 +56,18 @@ namespace ConsoleUI
             var traitRepository = new TraitRepository();
             var personRepository = new PersonRepository();
 
+            string personFilename = "PersonsSeedData.txt";
+            string traitFilename = "TraitSeedData.txt";
+
+            personRepository.LoadFile(personFilename);
+            traitRepository.LoadFile(traitFilename);
+
             while (geneticCounsellorScreen == true)
             {
                 Console.WriteLine("1) Add Person");
                 Console.WriteLine("2) List all Persons");
                 Console.WriteLine("3) Create trait");
                 Console.WriteLine("4) List all traits");
-
-               
-                string personFilename = "PersonsSeedData.txt";
-                string traitFilename = "TraitSeedData.txt";
-
-
-                personRepository.LoadFile(personFilename);
-                traitRepository.LoadFile(traitFilename);
-                
 
 
                 int geneticCounsellorMenuOption = MenuUserInputInt(4);
@@ -158,7 +155,8 @@ namespace ConsoleUI
             bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
 
             var person = new Person(inputName,inputSex,inputLiving); 
-            personRepository.AddPerson(person);
+            personRepository.AddPerson(person); //after adding a person the ListAllPersonsScreen outputs the list twice
+
             
         }
         private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)// Implement ability to load file into list of persons.
@@ -237,6 +235,28 @@ namespace ConsoleUI
             Console.WriteLine("Sex: ",SelectedPerson.Sex);
             Console.WriteLine("Traits: ",SelectedPerson.Traits);
             Console.WriteLine("Genotypes: ", SelectedPerson.Genotypes);
+
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("1) Combine Genotype with other person");
+            Console.WriteLine("2) ");
+            Console.WriteLine("-----------------------------------------------------");
+
+            //switch (PersonMenuChoice)
+            //{
+            //    case 0:
+            //        PersonMenuChoice = true;
+            //        break;
+            //    case 1:
+            //        CombineGenotypeWithOtherPerson();
+            //        break;
+            //    case 2:
+            //        HardyWeinbergCalculator();
+            //        break;
+            //    default:
+            //        throw new Exception("Invalid Menu input");
+            //}
+
+
         }
         
         private static int MenuUserInputInt(int max)
