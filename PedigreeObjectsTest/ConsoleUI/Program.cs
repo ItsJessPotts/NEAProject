@@ -87,6 +87,16 @@ namespace ConsoleUI
                         string s = sb.ToString();
                         Console.Write(s);
                         Console.WriteLine("____________________________________________________");
+                        int ListAllPersonsScreenOption = MenuUserInputInt(2);
+
+                        switch (ListAllPersonsScreenOption)
+                        {
+                            case 1:
+                                FindPersonByIndex(personRepository);
+                                break;
+                            default:
+                                throw new Exception("Invalid Menu input");
+                        }
 
                         break;
                     case 3:
@@ -155,7 +165,7 @@ namespace ConsoleUI
             bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
 
             var person = new Person(inputName,inputSex,inputLiving); 
-            personRepository.AddPerson(person); //after adding a person the ListAllPersonsScreen outputs the list twice
+            personRepository.AddPerson(person); 
 
             
         }
@@ -163,11 +173,11 @@ namespace ConsoleUI
         {
             var ListOfPersons = personRepository.ListPersons();
             int i = 0;
-                        
+
             if (ListOfPersons.Count == 0)
             {
                 sb.AppendLine("There are no Persons in this system, please add one.");
-                sb.AppendLine("____________________________________________________");                
+                sb.AppendLine("____________________________________________________");
             }
             else
             {
@@ -175,60 +185,38 @@ namespace ConsoleUI
                 foreach (var person in ListOfPersons)
                 {
                     i++;
-                    sb.AppendLine(i + " " + person.ToString()); 
+                    sb.AppendLine(i + " " + person.ToString());
                 }
-                
-                
+
+
             }
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1) Select a Person");
             Console.WriteLine("2) Delete a Person");
             Console.WriteLine("-----------------------------------------------------");
-
-            //int ListAllPersonsScreenOption = MenuUserInputInt(2); 
-
-            //switch (ListAllPersonsScreenOption)
-            //{
-            //    case 1:
-            //        FindPersonByIndex();
-            //        break;
-            //    default:
-            //        throw new Exception("Invalid Menu input"); 
-            //}
-
         }
 
-        private static void FindPersonByIndex()
+        private static void FindPersonByIndex(PersonRepository personRepository)
         {
-            throw new NotImplementedException();
+            Console.Write("Enter Index No. :");
+            try
+            {
+                var ListOfPersons = personRepository.ListPersons();
+                int index = Convert.ToInt32(Console.ReadLine());
+                PersonScreen(ListOfPersons[index +1]);
+                
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Console.WriteLine("Not a valid index");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Not a number");
+            }
         }
 
-
-        //static void FindRecordByIndex(string [] records)
-        //{
-        //    Console.Write("Enter Index No. :");
-        //    try
-        //    {
-        //        int index = Convert.ToInt32(Console.ReadLine());                          From Student Records
-        //        WriteRecordToConsole(records[index]);
-        //    }
-        //    catch (IndexOutOfRangeException)
-        //    {
-        //        Console.WriteLine("Not a valid index");
-        //    }
-        //    catch (FormatException)
-        //    {
-        //        Console.WriteLine("Not a number");
-        //    }
-        //}
-
-
-        //static void WriteRecordToConsole(string record)
-        //{
-        //    var formatted = record.Replace(",", "\t");
-        //    Console.WriteLine(formatted);
-        //}
-
+      
         private static void PersonScreen(Person SelectedPerson)//To Do: Add options for methods
         {
             Console.WriteLine("Name: ",SelectedPerson.Name);
@@ -238,27 +226,47 @@ namespace ConsoleUI
 
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1) Combine Genotype with other person");
-            Console.WriteLine("2) ");
+            Console.WriteLine("2) -");
             Console.WriteLine("-----------------------------------------------------");
+            
+            int PersonMenuChoice = MenuUserInputInt(2);
 
-            //switch (PersonMenuChoice)
-            //{
-            //    case 0:
-            //        PersonMenuChoice = true;
-            //        break;
-            //    case 1:
-            //        CombineGenotypeWithOtherPerson();
-            //        break;
-            //    case 2:
-            //        HardyWeinbergCalculator();
-            //        break;
-            //    default:
-            //        throw new Exception("Invalid Menu input");
-            //}
+            bool PersonScreenMenu = true;
+
+            while (PersonScreenMenu == true)
+            {
+                switch (PersonMenuChoice)
+                {
+                    case 0:
+                        PersonScreenMenu = true;
+                        break;
+                    case 1:
+                        EditPersonScreen();
+                        break;
+                    case 2:
+                        CombineGenotypesScreen();
+                        break;
+                    default:
+                        throw new Exception("Invalid Menu input");
+                }
+
+            }
+
+            
 
 
         }
-        
+
+        private static void CombineGenotypesScreen()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void EditPersonScreen()
+        {
+            throw new NotImplementedException();
+        }
+
         private static int MenuUserInputInt(int max)
         {
            
