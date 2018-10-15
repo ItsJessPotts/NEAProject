@@ -1,11 +1,7 @@
-﻿using PedigreeObjects;
-using HardyWeinbergTest;
+﻿using HardyWeinbergTest;
+using PedigreeObjects;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace ConsoleUI
 {
@@ -13,35 +9,35 @@ namespace ConsoleUI
     {       
         static void Main()
         {
-            
-            bool MainMenuScreen = true;
-            while (MainMenuScreen == true)
-            {
-                Console.WriteLine("Welcome");
-                Console.WriteLine("1) Genetic Counsellor");
-                Console.WriteLine("2) Hardy Weinberg Calculator");
-                int mainMenuChoice = MenuUserInputInt(2);
-
-                
-
-                switch (mainMenuChoice)
-                {
-                    case 0:
-                        MainMenuScreen = true;
-                        break;
-                    case 1:
-                        GeneticCounsellor();
-                        break;
-                    case 2:
-                        HardyWeinbergCalculator();
-                        break;
-                    default:
-                        throw new Exception("Invalid Menu input");
-                }
-
-            }
-            
+            MainMenuScreen();                                  
         }
+
+        private static void MainMenuScreen()
+        {
+            Console.WriteLine("____________________________________________________");
+            Console.WriteLine("Welcome");
+            Console.WriteLine("1) Genetic Counsellor");
+            Console.WriteLine("2) Hardy Weinberg Calculator");
+            Console.WriteLine("Select 0 to return to a previous menu at any screen");
+            Console.WriteLine("____________________________________________________");
+            int mainMenuChoice = MenuUserInputInt(2);
+
+            switch (mainMenuChoice)
+            {
+                case 0:
+                    MainMenuScreen();
+                    break;
+                case 1:
+                    GeneticCounsellor();
+                    break;
+                case 2:
+                    HardyWeinbergCalculator();
+                    break;
+                default:
+                    throw new Exception("Invalid Menu input");
+            }
+        }
+
         private static void HardyWeinbergCalculator()
         {
 
@@ -50,7 +46,7 @@ namespace ConsoleUI
 
         private static void GeneticCounsellor()
         {
-            bool geneticCounsellorScreen = true;
+            
             
             var genotypeRepository = new GenotypeRepository(); 
             var traitRepository = new TraitRepository();
@@ -62,61 +58,79 @@ namespace ConsoleUI
             personRepository.LoadFile(personFilename);
             traitRepository.LoadFile(traitFilename);
 
-            while (geneticCounsellorScreen == true)
+            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename);
+                                                        
+        }
+
+        private static void geneticCounsellorScreen(GenotypeRepository genotypeRepository, TraitRepository traitRepository, PersonRepository personRepository, string personFilename, string traitFilename)
+        {
+            Console.WriteLine("____________________________________________________");
+            Console.WriteLine("1) Add Person");
+            Console.WriteLine("2) List all Persons");
+            Console.WriteLine("3) Create trait");
+            Console.WriteLine("4) List all traits");
+            Console.WriteLine("____________________________________________________");
+
+            int geneticCounsellorMenuOption = MenuUserInputInt(4);
+
+            switch (geneticCounsellorMenuOption)
             {
-                Console.WriteLine("1) Add Person");
-                Console.WriteLine("2) List all Persons");
-                Console.WriteLine("3) Create trait");
-                Console.WriteLine("4) List all traits");
+                case 0:
+                    MainMenuScreen();
+                    break;
+                case 1:
+                    AddPersonScreen(personRepository, personFilename);
 
+                    break;
+                case 2:
+                    ListAllPersonsChoice(personRepository);
+                    int ListAllPersonsScreenOption = MenuUserInputInt(2);
 
-                int geneticCounsellorMenuOption = MenuUserInputInt(4);
+                    switch (ListAllPersonsScreenOption)
+                    {
+                        case 0:
+                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename);
+                            break;
+                        case 1:
+                            Person SelectedPerson = FindPersonByIndex(personRepository);
+                            PersonScreen(SelectedPerson, personRepository);
 
-                switch (geneticCounsellorMenuOption)
-                {
-                    case 0:
-                     geneticCounsellorScreen = true;
-                        break;
-                    case 1:
-                        AddPersonScreen(personRepository);
-                        
-                        break;
-                    case 2:
-                        StringBuilder sb = new StringBuilder();
-                        ListAllPersonsScreen(sb,personRepository);
-                        string s = sb.ToString();
-                        Console.Write(s);
-                        Console.WriteLine("____________________________________________________");
-                        int ListAllPersonsScreenOption = MenuUserInputInt(2);
+                            break;
+                        default:
+                            throw new Exception("Invalid Menu input");
+                    }
 
-                        switch (ListAllPersonsScreenOption)
-                        {
-                            case 1:
-                                FindPersonByIndex(personRepository);
-                                break;
-                            default:
-                                throw new Exception("Invalid Menu input");
-                        }
+                    break;
+                case 3:
+                    CreateTraitScreen(traitRepository);
 
-                        break;
-                    case 3:
-                        CreateTraitScreen(traitRepository);
-                        
-                        break;
-                    case 4:
-                        StringBuilder sb2 = new StringBuilder();
-                        ListAllTraitsScreen(sb2,genotypeRepository, traitRepository);
-                        string s2 = sb2.ToString();
-                        Console.Write(s2);
-                        Console.WriteLine("____________________________________________________");
+                    break;
+                case 4:
+                    ListAllTraitsChoice(genotypeRepository, traitRepository);
 
-                        break;
-                    default:
-                        throw new Exception("Invalid Menu input");
-                }
-
+                    break;
+                default:
+                    throw new Exception("Invalid Menu input");
             }
-                
+        }
+
+        private static void ListAllPersonsChoice(PersonRepository personRepository)
+        {
+            StringBuilder sb = new StringBuilder();
+            ListAllPersonsScreen(sb, personRepository);
+            string s = sb.ToString();
+            Console.Write(s);
+            Console.WriteLine("____________________________________________________");
+           
+        }
+
+        private static void ListAllTraitsChoice(GenotypeRepository genotypeRepository,TraitRepository traitRepository)
+        {
+            StringBuilder sb2 = new StringBuilder();
+            ListAllTraitsScreen(sb2, genotypeRepository, traitRepository);
+            string s2 = sb2.ToString();
+            Console.Write(s2);
+            Console.WriteLine("____________________________________________________");
         }
 
         private static void ListAllTraitsScreen(StringBuilder sb2, GenotypeRepository genotypeRepository, TraitRepository traitRepository)
@@ -152,7 +166,7 @@ namespace ConsoleUI
 
         }
         
-        private static void AddPersonScreen(PersonRepository personRepository)
+        private static void AddPersonScreen(PersonRepository personRepository,string personFilename)
         {
             
             Console.WriteLine("Name (first and last): ");
@@ -165,7 +179,8 @@ namespace ConsoleUI
             bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
 
             var person = new Person(inputName,inputSex,inputLiving); 
-            personRepository.AddPerson(person); 
+            personRepository.AddPerson(person);
+            personRepository.WritePersonToTexfile(person,personFilename);
 
             
         }
@@ -190,76 +205,84 @@ namespace ConsoleUI
 
 
             }
-            Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("1) Select a Person");
-            Console.WriteLine("2) Delete a Person");
-            Console.WriteLine("-----------------------------------------------------");
+            
+            {
+                Console.WriteLine("-----------------------------------------------------");
+                Console.WriteLine("1) Select a Person");
+                Console.WriteLine("2) Delete a Person");
+                Console.WriteLine("-----------------------------------------------------");
+            }
+            
+
+
         }
 
-        private static void FindPersonByIndex(PersonRepository personRepository)
+        private static Person FindPersonByIndex(PersonRepository personRepository)
         {
             Console.Write("Enter Index No. :");
             try
             {
                 var ListOfPersons = personRepository.ListPersons();
                 int index = Convert.ToInt32(Console.ReadLine());
-                PersonScreen(ListOfPersons[index +1]);
-                
+                Person SelectedPerson = ListOfPersons[index - 1];
+                return SelectedPerson;
             }
             catch (IndexOutOfRangeException)
             {
                 Console.WriteLine("Not a valid index");
+                return null;
             }
             catch (FormatException)
             {
                 Console.WriteLine("Not a number");
+                return null;
             }
+            
         }
 
       
-        private static void PersonScreen(Person SelectedPerson)//To Do: Add options for methods
+        private static void PersonScreen(Person SelectedPerson, PersonRepository personRepository)//To Do: Add options for methods
         {
-            Console.WriteLine("Name: ",SelectedPerson.Name);
-            Console.WriteLine("Sex: ",SelectedPerson.Sex);
-            Console.WriteLine("Traits: ",SelectedPerson.Traits);
-            Console.WriteLine("Genotypes: ", SelectedPerson.Genotypes);
+            Console.WriteLine("Name: " + SelectedPerson.Name);
+            Console.WriteLine("Sex: " + SelectedPerson.Sex);
+            Console.WriteLine("Traits: " + SelectedPerson.Traits);
+            Console.WriteLine("Genotypes: " + SelectedPerson.Genotypes);
 
             Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("1) Combine Genotype with other person");
-            Console.WriteLine("2) -");
+            Console.WriteLine("1) Edit Person");
+            Console.WriteLine("2) Combine Genotype with other person");
             Console.WriteLine("-----------------------------------------------------");
-            
-            int PersonMenuChoice = MenuUserInputInt(2);
-
-            bool PersonScreenMenu = true;
-
-            while (PersonScreenMenu == true)
-            {
-                switch (PersonMenuChoice)
-                {
-                    case 0:
-                        PersonScreenMenu = true;
-                        break;
-                    case 1:
-                        EditPersonScreen();
-                        break;
-                    case 2:
-                        CombineGenotypesScreen();
-                        break;
-                    default:
-                        throw new Exception("Invalid Menu input");
-                }
-
-            }
-
-            
-
-
+                        
+            PersonScreenMenu(personRepository,SelectedPerson);
+                      
         }
 
-        private static void CombineGenotypesScreen()
+        private static void PersonScreenMenu(PersonRepository personRepository, Person SelectedPerson)
         {
-            throw new NotImplementedException();
+            int PersonMenuChoice = MenuUserInputInt(2);
+            switch (PersonMenuChoice)
+            {
+                case 0:
+                    StringBuilder sb = new StringBuilder();
+                    ListAllPersonsScreen(sb, personRepository);
+                    break;
+                case 1:
+                    EditPersonScreen();
+                    break;
+                case 2:
+                    CombineGenotypesScreen(SelectedPerson, personRepository);
+                    break;
+                default:
+                    throw new Exception("Invalid Menu input");
+            }
+        }
+
+        private static void CombineGenotypesScreen(Person selectedPerson, PersonRepository personRepository)//TO DO: Change Seed Data to be compatible with added Genotypes
+        {
+            selectedPerson.Genotypes.ListGenotypes();
+            Console.WriteLine("Please select a person to combine genotypes with:");
+            Person otherPerson = FindPersonByIndex(personRepository);
+            otherPerson.Genotypes.ListGenotypes();
         }
 
         private static void EditPersonScreen()

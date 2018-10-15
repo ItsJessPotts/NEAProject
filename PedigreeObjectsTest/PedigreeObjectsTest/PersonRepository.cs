@@ -55,15 +55,18 @@ namespace PedigreeObjects
             return Persons;
         }
 
-        //public List<Person> WritePersonToTexfile(Person person,string personFilename)//Trying to enable a name to be added
-        //{
-        //    person.ToString();
-        //    using (StreamWriter reader = new StreamWriter(personFilename))
-        //    {
-                
-        //    }
+        public void WritePersonToTexfile(Person person, string personFilename)//Trying to enable a name to be added
+        {
+            person.ToString();
+            using (StreamReader reader = new StreamReader(personFilename))
+            {
+                while (reader.EndOfStream)
+                {
+                    File.AppendAllText(personFilename, person.ToString());
+                }
+            }
 
-        //}
+        }
 
     }
 }

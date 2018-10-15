@@ -14,7 +14,7 @@ namespace PedigreeObjects
         public Phenotype Phenotype { get; set; }//is colourblind, heamophiliac, Has cystic fibrosis etc        
         public object Gametes { get; set; }// 'A, a, B, b'or ' A,b
         public GenotypeRepository Genotypes { get; set; }
-        public TraitRepository[] Traits { get; set; }// colourblindness, heamophilia, blue eyes,
+        public TraitRepository Traits { get; set; }// colourblindness, heamophilia, blue eyes,
 
         public Person(string name, Sex sex, bool living)
         {
