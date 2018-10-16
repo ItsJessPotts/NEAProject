@@ -50,21 +50,17 @@ namespace PedigreeObjects
                 throw;
             }
         }
-        public List<Person> FindPersonByIndex()
-        {
-            return Persons;
-        }
+        
 
-        public void WritePersonToTexfile(Person person, string personFilename)//Trying to enable a name to be added
+        public void WritePersonToTexfile(Person person, string personFilename)
         {
-            person.ToString();
-            using (StreamReader reader = new StreamReader(personFilename))
+            
+            using (StreamWriter writer = File.AppendText(personFilename))
             {
-                while (reader.EndOfStream)
-                {
-                    File.AppendAllText(personFilename, person.ToString());
-                }
+                writer.WriteLine(person.ToString());
+                
             }
+            
 
         }
 

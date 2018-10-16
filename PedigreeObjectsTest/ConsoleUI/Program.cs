@@ -80,7 +80,7 @@ namespace ConsoleUI
                     break;
                 case 1:
                     AddPersonScreen(personRepository, personFilename);
-
+                    geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename);
                     break;
                 case 2:
                     ListAllPersonsChoice(personRepository);
@@ -184,7 +184,7 @@ namespace ConsoleUI
 
             
         }
-        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)// Implement ability to load file into list of persons.
+        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)
         {
             var ListOfPersons = personRepository.ListPersons();
             int i = 0;
@@ -241,7 +241,7 @@ namespace ConsoleUI
         }
 
       
-        private static void PersonScreen(Person SelectedPerson, PersonRepository personRepository)//To Do: Add options for methods
+        private static void PersonScreen(Person SelectedPerson, PersonRepository personRepository)
         {
             Console.WriteLine("Name: " + SelectedPerson.Name);
             Console.WriteLine("Sex: " + SelectedPerson.Sex);
@@ -249,7 +249,7 @@ namespace ConsoleUI
             Console.WriteLine("Genotypes: " + SelectedPerson.Genotypes);
 
             Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("1) Edit Person");
+            Console.WriteLine("1) Edit Person");//TO DO
             Console.WriteLine("2) Combine Genotype with other person");
             Console.WriteLine("-----------------------------------------------------");
                         
@@ -279,10 +279,29 @@ namespace ConsoleUI
 
         private static void CombineGenotypesScreen(Person selectedPerson, PersonRepository personRepository)//TO DO: Change Seed Data to be compatible with added Genotypes
         {
-            selectedPerson.Genotypes.ListGenotypes();
+            Genotype firstSelectedPerson = GetSelectedPersonsGenotype(selectedPerson);            
             Console.WriteLine("Please select a person to combine genotypes with:");
             Person otherPerson = FindPersonByIndex(personRepository);
-            otherPerson.Genotypes.ListGenotypes();
+            Genotype otherSelectedPerson = GetSelectedPersonsGenotype(otherPerson);
+            Genotype resultingGenotype = firstSelectedPerson.CombineGenotypes(otherSelectedPerson);
+            
+        }
+
+        private static Genotype GetSelectedPersonsGenotype(Person selectedPerson)
+        {
+            GenotypeRepository selectedPersonGenotypes = selectedPerson.Genotypes;
+            var listOfSelectedPersonGenotypes = selectedPersonGenotypes.ListGenotypes();
+            int number = 0;
+            foreach (var genotype in listOfSelectedPersonGenotypes)
+            {
+                Console.Write(number + genotype.ToString());
+                number++;
+            }
+            Console.WriteLine("Please input the index of genotype you want to combine");
+            int index = Convert.ToInt32(Console.ReadLine());
+            Genotype selectedPersonGenotype = listOfSelectedPersonGenotypes[index - 1];
+            return selectedPersonGenotype;
+
         }
 
         private static void EditPersonScreen()

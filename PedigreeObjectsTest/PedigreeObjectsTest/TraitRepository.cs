@@ -51,5 +51,16 @@ namespace PedigreeObjects
                 throw;
             }
         }
+        public void WriteTraitToTexfile(Person trait, string traitFilename)//Trying to enable a name to be added
+        {
+
+            using (StreamWriter writer = File.AppendText(traitFilename))
+            {
+                writer.WriteLine(trait.ToString());
+
+            }
+
+
+        }
     }   
 }
