@@ -1,6 +1,6 @@
-John Adams,Male,true
-Eliza Hamilton,Female,true
-Samuel Adams,Male,true
-Paul Revere,Male,true
-Crispis Attucks,Male,false
-Abigail Adams,Female,true
+John Adams,Male,true,AA
+Eliza Hamilton,Female,true,Aa
+Samuel Adams,Male,true,aa
+Paul Revere,Male,true,Aa
+Crispis Attucks,Male,false,AA
+Abigail Adams,Female,true,aa

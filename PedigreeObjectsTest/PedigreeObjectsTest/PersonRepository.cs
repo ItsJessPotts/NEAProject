@@ -36,7 +36,10 @@ namespace PedigreeObjects
                             string name = item[0];
                             Sex sex = (Sex)Enum.Parse(typeof(Sex), item[1], true);
                             bool living = Convert.ToBoolean(item[2]);
-                            var person = new Person(name, sex, living); //inputSex , inputLiving
+                            Genotype genotype = (Genotype)Enum.Parse(typeof(Genotype), item[3], true);
+                            var genotypes = new GenotypeRepository();
+                            genotypes.AddGenotype(genotype);
+                            var person = new Person(name, sex, living, genotypes); //inputSex , inputLiving
                             Persons.Add(person);                                                    
                     }
                 }
