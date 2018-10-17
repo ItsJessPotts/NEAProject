@@ -52,8 +52,8 @@ namespace ConsoleUI
             var traitRepository = new TraitRepository();
             var personRepository = new PersonRepository();
 
-            string personFilename = "PersonsSeedData.txt";
-            string traitFilename = "TraitSeedData.txt";
+            string personFilename = @"C:\Users\potts\Desktop\PersonsSeedData.txt";
+            string traitFilename = @"C:\Users\potts\Desktop\TraitSeedData.txt";
 
             personRepository.LoadFile(personFilename);
             traitRepository.LoadFile(traitFilename);
@@ -250,8 +250,15 @@ namespace ConsoleUI
             Console.WriteLine("Name: " + SelectedPerson.Name);
             Console.WriteLine("Sex: " + SelectedPerson.Sex);
             Console.WriteLine("Traits: " + SelectedPerson.Traits);
-            Console.WriteLine("Genotypes: " + SelectedPerson.Genotypes);
 
+            GenotypeRepository selectedPersonGenotypes = SelectedPerson.Genotypes;
+            var listOfSelectedPersonGenotypes = selectedPersonGenotypes.ListGenotypes();
+            string outputGenotypes = "";
+            foreach (var genotype in listOfSelectedPersonGenotypes)
+            {
+                outputGenotypes = outputGenotypes + genotype.ToString() + ',';               
+            }
+            Console.WriteLine("Genotypes: " + outputGenotypes);
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1) Edit Person");//TO DO
             Console.WriteLine("2) Combine Genotype with other person");
@@ -274,20 +281,23 @@ namespace ConsoleUI
                     EditPersonScreen();
                     break;
                 case 2:
-                    CombineGenotypesScreen(SelectedPerson, personRepository);
+                    Genotype resultingGenotype = CombineGenotypesScreen(SelectedPerson, personRepository);
+                    Console.WriteLine(resultingGenotype.ToString()+" is the most likely genotype combination in offspring between these two persons");
+                    Console.ReadKey();
                     break;
                 default:
                     throw new Exception("Invalid Menu input");
             }
         }
 
-        private static void CombineGenotypesScreen(Person selectedPerson, PersonRepository personRepository)//TO DO: Change Seed Data to be compatible with added Genotypes
+        private static Genotype CombineGenotypesScreen(Person selectedPerson, PersonRepository personRepository)//TO DO: Change Seed Data to be compatible with added Genotypes
         {
             Genotype firstSelectedPerson = GetSelectedPersonsGenotype(selectedPerson);            
-            Console.WriteLine("Please select a person to combine genotypes with:");
+            Console.WriteLine("Please select a person to combine genotypes with:"); //Ensure only males and females are compatible 
             Person otherPerson = FindPersonByIndex(personRepository);
             Genotype otherSelectedPerson = GetSelectedPersonsGenotype(otherPerson);
             Genotype resultingGenotype = firstSelectedPerson.CombineGenotypes(otherSelectedPerson);
+            return resultingGenotype;
             
         }
 
@@ -295,10 +305,10 @@ namespace ConsoleUI
         {
             GenotypeRepository selectedPersonGenotypes = selectedPerson.Genotypes;
             var listOfSelectedPersonGenotypes = selectedPersonGenotypes.ListGenotypes();
-            int number = 0;
+            int number = 1;
             foreach (var genotype in listOfSelectedPersonGenotypes)
             {
-                Console.Write(number + genotype.ToString());
+                Console.WriteLine(number + " "+ genotype.ToString());
                 number++;
             }
             Console.WriteLine("Please input the index of genotype you want to combine");

@@ -8,6 +8,6 @@ namespace PedigreeObjects
 {
     public enum Dominance
     {
-        Dominant, Recessive 
+        Dominant, Recessive, Unknown 
     }
 }

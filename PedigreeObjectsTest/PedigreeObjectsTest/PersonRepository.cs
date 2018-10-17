@@ -32,15 +32,37 @@ namespace PedigreeObjects
                     {
                         string line = reader.ReadLine();
                                                 
-                            var item = line.Split(',');
-                            string name = item[0];
-                            Sex sex = (Sex)Enum.Parse(typeof(Sex), item[1], true);
-                            bool living = Convert.ToBoolean(item[2]);
-                            Genotype genotype = (Genotype)Enum.Parse(typeof(Genotype), item[3], true);
-                            var genotypes = new GenotypeRepository();
-                            genotypes.AddGenotype(genotype);
-                            var person = new Person(name, sex, living, genotypes); //inputSex , inputLiving
-                            Persons.Add(person);                                                    
+                         var item = line.Split(',');
+                         string name = item[0];
+                         Sex sex = (Sex)Enum.Parse(typeof(Sex), item[1], true);
+                         bool living = Convert.ToBoolean(item[2]);
+                        var rng = new PredictableRandomNumberGenerator();
+                        var genotypeLetters = item[3].Split(' ');
+                        Dominance allele1 = Dominance.Unknown;
+                        Dominance allele2 = Dominance.Unknown;
+                        if (genotypeLetters[0].ToString().ToUpper() == genotypeLetters[0].ToString())
+                        {
+                            allele1 = Dominance.Dominant;
+                        }
+                        else
+                        {
+                            allele1 = Dominance.Recessive;
+                        }
+                        if (genotypeLetters[1].ToString().ToUpper() == genotypeLetters[1].ToString())
+                        {
+                            allele2 = Dominance.Dominant;
+                        }
+                        else
+                        {
+                            allele2 = Dominance.Recessive;
+                        }
+                        char[] alleleName = genotypeLetters[0].ToCharArray();
+                        Genotype genotype = new Genotype(alleleName[0], allele1, allele2,rng);   //TO DO: FIX ME!!
+
+                        var genotypes = new GenotypeRepository();
+                        genotypes.AddGenotype(genotype);
+                        var person = new Person(name, sex, living, genotypes); //inputSex , inputLiving
+                        Persons.Add(person);                                                    
                     }
                 }
 
