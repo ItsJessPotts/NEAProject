@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PedigreeObjects
+namespace PedigreeObjects //TO DO: write a ToString
 {
     //The pairs of alelles that express a specific phenotype: Aa Or Bb or Cc
     public class Genotype
     {
+        public int GenotypeID { get; set; }
         private IRandomNumberGenerator RNG { get; set; }
-        private char AlleleName { get; set; } //eg C for colourblindness or A for asthma
+        public string AlleleName { get; set; } //eg C for colourblindness or A for asthma //TO DO:turn back to char
         public Dominance Allele1 { get; set; } //If dominant- inputted here
         public Dominance Allele2 { get; set; }
 
-        public Genotype(char alleleName, Dominance allele1, Dominance allele2, IRandomNumberGenerator rng)
+        public Genotype(string alleleName, Dominance allele1, Dominance allele2)
         {
             AlleleName = alleleName;
             if (allele1 == Dominance.Recessive && allele2 == Dominance.Dominant)
@@ -27,12 +28,16 @@ namespace PedigreeObjects
                 Allele1 = allele1;
                 Allele2 = allele2;
             }
-            RNG = rng;
+            
+        }
+        public Genotype()
+        {
+
         }
 
         public override string ToString()
         {
-            return AlleleAsString(Allele1) + AlleleAsString(Allele2);
+            return "Genotype:" + AlleleAsString(Allele1) + AlleleAsString(Allele2);
         }
         private string AlleleAsString(Dominance allele)
         {
@@ -73,7 +78,7 @@ namespace PedigreeObjects
                     throw new Exception("Invalid Choice");
             }
             //Create Genotype given the two alelles
-            var gt = new Genotype(this.AlleleName, resultingAllele1, resultingAllele2,RNG);
+            var gt = new Genotype(this.AlleleName, resultingAllele1, resultingAllele2);
             return gt;
         }
 

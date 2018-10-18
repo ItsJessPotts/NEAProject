@@ -4,23 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PedigreeObjects
+namespace PedigreeObjects//TO DO: write a ToString
 {
     public class Phenotype//NEED TO: Test Phenotypic Ratio or implement CoDominance
     {
-        
-        public string[] Traits { get; set; } //Array of traits possessed by the person
-        public string[] Environment { get; set; } //Array of environmental influences that could be effecting the phenotype
-        public Genotype[] TraitGenotypes { get; set; } // The actual genotypes possessed: Aa, BB, Cc, Dd, EE
+        public int PhenotypeID { get; set; }
+        public List<Trait> Traits { get; set; } //Array of traits possessed by the person
+        public string Environment { get; set; } //Array of environmental influences that could be effecting the phenotype
+        public List<Genotype> TraitGenotypes { get; set; } // The actual genotypes possessed: Aa, BB, Cc, Dd, EE
+        public string PhenotypeName { get; set; } //name of phenotype
 
-        public Phenotype( string[] traits, string[] environment, Genotype[] traitGenotypes)
+        public Phenotype( string phenotypeName)
         {
+                                    
+            PhenotypeName = phenotypeName;
             
-            string[] Traits = traits;
-            string[] Environment = environment;
-            Genotype[] TraitGenotypes = traitGenotypes;
         }
+        public Phenotype()
+        {
 
+        }
+        public override string ToString()
+        {
+            string summary = "Phenotype: "+ PhenotypeName;
+            return summary;
+        }
         public string CalculatePhenotypicRatio(Genotype parent1, Genotype parent2, int NumberOfPhenotypeOptions) //Aa Bb
         {
             int isHeterozygous = 0;

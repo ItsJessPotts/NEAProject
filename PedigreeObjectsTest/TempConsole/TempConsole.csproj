@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{11FCA152-FEFC-4765-B20F-E812212D8A25}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>PedigreeObjects</RootNamespace>
-    <AssemblyName>PedigreeObjects</AssemblyName>
+    <ProjectGuid>{19375FD1-35A0-4969-B440-FB08FA1F5EF9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TempConsole</RootNamespace>
+    <AssemblyName>TempConsole</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,9 +32,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -52,30 +50,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dominance.cs" />
-    <Compile Include="DropCreateDatabaseIfModelChanges.cs" />
-    <Compile Include="GeneticCounsellorDbContext.cs" />
-    <Compile Include="GeneticCounsellorDbInitialiser.cs" />
-    <Compile Include="Genotype.cs" />
-    <Compile Include="IRandomNumberGenerator.cs" />
-    <Compile Include="Person.cs" />
-    <Compile Include="PersonRepository.cs" />
-    <Compile Include="Phenotype.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sex.cs" />
-    <Compile Include="GenotypeRepository.cs" />
-    <Compile Include="Trait.cs" />
-    <Compile Include="TraitRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PersonsSeedData.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\..\HardyWeinbergTest\HardyWeinbergTest\HardyWeinbergTest.csproj">
+      <Project>{e64f7bdc-1b96-44fa-9f4e-911854d33e5b}</Project>
+      <Name>HardyWeinbergTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PedigreeObjectsTest\PedigreeObjects.csproj">
+      <Project>{11fca152-fefc-4765-b20f-e812212d8a25}</Project>
+      <Name>PedigreeObjects</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

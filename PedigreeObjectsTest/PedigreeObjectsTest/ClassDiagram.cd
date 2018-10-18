@@ -3,7 +3,7 @@
   <Class Name="PedigreeObjects.Person">
     <Position X="3.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAQBAAEoEAAAAQAAAAAAAAAAAQAEAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAQBAAEgEAAAAQAAAAAAAAAAAQAEAAAAAA=</HashCode>
       <FileName>Person.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -23,7 +23,7 @@
   <Class Name="PedigreeObjects.Genotype">
     <Position X="6.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>RAAAAAAAAAAAAAAEAAAAAAASAAAAQgAAAAAAAAAAEAA=</HashCode>
+      <HashCode>RAAAAAAAAAAAAAQEAAAAAAASAAAAQgAAAAAAAAAAEAA=</HashCode>
       <FileName>Genotype.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -48,7 +48,7 @@
   <Enum Name="PedigreeObjects.Dominance" Collapsed="true">
     <Position X="10.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAEAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Dominance.cs</FileName>
     </TypeIdentifier>
   </Enum>

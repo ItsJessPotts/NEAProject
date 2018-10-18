@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace PedigreeObjects
 {
-    public class Trait
+    public class Trait //TO DO: write a ToString
     {
-        private string TraitName { get; set; }// Colourblindness
-        private char AlleleName { get; set; }//eg C for colourblindness or A for asthma
-        private Dominance InheritanceType { get; set; }// Dominant/ Recessive/ Autosomal/ Dihybrid/ Epistasis   // Maybe make it an enum
+        public int TraitID { get; set; }
+        public string TraitName { get; set; }// Colourblindness
+        public char AlleleName { get; set; }//eg C for colourblindness or A for asthma
+        public Dominance InheritanceType { get; set; }// Dominant/ Recessive/ Autosomal/ Dihybrid/ Epistasis   // Maybe make it an enum
 
         public Trait(string traitName, char alleleName, Dominance inheritanceType)
         {
@@ -18,10 +19,15 @@ namespace PedigreeObjects
             this.AlleleName = alleleName;
             this.InheritanceType = inheritanceType;
         }
+        public Trait()
+        {
+
+        }
+     
 
         public override string ToString()
         {
-            string summary = TraitName + " " + InheritanceType.ToString();
+            string summary = "Trait: " + TraitName + " " + InheritanceType.ToString();
             return summary;
         }
 
