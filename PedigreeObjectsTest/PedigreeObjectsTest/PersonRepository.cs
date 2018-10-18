@@ -82,8 +82,7 @@ namespace PedigreeObjects
             
             using (StreamWriter writer = File.AppendText(personFilename))
             {
-                writer.WriteLine(person.ToString());
-                
+                writer.WriteLine(person.ToString());                
             }
             
 

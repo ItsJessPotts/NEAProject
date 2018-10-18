@@ -111,16 +111,18 @@ namespace PedigreeObjectsTests
         [TestMethod]//TO DO: Test Person Functions
         public void TestPersonToString()
         {
-            var j = new Person("Jess Potts", Sex.Female, true);
+            var gp = new GenotypeRepository();
+            var j = new Person("Jess Potts", Sex.Female, true,gp);
             string jess = j.ToString();
             Assert.AreEqual("Jess Potts Female", jess);
         }
         [TestMethod]
         public void TestAddPerson()
         {
-            var j = new Person("Jess Potts", Sex.Female, true);
-            var e = new Person("Erica Korner", Sex.Female, true);
-            var p = new Person("paul Korner", Sex.Female, true);
+            var gp = new GenotypeRepository();
+            var j = new Person("Jess Potts", Sex.Female, true,gp);
+            var e = new Person("Erica Korner", Sex.Female, true,gp);
+            var p = new Person("paul Korner", Sex.Female, true,gp);
             var rep = new PersonRepository();
             rep.AddPerson(j);
             rep.AddPerson(e);
@@ -133,9 +135,10 @@ namespace PedigreeObjectsTests
         [TestMethod]
         public void TestReturnPerson()
         {
-            var j = new Person("Jess Potts", Sex.Female, true);
-            var e = new Person("Erica Korner", Sex.Female, true);
-            var p = new Person("Paul Korner", Sex.Female, true);
+            var gp = new GenotypeRepository();
+            var j = new Person("Jess Potts", Sex.Female, true,gp);
+            var e = new Person("Erica Korner", Sex.Female, true,gp);
+            var p = new Person("Paul Korner", Sex.Female, true,gp);
             var rep = new PersonRepository();
             rep.AddPerson(j);
             rep.AddPerson(e);
@@ -169,6 +172,9 @@ namespace PedigreeObjectsTests
         [TestMethod]
         public void TestLoadFile()
         {
+            var rng = new PredictableRandomNumberGenerator();
+            var gp = new GenotypeRepository();
+            var g = new Genotype('A', Dominance.Dominant, Dominance.Recessive, rng);
             var myPersonRepository = new PersonRepository();
             string[] records = new string[1000];
             myPersonRepository.LoadFile("PersonsSeedData.txt");
@@ -176,9 +182,9 @@ namespace PedigreeObjectsTests
             var ListofPersons = new List<Person>();
             ListofPersons = myPersonRepository.ListPersons();
 
-            var TestPerson = new Person("Abigail Adams",Sex.Female, true);
+            var TestPerson = new Person("Abigail Adams",Sex.Female, true,gp);
 
-            Assert.AreEqual("Abigail Adams Female", ListofPersons[5].ToString());
+            Assert.AreEqual("Abigail Adams Female A a", ListofPersons[5].ToString());
         }
 
 

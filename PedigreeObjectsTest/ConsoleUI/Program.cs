@@ -179,7 +179,7 @@ namespace ConsoleUI
             bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
             var genotypes = new GenotypeRepository();
             string inputtedGenotype = Console.ReadLine();
-            Genotype inputGenotype = (Genotype)Enum.Parse(typeof(Genotype), inputtedGenotype, true);
+            Genotype inputGenotype = (Genotype)Enum.Parse(typeof(Genotype), inputtedGenotype, true); //Not an enum; but an object... figure out how to convert to object...
             genotypes.AddGenotype(inputGenotype);
 
             var person = new Person(inputName,inputSex,inputLiving,genotypes); 

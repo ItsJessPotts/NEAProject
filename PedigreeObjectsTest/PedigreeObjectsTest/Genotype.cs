@@ -77,12 +77,18 @@ namespace PedigreeObjects
             return gt;
         }
 
+
         // THESE METHODS BELOW MAY NOT BE SUITED TO THIS CLASS..
 
         public int CalculateGenotypicRatio(Genotype gt)
         {
             return 0;
-        }        
+        } 
+        
+        public GenotypeRepository CalculateParentalGenotypes()
+        {
+            return null;
+        }
         
 
     }
