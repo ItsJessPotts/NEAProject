@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PedigreeObjects//TO DO: write a ToString
+namespace PedigreeObjects
 {
     public class Phenotype//NEED TO: Test Phenotypic Ratio or implement CoDominance
     {

@@ -12,34 +12,53 @@ namespace PedigreeObjects
         protected override void Seed(GeneticCounsellorDbContext context)
         {
             base.Seed(context);
-            var JA = new Person("John Adams", Sex.Male, true); 
-            context.Persons.Add(JA); //Repeat with other seed data
-
+            var ja = new Person("John Adams", Sex.Male, true); 
+            context.Persons.Add(ja); //Repeat with other seed data
+            var ea = new Person("Eliza Hamilton", Sex.Female, true);
+            context.Persons.Add(ea);
+            var sa = new Person("Samuel Adams", Sex.Male, true);
+            context.Persons.Add(sa);
+            var pr = new Person("Paul Revere", Sex.Male, true);
+            context.Persons.Add(pr);
+            var ca = new Person("Crispus Attucks", Sex.Male, false);
+            context.Persons.Add(ca);
+            var aa = new Person("Abigail Adams",Sex.Female,true);
+            context.Persons.Add(aa);
             context.SaveChanges();
             
 
-            var AA = new Genotype("A",Dominance.Dominant,Dominance.Recessive);
-            context.Genotypes.Add(AA);
+            var aDom = new Genotype('A',Dominance.Dominant,Dominance.Dominant);
+            context.Genotypes.Add(aDom);
+            var Aa = new Genotype('A', Dominance.Dominant, Dominance.Recessive);
+            context.Genotypes.Add(Aa);
+            var aRec = new Genotype('a', Dominance.Recessive, Dominance.Recessive);
+            context.Genotypes.Add(aRec);
             context.SaveChanges();
 
             var c = new Trait("Colourblindness", 'c', Dominance.Recessive);
             context.Traits.Add(c);
+            var f = new Trait("Cystic Fibrosis", 'f', Dominance.Recessive);
+            context.Traits.Add(f);
+            var p = new Trait("haemophilia", 'p', Dominance.Recessive);
+            context.Traits.Add(p);
+            var H = new Trait("Huntington's Disease", 'H', Dominance.Dominant);
+            context.Traits.Add(H);
+            var M = new Trait("Marfan's Syndrom", 'M', Dominance.Dominant);
+            context.Traits.Add(M);
+            var T = new Trait("Tuberous Sclerosis", 'T', Dominance.Dominant);
+            context.Traits.Add(T);
             context.SaveChanges();
 
             var cb = new Phenotype("Colourblind");
             context.Phenotypes.Add(cb);
             context.SaveChanges();
 
-            JA.Phenotype = cb;
+            ja.Phenotype = cb;
             context.SaveChanges();
 
         }
-            //        John Adams, Male,true, A A
-            //  Eliza Hamilton,Female,true,A a
-            //Samuel Adams, Male,true, a a
-            //  Paul Revere,Male,true,A a
-            //Crispis Attucks, Male,false, A A
-            //  Abigail Adams,Female,true,a a
-
+            
+            
+         
     }
 }

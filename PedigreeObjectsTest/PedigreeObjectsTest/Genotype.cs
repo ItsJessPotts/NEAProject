@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PedigreeObjects //TO DO: write a ToString
+namespace PedigreeObjects 
 {
     //The pairs of alelles that express a specific phenotype: Aa Or Bb or Cc
     public class Genotype
     {
         public int GenotypeID { get; set; }
         private IRandomNumberGenerator RNG { get; set; }
-        public string AlleleName { get; set; } //eg C for colourblindness or A for asthma //TO DO:turn back to char
+        public char AlleleName { get; set; } //eg C for colourblindness or A for asthma //TO DO:turn back to char
         public Dominance Allele1 { get; set; } //If dominant- inputted here
         public Dominance Allele2 { get; set; }
 
-        public Genotype(string alleleName, Dominance allele1, Dominance allele2)
+        public Genotype(char alleleName, Dominance allele1, Dominance allele2)
         {
             AlleleName = alleleName;
             if (allele1 == Dominance.Recessive && allele2 == Dominance.Dominant)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PedigreeObjects
 {
-    public class Trait //TO DO: write a ToString
+    public class Trait 
     {
         public int TraitID { get; set; }
         public string TraitName { get; set; }// Colourblindness
