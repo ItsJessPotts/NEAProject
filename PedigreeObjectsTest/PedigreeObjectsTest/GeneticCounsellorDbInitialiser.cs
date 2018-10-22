@@ -51,6 +51,16 @@ namespace PedigreeObjects
 
             var cb = new Phenotype("Colourblind");
             context.Phenotypes.Add(cb);
+            var cf = new Phenotype("Cystic Fibrosis");
+            context.Phenotypes.Add(cf);
+            var hp = new Phenotype("Heamophiliac");
+            context.Phenotypes.Add(hp);
+            var hd = new Phenotype("Huntingtons");
+            context.Phenotypes.Add(hd);
+            var ms = new Phenotype("Marfans");
+            context.Phenotypes.Add(ms);
+            var ts = new Phenotype("Tuberous Sclerosis");
+            context.Phenotypes.Add(ts);
             context.SaveChanges();
 
             ja.Phenotype = cb;
