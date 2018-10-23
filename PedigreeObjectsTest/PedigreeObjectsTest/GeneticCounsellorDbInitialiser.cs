@@ -64,6 +64,7 @@ namespace PedigreeObjects
             context.SaveChanges();
 
             ja.Phenotype = cb;
+            ea.Phenotype = cf;
             context.SaveChanges();
 
         }

@@ -8,7 +8,8 @@ namespace PedigreeObjects
 {
     public class Phenotype//NEED TO: Test Phenotypic Ratio or implement CoDominance
     {
-        public int PhenotypeID { get; set; }
+        public int? PhenotypeID { get; set; }
+        
         public List<Trait> Traits { get; set; } //Array of traits possessed by the person
         public string Environment { get; set; } //Array of environmental influences that could be effecting the phenotype
         public List<Genotype> TraitGenotypes { get; set; } // The actual genotypes possessed: Aa, BB, Cc, Dd, EE
