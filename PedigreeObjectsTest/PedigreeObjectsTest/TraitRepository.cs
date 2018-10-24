@@ -14,6 +14,19 @@ namespace PedigreeObjects
         public void AddTrait(Trait trait)
         {
             Traits.Add(trait);
+            db.Trait.InsertOnSubmit(trait);
+            try
+            {
+                db.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Make some adjustments.
+                // ...
+                // Try again.
+                db.SubmitChanges();
+            }
         }
         public List<Trait> ListTraits()
         {
@@ -51,16 +64,6 @@ namespace PedigreeObjects
                 throw;
             }
         }
-        public void WriteTraitToTexfile(Person trait, string traitFilename)//Trying to enable a name to be added
-        {
-
-            using (StreamWriter writer = File.AppendText(traitFilename))
-            {
-                writer.WriteLine(trait.ToString());
-
-            }
-
-
-        }
+        
     }   
 }

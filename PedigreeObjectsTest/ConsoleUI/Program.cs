@@ -55,8 +55,8 @@ namespace ConsoleUI
             string personFilename = @"C:\Users\potts\Desktop\PersonsSeedData.txt";
             string traitFilename = @"C:\Users\potts\Desktop\TraitSeedData.txt";
 
-            personRepository.LoadFile(personFilename);
-            traitRepository.LoadFile(traitFilename);
+            //personRepository.LoadFile(personFilename);
+            //traitRepository.LoadFile(traitFilename);
 
             geneticCounsellorScreen(traitRepository, personRepository, personFilename, traitFilename);
                                                         
@@ -79,7 +79,7 @@ namespace ConsoleUI
                     MainMenuScreen();
                     break;
                 case 1:
-                    AddPersonScreen(personRepository, personFilename);
+                    AddPersonScreen();
                     geneticCounsellorScreen(traitRepository, personRepository, personFilename, traitFilename);
                     break;
                 case 2:
@@ -166,7 +166,7 @@ namespace ConsoleUI
 
         }
         
-        private static void AddPersonScreen(PersonRepository personRepository,string personFilename)
+        private static void AddPersonScreen()
         {
             
             Console.WriteLine("Name (first and last): ");
@@ -182,9 +182,9 @@ namespace ConsoleUI
             Genotype inputGenotype = (Genotype)Enum.Parse(typeof(Genotype), inputtedGenotype, true); //Not an enum; but an object... figure out how to convert to object...
             genotypes.AddGenotype(inputGenotype);
 
-            var person = new Person(inputName,inputSex,inputLiving,genotypes); 
-            personRepository.AddPerson(person);
-            personRepository.WritePersonToTexfile(person,personFilename);
+            //var person = new Person(inputName,inputSex,inputLiving,genotypes); 
+            //personRepository.AddPerson(person);
+            //personRepository.WritePersonToTexfile(person,personFilename);
 
             
         }
@@ -251,7 +251,7 @@ namespace ConsoleUI
             Console.WriteLine("Sex: " + SelectedPerson.Sex);
             Console.WriteLine("Traits: " + SelectedPerson.Traits);
 
-            GenotypeRepository selectedPersonGenotypes = SelectedPerson.Genotypes;
+            GenotypeRepository selectedPersonGenotypes = SelectedPerson;
             var listOfSelectedPersonGenotypes = selectedPersonGenotypes.ListGenotypes();
             string outputGenotypes = "";
             foreach (var genotype in listOfSelectedPersonGenotypes)

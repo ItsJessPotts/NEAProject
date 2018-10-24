@@ -60,6 +60,7 @@
     <Compile Include="Person.cs" />
     <Compile Include="PersonRepository.cs" />
     <Compile Include="Phenotype.cs" />
+    <Compile Include="PhenotypeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sex.cs" />
     <Compile Include="GenotypeRepository.cs" />

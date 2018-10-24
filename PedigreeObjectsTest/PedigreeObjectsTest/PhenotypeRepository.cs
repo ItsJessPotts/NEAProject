@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace PedigreeObjects
 {
-    public class GenotypeRepository //Referred to as traits on the user interface
-                                    //Stored in Repos as Homozygous
+    public class PhenotypeRepository
     {
-        private List<Genotype> Genotypes = new List<Genotype>();
+        private List<Phenotype> Phenotypes = new List<Phenotype>();
 
-        public void AddGenotype(Genotype genotype)
+        public void AddPhenotype(Phenotype phenotype)
         {
-            Genotypes.Add(genotype);
-            db.Genotypes.InsertOnSubmit(genotype);
+            Phenotypes.Add(phenotype);
+            db.Phenotype.InsertOnSubmit();
             try
             {
                 db.SubmitChanges();
@@ -28,9 +27,9 @@ namespace PedigreeObjects
                 db.SubmitChanges();
             }
         }
-        public List<Genotype> ListGenotypes()
+        public List<Phenotype> ListPhenotypes()
         {
-            return Genotypes;
+            return Phenotypes;
         }
     }
 }

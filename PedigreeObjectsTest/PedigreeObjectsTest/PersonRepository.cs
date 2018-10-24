@@ -14,6 +14,19 @@ namespace PedigreeObjects
         public void AddPerson(Person person)
         {
             Persons.Add(person);
+            db.Persons.InsertOnSubmit(person);
+            try
+            {
+                db.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Make some adjustments.
+                // ...
+                // Try again.
+                db.SubmitChanges();
+            }
         }
         public List<Person> ListPersons()
         {
@@ -77,16 +90,6 @@ namespace PedigreeObjects
         //}
         
 
-        public void WritePersonToTexfile(Person person, string personFilename)
-        {
-            
-            using (StreamWriter writer = File.AppendText(personFilename))
-            {
-                writer.WriteLine(person.ToString());                
-            }
-            
-
-        }
-
+        
     }
 }
