@@ -9,28 +9,46 @@ namespace PedigreeObjects
     public class GenotypeRepository //Referred to as traits on the user interface
                                     //Stored in Repos as Homozygous
     {
-        private List<Genotype> Genotypes = new List<Genotype>();
+        
+        private GeneticCounsellorDbContext Db { get; set; }
 
-        public void AddGenotype(Genotype genotype)
+        public GenotypeRepository(GeneticCounsellorDbContext db)
         {
-            Genotypes.Add(genotype);
-            db.Genotypes.InsertOnSubmit(genotype);
-            try
+            Db = db;
+        }
+        
+
+
+        public Genotype AddGenotype(char alleleName, Dominance allele1, Dominance allele2)
+        {
+            var g = new Genotype();
+            g.AlleleName = alleleName;
+            if (allele1 == Dominance.Recessive && allele2 == Dominance.Dominant)
             {
-                db.SubmitChanges();
+                g.Allele1 = allele2;
+                g.Allele2 = allele1;
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine(e);
-                // Make some adjustments.
-                // ...
-                // Try again.
-                db.SubmitChanges();
+                g.Allele1 = allele1;
+                g.Allele2 = allele2;
             }
+            
+            Db.Genotypes.Add(g);
+            Db.SaveChanges();
+            return g;
         }
         public List<Genotype> ListGenotypes()
         {
-            return Genotypes;
+            return Db.Genotypes.ToList();
+        }
+        public List<Genotype> FindGenotypeByAlleleName(char AlelleName) //Find all Genotypes relating to AlleleName eg show all genotypes for C
+        {
+            IQueryable<Genotype> genotypeQuery =
+                from genotype in Db.Genotypes
+                where genotype.AlleleName == AlelleName
+                select genotype;
+                return genotypeQuery.ToList();
         }
     }
 }

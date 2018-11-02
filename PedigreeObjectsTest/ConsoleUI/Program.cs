@@ -9,7 +9,8 @@ namespace ConsoleUI
     {       
         static void Main()
         {
-            MainMenuScreen();                                  
+            MainMenuScreen();
+            
         }
 
         private static void MainMenuScreen()
@@ -46,23 +47,23 @@ namespace ConsoleUI
 
         private static void GeneticCounsellor()
         {
-            
-            
-             
-            var traitRepository = new TraitRepository();
-            var personRepository = new PersonRepository();
+
+
+            var Db = new GeneticCounsellorDbContext("Jess1");
+            var traitRepository = new TraitRepository(Db);
+            var personRepository = new PersonRepository(Db);
+            var genotypeRepository = new GenotypeRepository(Db);
 
             string personFilename = @"C:\Users\potts\Desktop\PersonsSeedData.txt";
             string traitFilename = @"C:\Users\potts\Desktop\TraitSeedData.txt";
 
-            //personRepository.LoadFile(personFilename);
-            //traitRepository.LoadFile(traitFilename);
+           
 
-            geneticCounsellorScreen(traitRepository, personRepository, personFilename, traitFilename);
+            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename);
                                                         
         }
 
-        private static void geneticCounsellorScreen( TraitRepository traitRepository, PersonRepository personRepository, string personFilename, string traitFilename)
+        private static void geneticCounsellorScreen( GenotypeRepository genotypeRepository,TraitRepository traitRepository, PersonRepository personRepository, string personFilename, string traitFilename)
         {
             Console.WriteLine("____________________________________________________");
             Console.WriteLine("1) Add Person");
@@ -79,8 +80,8 @@ namespace ConsoleUI
                     MainMenuScreen();
                     break;
                 case 1:
-                    AddPersonScreen();
-                    geneticCounsellorScreen(traitRepository, personRepository, personFilename, traitFilename);
+                    AddPersonScreen(personRepository, genotypeRepository);
+                    geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename);
                     break;
                 case 2:
                     ListAllPersonsChoice(personRepository);
@@ -89,7 +90,7 @@ namespace ConsoleUI
                     switch (ListAllPersonsScreenOption)
                     {
                         case 0:
-                            geneticCounsellorScreen(traitRepository, personRepository, personFilename, traitFilename);
+                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename);
                             break;
                         case 1:
                             Person SelectedPerson = FindPersonByIndex(personRepository);
@@ -166,7 +167,7 @@ namespace ConsoleUI
 
         }
         
-        private static void AddPersonScreen()
+        private static void AddPersonScreen(PersonRepository personRepository, GenotypeRepository genotypeRepository)
         {
             
             Console.WriteLine("Name (first and last): ");
@@ -176,17 +177,16 @@ namespace ConsoleUI
             Sex inputSex = (Sex)Enum.Parse(typeof(Sex),inputtedSex,true);
             Console.WriteLine("Living (true or false): ");
             string inputtedLiving = Console.ReadLine();
-            bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
-            var genotypes = new GenotypeRepository();
+            bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);           
             string inputtedGenotype = Console.ReadLine();
             Genotype inputGenotype = (Genotype)Enum.Parse(typeof(Genotype), inputtedGenotype, true); //Not an enum; but an object... figure out how to convert to object...
-            genotypes.AddGenotype(inputGenotype);
 
-            //var person = new Person(inputName,inputSex,inputLiving,genotypes); 
-            //personRepository.AddPerson(person);
-            //personRepository.WritePersonToTexfile(person,personFilename);
-
+            genotypeRepository.AddGenotype(inputGenotype);
             
+            personRepository.AddPerson(inputName, inputSex, inputLiving);
+
+
+
         }
         private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)
         {

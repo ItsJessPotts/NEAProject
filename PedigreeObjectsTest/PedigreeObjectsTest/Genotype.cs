@@ -15,26 +15,6 @@ namespace PedigreeObjects
         public Dominance Allele1 { get; set; } //If dominant- inputted here
         public Dominance Allele2 { get; set; }
 
-        public Genotype(char alleleName, Dominance allele1, Dominance allele2)
-        {
-            AlleleName = alleleName;
-            if (allele1 == Dominance.Recessive && allele2 == Dominance.Dominant)
-            {
-                Allele1 = allele2;
-                Allele2 = allele1;
-            }
-            else
-            {
-                Allele1 = allele1;
-                Allele2 = allele2;
-            }
-            
-        }
-        public Genotype()
-        {
-
-        }
-
         public override string ToString()
         {
             return "Genotype:" + AlleleAsString(Allele1) + AlleleAsString(Allele2);

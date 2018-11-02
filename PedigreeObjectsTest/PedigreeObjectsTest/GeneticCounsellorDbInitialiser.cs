@@ -12,43 +12,46 @@ namespace PedigreeObjects
         protected override void Seed(GeneticCounsellorDbContext context)
         {
             base.Seed(context);
-            var ja = new Person("John Adams", Sex.Male, true); 
+            var personRepository = new PersonRepository(context);
+            var ja = personRepository.AddPerson("John Adams", Sex.Male, true); 
             context.Persons.Add(ja); //Repeat with other seed data
-            var ea = new Person("Eliza Hamilton", Sex.Female, true);
+            var ea = personRepository.AddPerson("Eliza Hamilton", Sex.Female, true);
             context.Persons.Add(ea);
-            var sa = new Person("Samuel Adams", Sex.Male, true);
+            var sa = personRepository.AddPerson("Samuel Adams", Sex.Male, true);
             context.Persons.Add(sa);
-            var pr = new Person("Paul Revere", Sex.Male, true);
+            var pr = personRepository.AddPerson("Paul Revere", Sex.Male, true);
             context.Persons.Add(pr);
-            var ca = new Person("Crispus Attucks", Sex.Male, false);
+            var ca = personRepository.AddPerson("Crispus Attucks", Sex.Male, false);
             context.Persons.Add(ca);
-            var aa = new Person("Abigail Adams",Sex.Female,true);
+            var aa = personRepository.AddPerson("Abigail Adams",Sex.Female,true);
             context.Persons.Add(aa);
             context.SaveChanges();
-            
 
-            var aDom = new Genotype('A',Dominance.Dominant,Dominance.Dominant);
+            var genotypeRepository = new GenotypeRepository(context);
+            var aDom = genotypeRepository.AddGenotype('A',Dominance.Dominant,Dominance.Dominant);
             context.Genotypes.Add(aDom);
-            var Aa = new Genotype('A', Dominance.Dominant, Dominance.Recessive);
+            var Aa = genotypeRepository.AddGenotype('A', Dominance.Dominant, Dominance.Recessive);
             context.Genotypes.Add(Aa);
-            var aRec = new Genotype('a', Dominance.Recessive, Dominance.Recessive);
+            var aRec = genotypeRepository.AddGenotype('a', Dominance.Recessive, Dominance.Recessive);
             context.Genotypes.Add(aRec);
             context.SaveChanges();
 
-            var c = new Trait("Colourblindness", 'c', Dominance.Recessive);
+            var traitRepository = new TraitRepository(context);
+            var c = traitRepository.AddTrait("Colourblindness", 'c', Dominance.Recessive);
             context.Traits.Add(c);
-            var f = new Trait("Cystic Fibrosis", 'f', Dominance.Recessive);
+            var f = traitRepository.AddTrait("Cystic Fibrosis", 'f', Dominance.Recessive);
             context.Traits.Add(f);
-            var p = new Trait("haemophilia", 'p', Dominance.Recessive);
+            var p = traitRepository.AddTrait("haemophilia", 'p', Dominance.Recessive);
             context.Traits.Add(p);
-            var H = new Trait("Huntington's Disease", 'H', Dominance.Dominant);
+            var H = traitRepository.AddTrait("Huntington's Disease", 'H', Dominance.Dominant);
             context.Traits.Add(H);
-            var M = new Trait("Marfan's Syndrom", 'M', Dominance.Dominant);
+            var M = traitRepository.AddTrait("Marfan's Syndrom", 'M', Dominance.Dominant);
             context.Traits.Add(M);
-            var T = new Trait("Tuberous Sclerosis", 'T', Dominance.Dominant);
+            var T = traitRepository.AddTrait("Tuberous Sclerosis", 'T', Dominance.Dominant);
             context.Traits.Add(T);
             context.SaveChanges();
 
+            var phenotypeRepository = new PhenotypeRepository(context);
             var cb = new Phenotype("Colourblind");
             context.Phenotypes.Add(cb);
             var cf = new Phenotype("Cystic Fibrosis");

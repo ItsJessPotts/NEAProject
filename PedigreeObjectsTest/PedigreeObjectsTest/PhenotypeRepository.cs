@@ -8,28 +8,25 @@ namespace PedigreeObjects
 {
     public class PhenotypeRepository
     {
-        private List<Phenotype> Phenotypes = new List<Phenotype>();
+        private GeneticCounsellorDbContext Db { get; set; }
 
-        public void AddPhenotype(Phenotype phenotype)
+        public PhenotypeRepository(GeneticCounsellorDbContext db)
         {
-            Phenotypes.Add(phenotype);
-            db.Phenotype.InsertOnSubmit();
-            try
-            {
-                db.SubmitChanges();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                // Make some adjustments.
-                // ...
-                // Try again.
-                db.SubmitChanges();
-            }
+            Db = db;
         }
+
+        public Phenotype AddPhenotype(string phenotypeName)
+        {
+            var p = new Phenotype();
+            p.PhenotypeName = phenotypeName;
+            Db.Phenotypes.Add(p);
+            Db.SaveChanges();
+            return p;
+        }
+
         public List<Phenotype> ListPhenotypes()
         {
-            return Phenotypes;
+            return Db.Phenotypes.ToList();
         }
     }
 }

@@ -15,16 +15,7 @@ namespace PedigreeObjects
         public List<Genotype> TraitGenotypes { get; set; } // The actual genotypes possessed: Aa, BB, Cc, Dd, EE
         public string PhenotypeName { get; set; } //name of phenotype
 
-        public Phenotype( string phenotypeName)
-        {
-                                    
-            PhenotypeName = phenotypeName;
-            
-        }
-        public Phenotype()
-        {
-
-        }
+        
         public override string ToString()
         {
             string summary = "Phenotype: "+ PhenotypeName;

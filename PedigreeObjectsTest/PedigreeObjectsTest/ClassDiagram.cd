@@ -3,13 +3,16 @@
   <Class Name="PedigreeObjects.Person">
     <Position X="7" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAQBAAEgEAAAAQAAAAAAAAAAAQAEAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAQBAAEgEAAAIQAAAAAAAAAAAQAEAAAAAA=</HashCode>
       <FileName>Person.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Phenotype" />
       <Property Name="Genotypes" />
+      <Property Name="Phenotype" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Traits" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PedigreeObjects.Phenotype">
     <Position X="3.5" Y="1" Width="1.5" />
@@ -33,16 +36,19 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="PedigreeObjects.Trait">
-    <Position X="9" Y="1.5" Width="1.5" />
+    <Position X="10.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAIJAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>BAAAAAIJABAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Trait.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="PersonsWithTrait" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PedigreeObjects.GenotypeRepository">
     <Position X="10" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAIEAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAMAAAAAEAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>GenotypeRepository.cs</FileName>
     </TypeIdentifier>
   </Class>
