@@ -30,7 +30,7 @@ namespace PedigreeObjects
                 return AlleleName.ToString().ToLower();
             }
         }
-        public Genotype CombineGenotypes(Genotype other)
+        public Genotype CombineGenotypes(Genotype other, GenotypeRepository genotypeRepository)
         {//TO DO: CHECK THAT OTHER GENOTYPE HAS THE SAME NAME
             
             var choice = RNG.Next(0, 4);
@@ -58,7 +58,8 @@ namespace PedigreeObjects
                     throw new Exception("Invalid Choice");
             }
             //Create Genotype given the two alelles
-            var gt = new Genotype(this.AlleleName, resultingAllele1, resultingAllele2);
+            //var gt = new Genotype(this.AlleleName, resultingAllele1, resultingAllele2);
+            var gt = genotypeRepository.AddGenotype(this.AlleleName, resultingAllele1, resultingAllele2);
             return gt;
         }
 

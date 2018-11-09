@@ -21,6 +21,7 @@ namespace PedigreeObjects
             string summary = "Phenotype: "+ PhenotypeName;
             return summary;
         }
+       
         public string CalculatePhenotypicRatio(Genotype parent1, Genotype parent2, int NumberOfPhenotypeOptions) //Aa Bb
         {
             int isHeterozygous = 0;
