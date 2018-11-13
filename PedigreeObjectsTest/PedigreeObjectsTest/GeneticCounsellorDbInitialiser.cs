@@ -60,13 +60,15 @@ namespace PedigreeObjects
             var mf =CreateNewPhenotype("Marfans", context);
             var ts =CreateNewPhenotype("Tuberous Sclerosis", context);
             
-            
+                                   
             context.SaveChanges();
 
 
             ja.Phenotype = cb;
             ea.Phenotype = cf;
-            
+            sa.Phenotype = hp;
+
+
             context.SaveChanges();
 
         }
@@ -103,8 +105,10 @@ namespace PedigreeObjects
             p.Name = Name;
             p.Sex = Sex;
             p.Living = Living;
+            p.Phenotype = CreateNewPhenotype("unaffected", context);
 
             context.Persons.Add(p);
+            context.SaveChanges();
             return p;
 
         }

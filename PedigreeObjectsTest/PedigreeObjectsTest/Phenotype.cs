@@ -12,7 +12,7 @@ namespace PedigreeObjects
         
         public List<Trait> Traits { get; set; } //Array of traits possessed by the person
         public string Environment { get; set; } //Array of environmental influences that could be effecting the phenotype
-        public List<Genotype> TraitGenotypes { get; set; } // The actual genotypes possessed: Aa, BB, Cc, Dd, EE
+        public List<Genotype> TraitGenotypes { get; set; } = new List<Genotype>(); // The actual genotypes possessed: Aa, BB, Cc, Dd, EE
         public string PhenotypeName { get; set; } //name of phenotype
 
         
