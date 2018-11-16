@@ -16,7 +16,7 @@ namespace PedigreeObjects
         public virtual Phenotype Phenotype { get; set; }//is colourblind, heamophiliac, Has cystic fibrosis etc  
         public int PhenotypeID { get; set; } 
         //public object Gametes { get; set; }// 'A, a, B, b'or ' A,b        
-        public List<Trait> Traits { get; set; }// colourblindness, heamophilia, blue eyes,
+       
 
        //no constructor
        
@@ -36,7 +36,7 @@ namespace PedigreeObjects
         }
         public void AddTraitToPerson(Trait trait)
         {
-            this.Traits.Add(trait);
+            this.Phenotype.Traits.Add(trait);
         }
         
 

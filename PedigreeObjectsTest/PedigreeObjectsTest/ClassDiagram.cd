@@ -1,18 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="PedigreeObjects.Person">
-    <Position X="7" Y="1.25" Width="1.5" />
+    <Position X="7" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAQBAAEgEAAAIQAAAAAAAAAAAQAEAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAABAAEAAAAAIQAAAAAAEBACAQAEAAAAAA=</HashCode>
       <FileName>Person.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Genotypes" />
       <Property Name="Phenotype" />
     </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="Traits" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PedigreeObjects.Phenotype">
     <Position X="3.5" Y="1" Width="1.5" />
@@ -22,6 +18,7 @@
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="TraitGenotypes" />
+      <Property Name="Traits" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PedigreeObjects.Genotype">
@@ -36,13 +33,13 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="PedigreeObjects.Trait">
-    <Position X="10.5" Y="1.25" Width="1.5" />
+    <Position X="0.5" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAIJABAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>BAAAAAIJAAAAAAAEAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Trait.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="PersonsWithTrait" />
+      <Property Name="PhenotypesWithTrait" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PedigreeObjects.GenotypeRepository">

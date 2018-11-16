@@ -14,10 +14,11 @@ namespace PedigreeObjects
         public char AlleleName { get; set; } //eg C for colourblindness or A for asthma //TO DO:turn back to char
         public Dominance Allele1 { get; set; } //If dominant- inputted here
         public Dominance Allele2 { get; set; }
+        
 
         public override string ToString()
         {
-            return "Genotype:" + AlleleAsString(Allele1) + AlleleAsString(Allele2);
+            return  AlleleAsString(Allele1) + AlleleAsString(Allele2);
         }
         private string AlleleAsString(Dominance allele)
         {

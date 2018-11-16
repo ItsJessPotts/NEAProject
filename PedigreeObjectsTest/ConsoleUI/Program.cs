@@ -182,7 +182,7 @@ namespace ConsoleUI
 
             
             
-            personRepository.AddPerson(inputName, inputSex, inputLiving);
+            personRepository.AddPerson(inputName, inputSex, inputLiving, "unaffected");
 
 
 
@@ -246,14 +246,19 @@ namespace ConsoleUI
       
         private static void PersonScreen(Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository)
         {
+            
             Console.WriteLine("Name: " + SelectedPerson.Name);
             Console.WriteLine("Sex: " + SelectedPerson.Sex);
-            Console.WriteLine("Traits: " + SelectedPerson.Traits);
-
-       
-            var listOfSelectedPersonGenotypes = SelectedPerson.Phenotype.TraitGenotypes;
+            
+            string traitOutput = "";
+            foreach (var traits in SelectedPerson.Phenotype.Traits)
+            {
+                traitOutput = traitOutput + traits.ToString() + ",";
+            }
+            Console.WriteLine("Traits: " + traitOutput);
+            
             string outputGenotypes = "";
-            foreach (var genotype in listOfSelectedPersonGenotypes)
+            foreach (var genotype in SelectedPerson.Phenotype.TraitGenotypes)
             {
                 outputGenotypes = outputGenotypes + genotype.ToString() + ',';               
             }

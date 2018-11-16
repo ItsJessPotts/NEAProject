@@ -12,18 +12,25 @@ namespace PedigreeObjects
         protected override void Seed(GeneticCounsellorDbContext context)
         {
             base.Seed(context);
+
+            var cb = CreateNewPhenotype("Colourblind", context);
+            var cf = CreateNewPhenotype("Cystic Fibrosis", context);
+            var hp = CreateNewPhenotype("Heamophiliac", context);
+            var ht = CreateNewPhenotype("Huntingtons", context);
+            var mf = CreateNewPhenotype("Marfans", context);
+            var ts = CreateNewPhenotype("Tuberous Sclerosis", context);
+
+            var ja = CreateNewPerson("John Adams", Sex.Male, true, "Colourblind", context); 
             
-            var ja = CreateNewPerson("John Adams", Sex.Male, true, context); 
+            var ea = CreateNewPerson("Eliza Hamilton", Sex.Female, true, "Cystic Fibrosis", context);
             
-            var ea = CreateNewPerson("Eliza Hamilton", Sex.Female, true, context);
-            
-            var sa = CreateNewPerson("Samuel Adams", Sex.Male, true, context);
+            var sa = CreateNewPerson("Samuel Adams", Sex.Male, true, "Heamophiliac", context);
       
-            var pr = CreateNewPerson("Paul Revere", Sex.Male, true, context);
+            var pr = CreateNewPerson("Paul Revere", Sex.Male, true, "Huntingtons",context);
           
-            var ca = CreateNewPerson("Crispus Attucks", Sex.Male, false,context);
+            var ca = CreateNewPerson("Crispus Attucks", Sex.Male, false, "Marfans",context);
         
-            var aa = CreateNewPerson("Abigail Adams",Sex.Female,true,context);
+            var aa = CreateNewPerson("Abigail Adams",Sex.Female,true, "Tuberous Sclerosis", context);
             
             context.SaveChanges();
 
@@ -51,25 +58,13 @@ namespace PedigreeObjects
             
             context.SaveChanges();
 
-            
-            
-            var cb = CreateNewPhenotype("Colourblind",context);
-            var cf = CreateNewPhenotype("Cystic Fibrosis", context);
-            var hp =CreateNewPhenotype("Heamophiliac", context);
-            var ht =CreateNewPhenotype("Huntingtons", context);
-            var mf =CreateNewPhenotype("Marfans", context);
-            var ts =CreateNewPhenotype("Tuberous Sclerosis", context);
-            
-                                   
+            ja.Phenotype.Traits.Add(c);
+            ja.Phenotype.Traits.Add(f);
+            ja.Phenotype.TraitGenotypes.Add(aRec);
+            ja.Phenotype.TraitGenotypes.Add(Aa);
             context.SaveChanges();
 
 
-            ja.Phenotype = cb;
-            ea.Phenotype = cf;
-            sa.Phenotype = hp;
-
-
-            context.SaveChanges();
 
         }
         public static Phenotype CreateNewPhenotype(string PhenotypeName, GeneticCounsellorDbContext context)
@@ -99,13 +94,13 @@ namespace PedigreeObjects
             return g;
 
         }
-        public static Person CreateNewPerson(string Name, Sex Sex, bool Living, GeneticCounsellorDbContext context)
+        public static Person CreateNewPerson(string Name, Sex Sex, bool Living, string phenotypeName, GeneticCounsellorDbContext context)
         {
             var p = new Person();
             p.Name = Name;
             p.Sex = Sex;
             p.Living = Living;
-            p.Phenotype = CreateNewPhenotype("unaffected", context);
+            p.Phenotype = CreateNewPhenotype(phenotypeName, context);
 
             context.Persons.Add(p);
             context.SaveChanges();

@@ -17,12 +17,14 @@ namespace PedigreeObjects
         }
 
                
-        public Person AddPerson(string name, Sex sex, bool living)
+        public Person AddPerson(string name, Sex sex, bool living, string phenotypeName)
         {
             var p = new Person();
             p.Name = name;
             p.Sex = sex;
             p.Living = living;
+            p.Phenotype = new Phenotype();
+            p.Phenotype.PhenotypeName = phenotypeName;
 
             Db.Persons.Add(p);
             Db.SaveChanges();

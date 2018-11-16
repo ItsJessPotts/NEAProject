@@ -12,12 +12,12 @@ namespace PedigreeObjects
         public string TraitName { get; set; }// Colourblindness
         public char AlleleName { get; set; }//eg C for colourblindness or A for asthma
         public Dominance InheritanceType { get; set; }// Dominant/ Recessive/ Autosomal/ Dihybrid/ Epistasis   // Maybe make it an enum
-        public List<Person> PersonsWithTrait { get; set; } //People whom have the trait
+        public virtual List<Phenotype> PhenotypesWithTrait { get; set; } = new List<Phenotype>(); //People whom have the trait
 
         
         public override string ToString()
         {
-            string summary = "Trait: " + TraitName + " " + InheritanceType.ToString();
+            string summary =  TraitName + " " + InheritanceType.ToString();
             return summary;
         }
 
