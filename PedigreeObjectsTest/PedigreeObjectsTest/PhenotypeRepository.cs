@@ -18,7 +18,7 @@ namespace PedigreeObjects
         public Phenotype AddPhenotype(string phenotypeName)
         {
             var p = new Phenotype();
-            p.PhenotypeName = phenotypeName;
+           //p.GenotypeName
             Db.Phenotypes.Add(p);
             Db.SaveChanges();
             return p;

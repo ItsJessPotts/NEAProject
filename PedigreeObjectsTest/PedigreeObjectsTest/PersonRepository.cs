@@ -23,8 +23,10 @@ namespace PedigreeObjects
             p.Name = name;
             p.Sex = sex;
             p.Living = living;
-            p.Phenotype = new Phenotype();
-            p.Phenotype.PhenotypeName = phenotypeName;
+            var ph = new Phenotype();
+            //derived from the traits and genotypes
+            Db.Phenotypes.Add(ph);
+            p.Phenotype = ph;
 
             Db.Persons.Add(p);
             Db.SaveChanges();

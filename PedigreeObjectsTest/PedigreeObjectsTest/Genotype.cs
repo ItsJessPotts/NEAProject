@@ -9,9 +9,8 @@ namespace PedigreeObjects
     //The pairs of alelles that express a specific phenotype: Aa Or Bb or Cc
     public class Genotype
     {
-        public int GenotypeID { get; set; }
-        private IRandomNumberGenerator RNG { get; set; }
-        public char AlleleName { get; set; } //eg C for colourblindness or A for asthma //TO DO:turn back to char
+        public int GenotypeID { get; set; }        
+        public string AlleleName { get; set; } //eg C for colourblindness or A for asthma //TO DO:turn back to char
         public Dominance Allele1 { get; set; } //If dominant- inputted here
         public Dominance Allele2 { get; set; }
         
@@ -31,7 +30,7 @@ namespace PedigreeObjects
                 return AlleleName.ToString().ToLower();
             }
         }
-        public Genotype CombineGenotypes(Genotype other, GenotypeRepository genotypeRepository)
+        public Genotype CombineGenotypes(Genotype other, GenotypeRepository genotypeRepository, IRandomNumberGenerator RNG)
         {//TO DO: CHECK THAT OTHER GENOTYPE HAS THE SAME NAME
             
             var choice = RNG.Next(0, 4);

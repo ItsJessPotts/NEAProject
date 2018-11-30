@@ -13,16 +13,28 @@ namespace PedigreeObjects
         public virtual List<Trait> Traits { get; set; } = new List<Trait>(); //Array of traits possessed by the person
         public string Environment { get; set; } //Array of environmental influences that could be effecting the phenotype
         public virtual List<Genotype> TraitGenotypes { get; set; } = new List<Genotype>(); // The actual genotypes possessed: Aa, BB, Cc, Dd, EE
-        public string PhenotypeName { get; set; } //name of phenotype
+        public string PhenotypeName {
+            get {
+                return GeneratePhenotypeName();
+            }
+        } //name of phenotype
 
+        private string GeneratePhenotypeName()
+        {
+            string name = "";
+            foreach (var genotype in TraitGenotypes)
+            {
+                name = name + genotype.AlleleName;
+            }
+            return name;
+        }
 
-        
         public override string ToString()
         {
-            string summary = "Phenotype: "+ PhenotypeName;
+            string summary = "Phenotype: " + PhenotypeName;
             return summary;
         }
-       
+
         public string CalculatePhenotypicRatio(Genotype parent1, Genotype parent2, int NumberOfPhenotypeOptions) //Aa Bb
         {
             int isHeterozygous = 0;
@@ -35,7 +47,7 @@ namespace PedigreeObjects
 
             foreach (int option in choice)
             {
-                
+
                 switch (option)
                 {
                     case 0:
@@ -63,7 +75,7 @@ namespace PedigreeObjects
                     default:
                         throw new Exception("Invalid Choice");
                 }
-                               
+
             }
             if (NumberOfPhenotypeOptions == 2) //normal monohyprid cross= has Trait/doesn't
             {
@@ -73,12 +85,12 @@ namespace PedigreeObjects
             if (NumberOfPhenotypeOptions == 3)//CoDominant = has trait/doesn't/mixed
             {
                 var gcd = GCD(GCD(4 - isRecessive, isRecessive), isHeterozygous); ;
-                formattedRatio = string.Format("{0}:{1}:{2}",(isRecessive/gcd).ToString(), (4 - isRecessive / gcd).ToString(),(isHeterozygous/gcd).ToString());//not working
+                formattedRatio = string.Format("{0}:{1}:{2}", (isRecessive / gcd).ToString(), (4 - isRecessive / gcd).ToString(), (isHeterozygous / gcd).ToString());//not working
             }
             return formattedRatio;
         }
-            
-                                           
+
+
         public int GCD(int a, int b)
         {
             while (a != 0 && b != 0)

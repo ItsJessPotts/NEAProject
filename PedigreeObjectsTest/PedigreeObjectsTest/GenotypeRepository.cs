@@ -19,7 +19,7 @@ namespace PedigreeObjects
         
 
 
-        public Genotype AddGenotype(char alleleName, Dominance allele1, Dominance allele2)
+        public Genotype AddGenotype(string alleleName, Dominance allele1, Dominance allele2)
         {
             var g = new Genotype();
             g.AlleleName = alleleName;
@@ -42,7 +42,7 @@ namespace PedigreeObjects
         {
             return Db.Genotypes.ToList();
         }
-        public List<Genotype> FindGenotypeByAlleleName(char AlelleName) //Find all Genotypes relating to AlleleName eg show all genotypes for C
+        public List<Genotype> FindGenotypeByAlleleName(string AlelleName) //Find all Genotypes relating to AlleleName eg show all genotypes for C
         {
             IQueryable<Genotype> genotypeQuery =
                 from genotype in Db.Genotypes

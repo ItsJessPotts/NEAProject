@@ -7,18 +7,18 @@ using System.Data.Entity;
 
 namespace PedigreeObjects
 {
-    public class GeneticCounsellorDbInitialiser: DropCreateDatabaseIfModelChanges<GeneticCounsellorDbContext> //DropCreateDatabaseAlways<GeneticCounsellorDbContext>
+    public class GeneticCounsellorDbInitialiser:DropCreateDatabaseAlways<GeneticCounsellorDbContext> //DropCreateDatabaseIfModelChanges<GeneticCounsellorDbContext>
     {
         protected override void Seed(GeneticCounsellorDbContext context)
         {
             base.Seed(context);
 
-            var cb = CreateNewPhenotype("Colourblind", context);
-            var cf = CreateNewPhenotype("Cystic Fibrosis", context);
-            var hp = CreateNewPhenotype("Heamophiliac", context);
-            var ht = CreateNewPhenotype("Huntingtons", context);
-            var mf = CreateNewPhenotype("Marfans", context);
-            var ts = CreateNewPhenotype("Tuberous Sclerosis", context);
+            //var cb = CreateNewPhenotype("Colourblind", context);
+            //var cf = CreateNewPhenotype("Cystic Fibrosis", context);
+            //var hp = CreateNewPhenotype("Heamophiliac", context);
+            //var ht = CreateNewPhenotype("Huntingtons", context);
+            //var mf = CreateNewPhenotype("Marfans", context);
+            //var ts = CreateNewPhenotype("Tuberous Sclerosis", context);
 
             var ja = CreateNewPerson("John Adams", Sex.Male, true, "Colourblind", context); 
             
@@ -34,21 +34,27 @@ namespace PedigreeObjects
             
             context.SaveChanges();
 
- 
-            var aDom = CreateNewGenotype('A',Dominance.Dominant,Dominance.Dominant, context);
+            //The Gene Pool
+            var cDom = CreateNewGenotype("C",Dominance.Dominant,Dominance.Dominant, context);
       
-            var Aa = CreateNewGenotype('A', Dominance.Dominant, Dominance.Recessive, context);
+            var cHet = CreateNewGenotype("C", Dominance.Dominant, Dominance.Recessive, context);
             
-            var aRec = CreateNewGenotype('a', Dominance.Recessive, Dominance.Recessive, context);
-            
+            var cRec = CreateNewGenotype("c", Dominance.Recessive, Dominance.Recessive, context);
+
+            var fDom = CreateNewGenotype("F", Dominance.Dominant, Dominance.Dominant, context);
+
+            var pDom = CreateNewGenotype("P", Dominance.Dominant, Dominance.Dominant, context);
+
+            var pRec = CreateNewGenotype("p", Dominance.Recessive, Dominance.Recessive, context);
+
             context.SaveChanges();
 
            
-            var c = CreateNewTrait("Colourblindness", 'c', Dominance.Recessive, context);
+            var c = CreateNewTrait("Colourblindness", 'C', Dominance.Recessive, context);
     
-            var f = CreateNewTrait("Cystic Fibrosis", 'f', Dominance.Recessive, context);
+            var f = CreateNewTrait("Cystic Fibrosis", 'F', Dominance.Recessive, context);
          
-            var p = CreateNewTrait("haemophilia", 'p', Dominance.Recessive, context);
+            var p = CreateNewTrait("haemophilia", 'P', Dominance.Recessive, context);
            
             var H = CreateNewTrait("Huntington's Disease", 'H', Dominance.Dominant, context);
             
@@ -60,8 +66,19 @@ namespace PedigreeObjects
 
             ja.Phenotype.Traits.Add(c);
             ja.Phenotype.Traits.Add(f);
-            ja.Phenotype.TraitGenotypes.Add(aRec);
-            ja.Phenotype.TraitGenotypes.Add(Aa);
+            ja.Phenotype.TraitGenotypes.Add(cRec);
+            ja.Phenotype.TraitGenotypes.Add(fDom);
+
+            ea.Phenotype.Traits.Add(p);
+            ea.Phenotype.Traits.Add(c);
+            ea.Phenotype.TraitGenotypes.Add(pDom);
+            ea.Phenotype.TraitGenotypes.Add(cHet);
+
+            //sa.Phenotype.Traits.Add(p);
+            //sa.Phenotype.Traits.Add(c);
+            //sa.Phenotype.TraitGenotypes.Add(pRec);
+            //sa.Phenotype.TraitGenotypes.Add(cHet);
+
             context.SaveChanges();
 
 
@@ -70,7 +87,7 @@ namespace PedigreeObjects
         public static Phenotype CreateNewPhenotype(string PhenotypeName, GeneticCounsellorDbContext context)
         {
             var p = new Phenotype();
-            p.PhenotypeName = PhenotypeName;
+            //derived from the traits and genotypes
             context.Phenotypes.Add(p);
             return p;
         }
@@ -83,7 +100,7 @@ namespace PedigreeObjects
             context.Traits.Add(t);
             return t;
         }
-        public static Genotype CreateNewGenotype(char AlleleName, Dominance Allele1, Dominance Allele2, GeneticCounsellorDbContext context)
+        public static Genotype CreateNewGenotype(string AlleleName, Dominance Allele1, Dominance Allele2, GeneticCounsellorDbContext context)
         {
             var g = new Genotype();
             g.AlleleName = AlleleName;
