@@ -54,7 +54,7 @@ namespace PedigreeObjects
     
             var f = CreateNewTrait("Cystic Fibrosis", 'F', Dominance.Recessive, context);
          
-            var p = CreateNewTrait("haemophilia", 'P', Dominance.Recessive, context);
+            var p = CreateNewTrait("Haemophilia", 'P', Dominance.Recessive, context);
            
             var H = CreateNewTrait("Huntington's Disease", 'H', Dominance.Dominant, context);
             

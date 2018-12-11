@@ -14,12 +14,16 @@ namespace PedigreeObjects
         public bool Living { get; set; } //dead or alive
         //public List<Genotype> Genotypes { get; set; }
         public virtual Phenotype Phenotype { get; set; }//is colourblind, heamophiliac, Has cystic fibrosis etc  
-        public int PhenotypeID { get; set; } 
-        //public object Gametes { get; set; }// 'A, a, B, b'or ' A,b        
-       
+        public int PhenotypeID { get; set; }
+        //public object Gametes { get; set; }// 'A, a, B, b'or ' A,b
+        public virtual Person Mother { get; set; }
+        public virtual int MotherID { get; set; }
+        //public virtual Person Father { get; set; }
+        //public virtual int FatherID { get; set; }
 
-       //no constructor
-       
+
+        //no constructor
+
         public override string ToString()
         {
             string summary = Name + " " + Sex.ToString();
@@ -38,12 +42,20 @@ namespace PedigreeObjects
         {
             this.Phenotype.Traits.Add(trait);
         }
-        
+        public void AddMotherToPerson(Person mother)
+        {
+            this.Mother = mother;
+        }
+        //public void AddFatherToPerson(Person father)
+        //{
+        //    this.Father = father;
+        //}
+
 
 
 
 
 
     }
-    
+
 }
