@@ -65,14 +65,16 @@ namespace ConsoleUI
 
         private static void geneticCounsellorScreen( GenotypeRepository genotypeRepository,TraitRepository traitRepository, PersonRepository personRepository, string personFilename, string traitFilename,RealRandomNumberGenerator rng)
         {
+            Console.Clear();
             Console.WriteLine("____________________________________________________");
             Console.WriteLine("1) Add Person");
             Console.WriteLine("2) List all Persons");
             Console.WriteLine("3) Create trait");
             Console.WriteLine("4) List all traits");
+            Console.WriteLine("5) Add exsisting Genotype to Person");
             Console.WriteLine("____________________________________________________");
 
-            int geneticCounsellorMenuOption = MenuUserInputInt(4);
+            int geneticCounsellorMenuOption = MenuUserInputInt(5);
 
             switch (geneticCounsellorMenuOption)
             {
@@ -108,7 +110,14 @@ namespace ConsoleUI
                     break;
                 case 4:
                     ListAllTraitsChoice(traitRepository);
-
+                    break;
+                case 5:
+                    StringBuilder sb = new StringBuilder();
+                    ListAllPersonsScreen(sb,personRepository);
+                    string s = sb.ToString();
+                    Console.Write(s);
+                    Person SelectedPersonToAddGenotypeTo = FindPersonByIndex(personRepository);
+                    AddExsistingGenotype(SelectedPersonToAddGenotypeTo, genotypeRepository);
                     break;
                 default:
                     throw new Exception("Invalid Menu input");
@@ -122,7 +131,13 @@ namespace ConsoleUI
             string s = sb.ToString();
             Console.Write(s);
             Console.WriteLine("____________________________________________________");
-           
+            {
+                Console.WriteLine("-----------------------------------------------------");
+                Console.WriteLine("1) Select a Person");
+                Console.WriteLine("2) Delete a Person");
+                Console.WriteLine("-----------------------------------------------------");
+            }
+
         }
 
         private static void ListAllTraitsChoice(TraitRepository traitRepository)
@@ -136,6 +151,7 @@ namespace ConsoleUI
 
         private static void ListAllTraitsScreen(StringBuilder sb2, TraitRepository traitRepository)
         {
+            Console.Clear();
             var ListOfTraits = traitRepository.ListTraits();
 
             if (ListOfTraits.Count == 0)
@@ -154,6 +170,7 @@ namespace ConsoleUI
 
         private static void CreateTraitScreen(TraitRepository traitRepository) 
         {
+            Console.Clear();
             Console.WriteLine("Name of trait:");// Colourblindness
             string inputName = Console.ReadLine();
             Console.WriteLine("Type of inheritance (currently Dominant or Recessive only)"); //Reccessive
@@ -169,6 +186,7 @@ namespace ConsoleUI
         
         private static void AddPersonScreen(PersonRepository personRepository, GenotypeRepository genotypeRepository)
         {
+            Console.Clear();
             try
             {
                 Console.WriteLine("Name (first and last): ");
@@ -202,12 +220,6 @@ namespace ConsoleUI
                 Console.WriteLine("Input was not valid, please try again.");
                 AddPersonScreen(personRepository, genotypeRepository);
             }
-                                  
-            
-
-           
-
-
 
         }
         private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)
@@ -228,23 +240,12 @@ namespace ConsoleUI
                     i++;
                     sb.AppendLine(i + " " + person.ToString());
                 }
-
-
-            }
-            
-            {
-                Console.WriteLine("-----------------------------------------------------");
-                Console.WriteLine("1) Select a Person");
-                Console.WriteLine("2) Delete a Person");
-                Console.WriteLine("-----------------------------------------------------");
-            }
-            
+            }                                   
         }
-
         private static Person FindPersonByIndex(PersonRepository personRepository)
         {
             Console.WriteLine("_________________________________________________");
-            Console.Write("Enter Index No. :");
+            Console.Write("Enter a Person Index No. :");
             try
             {
                 var ListOfPersons = personRepository.ListPersons();
@@ -268,6 +269,7 @@ namespace ConsoleUI
       
         private static void PersonScreen(Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
         {
+            Console.Clear();
             
             Console.WriteLine("Name: " + SelectedPerson.Name);
             Console.WriteLine("Sex: " + SelectedPerson.Sex);
@@ -287,7 +289,7 @@ namespace ConsoleUI
             Console.WriteLine("Genotypes: " + outputGenotypes);
 
             Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("1) Edit Person");//TO DO
+            Console.WriteLine("1) Edit Person");
             Console.WriteLine("2) Combine Genotype with other person");
             Console.WriteLine("-----------------------------------------------------");
                         
@@ -295,7 +297,7 @@ namespace ConsoleUI
                       
         }
 
-        private static void PersonScreenMenu(PersonRepository personRepository, Person SelectedPerson, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng)
+        private static void PersonScreenMenu(PersonRepository personRepository, Person SelectedPerson, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng )
         {
             int PersonMenuChoice = MenuUserInputInt(2);
             switch (PersonMenuChoice)
@@ -304,7 +306,7 @@ namespace ConsoleUI
                     StringBuilder sb = new StringBuilder();
                     ListAllPersonsScreen(sb, personRepository);
                     break;
-                case 1:
+                case 1://Edit Person
                     EditPersonScreen(personRepository, SelectedPerson, genotypeRepository, rng);
                     break;
                 case 2: //Combine Genotypes
@@ -349,6 +351,12 @@ namespace ConsoleUI
 
         private static void EditPersonScreen(PersonRepository personRepository, Person SelectedPerson, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
         {
+            Console.WriteLine("1) Change Name");
+            Console.WriteLine("2) Change Sex");
+            Console.WriteLine("3) Change Living");            
+            Console.WriteLine("4) Change an exsisting Genotype ");
+            Console.WriteLine("5) Add a Phenotype");
+            Console.WriteLine("6) Change an exsiting phenotype");
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             int EditPersonMenuChoice = MenuUserInputInt(4);
             switch (EditPersonMenuChoice)
@@ -357,32 +365,95 @@ namespace ConsoleUI
                     PersonScreenMenu(personRepository, SelectedPerson, genotypeRepository, rng);
                     break;
                 case 1:
-                    ChangeName();
+                    ChangeName(SelectedPerson);
                     break;
                 case 2:
-                    ChangeSex();
+                    ChangeSex(SelectedPerson);
                     break;
                 case 3:
-                    changeLiving();
+                    changeLiving(SelectedPerson);
                     break;
                 case 4:
-                    AddGenotype();
+                    changeGenotype(SelectedPerson);
                     break;
                 case 5:
-                    changeGenotype();
+                    AddPhenotype(SelectedPerson);
                     break;
                 case 6:
-                    AddPhenotype();
-                case 7:
-                    changePhenotype();
+                    changePhenotype(SelectedPerson);
                     break;
       
             }
         }
 
-        private static int MenuUserInputInt(int max)
+        private static void changePhenotype(Person SelectedPerson)
         {
-           
+            throw new NotImplementedException();
+        }
+
+        private static void AddPhenotype(Person SelectedPerson)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void changeGenotype(Person SelectedPerson)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void AddExsistingGenotype(Person SelectedPerson, GenotypeRepository genotypeRepository)//GeneticCounsellorDbContext Db
+        {
+            Console.WriteLine("Already exsisting Genotypes:");
+            int num = 0;
+            foreach (var g in genotypeRepository.ListGenotypes())
+            {
+                Console.WriteLine(num + ") " + g );
+                num++;
+            }
+            Console.WriteLine("Select a genotype from list:");
+            int genotypeIndex = Convert.ToInt32(Console.ReadLine());
+                      
+        }
+
+        private static void changeLiving(Person SelectedPerson)
+        {
+            Console.WriteLine("Please input a new Living status (True, False)");            
+            string acceptableTrueString = "true";
+            string acceptableFalseString = "False";
+            string inputtedLiving = Console.ReadLine();
+            if (inputtedLiving == acceptableTrueString || inputtedLiving == acceptableFalseString)
+            {
+                bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
+                SelectedPerson.Living = inputLiving;
+            }
+        }
+
+        private static void ChangeSex(Person SelectedPerson)
+        {
+            Console.WriteLine("Please input a new sex (Male, Female or Unknown)");
+            string inputtedSex = Console.ReadLine();
+            Sex newSex = (Sex)Enum.Parse(typeof(Sex), inputtedSex, true);
+
+            SelectedPerson.Sex = newSex;
+
+        }
+
+        private static void ChangeName(Person SelectedPerson)
+        {
+            
+            Console.WriteLine("Please input a new full name");
+            string newName = Console.ReadLine();
+            if (newName == "")
+            {
+                Console.WriteLine("It is against the Geneva convention for a person to be denied a name");
+            }
+          
+            SelectedPerson.Name = newName;
+                       
+        }
+
+        private static int MenuUserInputInt(int max)
+        {           
             try
             {
                 Console.WriteLine("Please select an option:");
