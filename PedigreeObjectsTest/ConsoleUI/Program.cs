@@ -279,6 +279,9 @@ namespace ConsoleUI
                 outputGenotypes = outputGenotypes + genotype.ToString() + ',';               
             }
             Console.WriteLine("Genotypes: " + outputGenotypes);
+
+            Console.WriteLine("Mother: " + SelectedPerson.Mother.Name); //recursive viewing of the whole family
+            Console.WriteLine("Father: " + SelectedPerson.Father.Name);
                         
             PersonScreenMenu(personRepository,SelectedPerson,genotypeRepository,rng);
                       
@@ -398,7 +401,7 @@ namespace ConsoleUI
             string s = sb.ToString();
             Console.Write(s);
             selectedPerson.AddMotherToPerson(FindPersonByIndex(personRepository));
-            PersonScreenMenu(personRepository, selectedPerson, genotypeRepository, rng); //returns user to last menu
+            PersonScreen( selectedPerson,personRepository, genotypeRepository, rng); //returns user to last menu
         }
 
         private static void changePhenotype(Person SelectedPerson)
@@ -427,7 +430,7 @@ namespace ConsoleUI
             }
             Console.WriteLine("Select a genotype from list:");
             int genotypeIndex = Convert.ToInt32(Console.ReadLine());
-            PersonScreenMenu(personRepository, SelectedPerson, genotypeRepository, rng); //returns user to last menu
+            PersonScreen(SelectedPerson, personRepository, genotypeRepository, rng); //returns user to last menu
 
 
         }
@@ -443,7 +446,7 @@ namespace ConsoleUI
                 bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
                 SelectedPerson.Living = inputLiving;
             }
-            PersonScreenMenu(personRepository, SelectedPerson, genotypeRepository, rng); //returns user to last menu
+            PersonScreen( SelectedPerson, personRepository, genotypeRepository, rng); //returns user to last menu
         }
 
         private static void ChangeSex(Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
@@ -453,7 +456,7 @@ namespace ConsoleUI
             Sex newSex = (Sex)Enum.Parse(typeof(Sex), inputtedSex, true);
 
             SelectedPerson.Sex = newSex;
-            PersonScreenMenu(personRepository, SelectedPerson, genotypeRepository, rng); //returns user to last menu
+            PersonScreen(SelectedPerson,personRepository, genotypeRepository, rng); //returns user to last menu
         }
 
         private static void ChangeName(Person SelectedPerson,PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
@@ -467,7 +470,7 @@ namespace ConsoleUI
             }
           
             SelectedPerson.Name = newName;
-            PersonScreenMenu(personRepository, SelectedPerson, genotypeRepository, rng); //returns user to last menu           
+            PersonScreen(SelectedPerson, personRepository, genotypeRepository, rng);           
         }
 
         private static int MenuUserInputInt(int max)

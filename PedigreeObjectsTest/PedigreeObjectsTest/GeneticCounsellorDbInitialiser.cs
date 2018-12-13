@@ -74,8 +74,8 @@ namespace PedigreeObjects
             ea.Phenotype.TraitGenotypes.Add(pDom);
             ea.Phenotype.TraitGenotypes.Add(cHet);
 
-            //sa.Phenotype.Traits.Add(p);
-            //sa.Phenotype.Traits.Add(c);
+            sa.Phenotype.Traits.Add(p);
+            sa.Phenotype.Traits.Add(c);
             //sa.Phenotype.TraitGenotypes.Add(pRec);
             //sa.Phenotype.TraitGenotypes.Add(cHet);
 

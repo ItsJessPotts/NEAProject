@@ -17,5 +17,17 @@ namespace PedigreeObjects
         public DbSet<Genotype> Genotypes { get; set; }
         public DbSet<Trait> Traits { get; set; }
         public DbSet<Phenotype> Phenotypes { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Person>()
+                .HasOptional(m => m.Mother)
+                .WithMany()
+                .HasForeignKey(m => m.MotherID);
+
+            modelBuilder.Entity<Person>()
+               .HasOptional(f => f.Father)
+               .WithMany()
+               .HasForeignKey(f => f.FatherID);
+        }
     }
 }

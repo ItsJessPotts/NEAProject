@@ -13,7 +13,8 @@ namespace PedigreeObjects
         public string AlleleName { get; set; } //eg C for colourblindness or A for asthma //TO DO:turn back to char
         public Dominance Allele1 { get; set; } //If dominant- inputted here
         public Dominance Allele2 { get; set; }
-        
+        public virtual List<Phenotype> PeopleWithGenotype { get; set; } = new List<Phenotype>();
+
 
         public override string ToString()
         {

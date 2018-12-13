@@ -17,9 +17,9 @@ namespace PedigreeObjects
         public int PhenotypeID { get; set; }
         //public object Gametes { get; set; }// 'A, a, B, b'or ' A,b
         public virtual Person Mother { get; set; }
-        public virtual int MotherID { get; set; }
-        //public virtual Person Father { get; set; }
-        //public virtual int FatherID { get; set; }
+        public virtual int? MotherID { get; set; }
+        public virtual Person Father { get; set; }
+        public virtual int? FatherID { get; set; }
 
 
         //no constructor
