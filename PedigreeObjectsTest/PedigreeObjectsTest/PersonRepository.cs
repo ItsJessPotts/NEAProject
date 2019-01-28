@@ -15,7 +15,11 @@ namespace PedigreeObjects
         {
             Db = db;
         }
-
+        public void DeletePerson(Person p)
+        {
+            Db.Persons.Remove(p);
+            Db.SaveChanges();
+        }
                
         public Person AddPerson(string name, Sex sex, bool living, string phenotypeName)
         {
@@ -29,6 +33,7 @@ namespace PedigreeObjects
             p.Phenotype = ph;
 
             Db.Persons.Add(p);
+            
             Db.SaveChanges();
             return p;
         }

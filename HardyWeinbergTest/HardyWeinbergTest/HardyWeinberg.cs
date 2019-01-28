@@ -21,9 +21,9 @@ namespace HardyWeinbergTest
             double FrequencyOfDominantSnails = CalculateFrequencyOfDominantSnails(FrequencyOfDominantAlelles);
             double FrequencyOfHeterozygousSnails = CalculateFrequencyOfHeterozygousSnails(FrequencyOfRecessiveAlelles,FrequencyOfDominantAlelles);
 
-            Console.WriteLine("AA = "+ FrequencyOfDominantSnails + "\t  %" + FrequencyOfDominantSnails*100 +" chance of homozygous dominant.");
-            Console.WriteLine("aa = "+FrequencyOfRecessiveSnails+"\t  %"+ FrequencyOfRecessiveSnails * 100+ " chance of being homozygous recessive.");
-            Console.WriteLine("Aa = "+FrequencyOfHeterozygousSnails+"\t  %"+ FrequencyOfHeterozygousSnails * 100+ " chance of being a carrier.");
+            Console.WriteLine("AA = "+ "\t  %" + FrequencyOfDominantSnails +  FrequencyOfDominantSnails*100 +" chance of homozygous dominant.");
+            Console.WriteLine("aa = " + "\t  %" + FrequencyOfRecessiveSnails+ FrequencyOfRecessiveSnails * 100+ " chance of being homozygous recessive.");
+            Console.WriteLine("Aa = " + "\t  %" + FrequencyOfHeterozygousSnails+ FrequencyOfHeterozygousSnails * 100+ " chance of being a carrier.");
            
             Console.ReadKey();
             

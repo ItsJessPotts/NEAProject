@@ -36,8 +36,10 @@ namespace PedigreeObjects
 
             var ed = CreateNewPerson("Enid Dundy", Sex.Female, true, "Hemophiliac", context);
 
-            
-            
+            var jh = CreateNewPerson("Jonathan Hamitlon", Sex.Male, true, "Hemophiliac", context);
+
+
+
             context.SaveChanges();
 
             //The Gene Pool
@@ -81,6 +83,11 @@ namespace PedigreeObjects
             ea.Phenotype.Traits.Add(c);
             ea.Phenotype.TraitGenotypes.Add(pDom);
             ea.Phenotype.TraitGenotypes.Add(cHet);
+            ea.AddMotherToPerson(ed);
+            ea.AddFatherToPerson(jh);
+
+            ed.Phenotype.Traits.Add(p);
+            ed.Phenotype.Traits.Add(c);
 
             sa.Phenotype.Traits.Add(p);
             sa.Phenotype.Traits.Add(c);

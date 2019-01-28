@@ -109,9 +109,12 @@ namespace ConsoleUI
                             geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename,rng);
                             break;
                         case 1:
-                            Person SelectedPerson = FindPersonByIndex(personRepository);
-                            PersonScreen(SelectedPerson, personRepository, genotypeRepository,rng);
-
+                            Person selectedPerson = FindPersonByIndex(personRepository);
+                            PersonScreen(selectedPerson, personRepository, genotypeRepository,rng); //SELECTS A PERSON
+                            break;
+                        case 2:
+                            Person selectedPersonToDelete = FindPersonByIndex(personRepository); //DELETES A PERSON
+                            personRepository.DeletePerson(selectedPersonToDelete); 
                             break;
                         default:
                             throw new Exception("Invalid Menu input");
@@ -366,7 +369,10 @@ namespace ConsoleUI
         {
             Genotype firstSelectedPerson = GetSelectedPersonsGenotype(selectedPerson); //Selected Genotypes            
             Console.WriteLine("Follow Instructions below to select a person to combine genotypes with:"); //Ensure only males and females are compatible 
-            //var otherPersonIndex = Console.ReadLine();
+            StringBuilder sb = new StringBuilder();
+            ListAllPersonsScreen(sb, personRepository, genotypeRepository);
+            string s = sb.ToString();
+            Console.Write(s);
             Person otherPerson = FindPersonByIndex(personRepository);
             Genotype otherSelectedPerson = GetSelectedPersonsGenotype(otherPerson);
             Genotype resultingGenotype = firstSelectedPerson.CombineGenotypes(otherSelectedPerson,genotypeRepository,rng);
@@ -387,6 +393,7 @@ namespace ConsoleUI
             
             Console.WriteLine("Please input the index of genotype you want to combine");
             int index = Convert.ToInt32(Console.ReadLine());
+
             Genotype selectedPersonGenotype = listOfSelectedPersonGenotypes[index - 1];
             return selectedPersonGenotype;
 
@@ -514,7 +521,6 @@ namespace ConsoleUI
             Console.WriteLine("Select a genotype from list:");
             int genotypeIndex = Convert.ToInt32(Console.ReadLine());
             PersonScreen(SelectedPerson, personRepository, genotypeRepository, rng); //returns user to last menu
-
 
         }
 
