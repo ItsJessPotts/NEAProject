@@ -32,7 +32,7 @@ namespace PedigreeObjects
             }
         }
         public Genotype CombineGenotypes(Genotype other, GenotypeRepository genotypeRepository, IRandomNumberGenerator RNG)
-        {//TO DO: CHECK THAT OTHER GENOTYPE HAS THE SAME NAME
+        {
             
             var choice = RNG.Next(0, 4);
             Dominance resultingAllele1;

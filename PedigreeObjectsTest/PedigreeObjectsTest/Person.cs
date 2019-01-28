@@ -44,12 +44,26 @@ namespace PedigreeObjects
         }
         public void AddMotherToPerson(Person mother)
         {
-            this.Mother = mother;
+            if (mother.Sex == Sex.Female)
+            {
+                this.Mother = mother;
+            }            
         }
-        //public void AddFatherToPerson(Person father)
-        //{
-        //    this.Father = father;
-        //}
+        public bool CanAddMother(Person mother)
+        {
+            return mother.Sex == Sex.Female;            
+        }
+        public void AddFatherToPerson(Person father)
+        {
+            if (father.Sex == Sex.Male)
+            {
+                this.Father = father;
+            }           
+        }
+        public bool CanAddFather(Person father)
+        {
+            return father.Sex == Sex.Male;
+        }
 
 
 

@@ -14,35 +14,49 @@ namespace ConsoleUI
 
         private static void MainMenuScreen()
         {
-            Console.WriteLine("____________________________________________________");
-            Console.WriteLine("Welcome");
-            Console.WriteLine("1) Genetic Counsellor");
-            Console.WriteLine("2) Hardy Weinberg Calculator");
-            Console.WriteLine("Enter 0 to return to a previous menu at any screen");
-            Console.WriteLine("____________________________________________________");
-            int mainMenuChoice = MenuUserInputInt(2);
-
-            switch (mainMenuChoice)
+            bool MainMenuScreenChoice = true;
+            while (MainMenuScreenChoice == true)
             {
-                case 0:
-                    MainMenuScreen();
-                    break;
-                case 1:
-                    GeneticCounsellor();
-                    break;
-                case 2:
-                    HardyWeinbergCalculator();
-                    break;
-                default:
-                    throw new Exception("Invalid Menu input");
+                Console.WriteLine("____________________________________________________");
+                Console.WriteLine("Welcome");
+                Console.WriteLine("1) Genetic Counsellor");
+                Console.WriteLine("2) Hardy Weinberg Calculator");
+                Console.WriteLine("3) Quit");
+                Console.WriteLine("Enter 0 to return to a previous menu at any screen");
+                Console.WriteLine("____________________________________________________");
+                int mainMenuChoice = MenuUserInputInt(3);
+
+                switch (mainMenuChoice)
+                {
+                    case 0:
+                        MainMenuScreen();
+                        break;
+                    case 1:
+                        GeneticCounsellor();
+                        break;
+                    case 2:
+                        HardyWeinbergCalculator();
+                        break;
+                    case 3:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        throw new Exception("Invalid Menu input");
+                }
+
             }
+           
         }
+
+        
 
         private static void HardyWeinbergCalculator()
         {
 
             HardyWeinberg.Main();
+            
         }
+
 
         private static void GeneticCounsellor()
         {
@@ -70,7 +84,8 @@ namespace ConsoleUI
             Console.WriteLine("1) Add Person");
             Console.WriteLine("2) List all Persons");
             Console.WriteLine("3) Create trait");
-            Console.WriteLine("4) List all traits");            
+            Console.WriteLine("4) List all traits");
+            Console.WriteLine("5) Create family tree");
             Console.WriteLine("____________________________________________________");
 
             int geneticCounsellorMenuOption = MenuUserInputInt(5);
@@ -85,7 +100,7 @@ namespace ConsoleUI
                     geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename,rng);
                     break;
                 case 2:
-                    ListAllPersonsChoice(personRepository);
+                    ListAllPersonsChoice(personRepository,genotypeRepository);
                     int ListAllPersonsScreenOption = MenuUserInputInt(2);
 
                     switch (ListAllPersonsScreenOption)
@@ -110,16 +125,39 @@ namespace ConsoleUI
                 case 4:
                     ListAllTraitsChoice(traitRepository);
                     break;
+                case 5:
+                    FamilyTreeScreen(personRepository, genotypeRepository);
+                    break;
                 
                 default:
                     throw new Exception("Invalid Menu input");
             }
         }
 
-        private static void ListAllPersonsChoice(PersonRepository personRepository)
+        private static void FamilyTreeScreen(PersonRepository personRepository, GenotypeRepository genotypeRepository)
         {
             StringBuilder sb = new StringBuilder();
-            ListAllPersonsScreen(sb, personRepository);
+            ListAllPersonsScreen(sb,personRepository,genotypeRepository);
+            Person SelectedPerson = FindPersonByIndex(personRepository);
+            Console.WriteLine(SelectedPerson.Mother + "            " + SelectedPerson.Father);
+            Console.WriteLine("    |                                           |");
+            Console.WriteLine("    |                                           |");
+            Console.WriteLine("    |                                           |");
+            Console.WriteLine("    |                                           |");
+            Console.WriteLine("    --------------------|------------------------");
+            Console.WriteLine("                        |                     ");
+            Console.WriteLine("                        |                     ");
+            Console.WriteLine("                        |                     ");
+            Console.WriteLine("               " +SelectedPerson);
+
+
+            
+        }
+
+        private static void ListAllPersonsChoice(PersonRepository personRepository,GenotypeRepository genotypeRepository)
+        {
+            StringBuilder sb = new StringBuilder();
+            ListAllPersonsScreen(sb, personRepository,genotypeRepository);
             string s = sb.ToString();
             Console.Write(s);
             Console.WriteLine("____________________________________________________");
@@ -173,7 +211,6 @@ namespace ConsoleUI
            
             traitRepository.AddTrait(inputName, inputAlelleName, inputInheritanceType);
             
-
         }
         
         private static void AddPersonScreen(PersonRepository personRepository, GenotypeRepository genotypeRepository)
@@ -212,9 +249,9 @@ namespace ConsoleUI
                 Console.WriteLine("Input was not valid, please try again.");
                 AddPersonScreen(personRepository, genotypeRepository);
             }
-
+            
         }
-        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository)
+        private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository, GenotypeRepository genotypeRepository)
         {
             var ListOfPersons = personRepository.ListPersons();
             int i = 0;
@@ -223,6 +260,8 @@ namespace ConsoleUI
             {
                 sb.AppendLine("There are no Persons in this system, please add one.");
                 sb.AppendLine("____________________________________________________");
+                Console.ReadKey();
+                AddPersonScreen(personRepository, genotypeRepository);
             }
             else
             {
@@ -232,7 +271,8 @@ namespace ConsoleUI
                     i++;
                     sb.AppendLine(i + " " + person.ToString());
                 }
-            }                                   
+            }
+            
         }
         private static Person FindPersonByIndex(PersonRepository personRepository)
         {
@@ -247,8 +287,9 @@ namespace ConsoleUI
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine("Not a valid index");
+                Console.WriteLine("Not a valid index");                
                 return null;
+               
             }
             catch (FormatException)
             {
@@ -279,9 +320,17 @@ namespace ConsoleUI
                 outputGenotypes = outputGenotypes + genotype.ToString() + ',';               
             }
             Console.WriteLine("Genotypes: " + outputGenotypes);
+            try
+            {
+                Console.WriteLine("Mother: " + SelectedPerson.Mother.Name); //recursive viewing of the whole family
+                Console.WriteLine("Father: " + SelectedPerson.Father.Name);
+            }
+            catch (Exception)
+            {
 
-            Console.WriteLine("Mother: " + SelectedPerson.Mother.Name); //recursive viewing of the whole family
-            Console.WriteLine("Father: " + SelectedPerson.Father.Name);
+                Console.WriteLine("Incomplete parents inputted.");
+            }
+           
                         
             PersonScreenMenu(personRepository,SelectedPerson,genotypeRepository,rng);
                       
@@ -298,7 +347,7 @@ namespace ConsoleUI
             {
                 case 0:
                     StringBuilder sb = new StringBuilder();
-                    ListAllPersonsScreen(sb, personRepository);
+                    ListAllPersonsScreen(sb, personRepository,genotypeRepository);
                     break;
                 case 1://Edit Person
                     EditPersonScreen(personRepository, SelectedPerson, genotypeRepository, rng);
@@ -371,7 +420,7 @@ namespace ConsoleUI
                     break;
                 case 4:
                     StringBuilder sb = new StringBuilder();
-                    ListAllPersonsScreen(sb, personRepository);
+                    ListAllPersonsScreen(sb, personRepository,genotypeRepository);
                     string s = sb.ToString();
                     Console.Write(s);                    
                     AddExsistingGenotype(SelectedPerson, genotypeRepository, personRepository, rng);
@@ -389,6 +438,9 @@ namespace ConsoleUI
                 case 8:
                     AddMother(SelectedPerson, personRepository, genotypeRepository, rng);
                     break;
+                case 9:
+                    AddFather(SelectedPerson, personRepository, genotypeRepository, rng);
+                    break;
                 
 
             }
@@ -397,13 +449,44 @@ namespace ConsoleUI
         private static void AddMother(Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
         {
             StringBuilder sb = new StringBuilder();
-            ListAllPersonsScreen(sb, personRepository);
+            ListAllPersonsScreen(sb, personRepository,genotypeRepository);
             string s = sb.ToString();
             Console.Write(s);
-            selectedPerson.AddMotherToPerson(FindPersonByIndex(personRepository));
+            Person personToBeMother = FindPersonByIndex(personRepository);
+            bool can = selectedPerson.CanAddMother(personToBeMother);
+            if (can)
+            {
+                selectedPerson.AddMotherToPerson(personToBeMother);
+                PersonScreen(selectedPerson, personRepository, genotypeRepository, rng);
+
+            }
+            else
+            {
+                Console.WriteLine("Only biological females can be entered as biological mothers");
+            }            
             PersonScreen( selectedPerson,personRepository, genotypeRepository, rng); //returns user to last menu
         }
 
+        private static void AddFather(Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        {
+            StringBuilder sb = new StringBuilder();
+            ListAllPersonsScreen(sb, personRepository,genotypeRepository);
+            string s = sb.ToString();
+            Console.Write(s);
+            Person personToBeFather = FindPersonByIndex(personRepository);
+            bool can =selectedPerson.CanAddFather(personToBeFather);
+            if (can)
+            {
+                selectedPerson.AddFatherToPerson(personToBeFather);
+                PersonScreen(selectedPerson, personRepository, genotypeRepository, rng);
+            }
+            else
+            {
+                Console.WriteLine("Only biological males can be entered as biological fathers.");
+            }
+            PersonScreen(selectedPerson, personRepository, genotypeRepository, rng);
+
+        }
         private static void changePhenotype(Person SelectedPerson)
         {
             throw new NotImplementedException();

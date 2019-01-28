@@ -31,6 +31,12 @@ namespace PedigreeObjects
             var ca = CreateNewPerson("Crispus Attucks", Sex.Male, false, "Marfans",context);
         
             var aa = CreateNewPerson("Abigail Adams",Sex.Female,true, "Tuberous Sclerosis", context);
+
+            var jc = CreateNewPerson("James Cook", Sex.Male, true, "Heamophiliac", context);
+
+            var ed = CreateNewPerson("Enid Dundy", Sex.Female, true, "Hemophiliac", context);
+
+            
             
             context.SaveChanges();
 
@@ -68,6 +74,8 @@ namespace PedigreeObjects
             ja.Phenotype.Traits.Add(f);
             ja.Phenotype.TraitGenotypes.Add(cRec);
             ja.Phenotype.TraitGenotypes.Add(fDom);
+            ja.AddMotherToPerson(ea);
+            ja.AddFatherToPerson(sa);
 
             ea.Phenotype.Traits.Add(p);
             ea.Phenotype.Traits.Add(c);
@@ -76,8 +84,8 @@ namespace PedigreeObjects
 
             sa.Phenotype.Traits.Add(p);
             sa.Phenotype.Traits.Add(c);
-            //sa.Phenotype.TraitGenotypes.Add(pRec);
-            //sa.Phenotype.TraitGenotypes.Add(cHet);
+            sa.Phenotype.TraitGenotypes.Add(pRec);
+            sa.Phenotype.TraitGenotypes.Add(cHet);
 
             context.SaveChanges();
 
