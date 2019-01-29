@@ -93,6 +93,7 @@ namespace ConsoleUI
             switch (geneticCounsellorMenuOption)
             {
                 case 0:
+                    Console.Clear();
                     MainMenuScreen();
                     break;
                 case 1:
@@ -256,6 +257,7 @@ namespace ConsoleUI
         }
         private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository, GenotypeRepository genotypeRepository)
         {
+            Console.Clear();
             var ListOfPersons = personRepository.ListPersons();
             int i = 0;
 
@@ -349,7 +351,8 @@ namespace ConsoleUI
             switch (PersonMenuChoice)
             {
                 case 0:
-                    StringBuilder sb = new StringBuilder();
+                    Console.Clear();
+                    StringBuilder sb = new StringBuilder(); //return to last menu
                     ListAllPersonsScreen(sb, personRepository,genotypeRepository);
                     break;
                 case 1://Edit Person
@@ -410,7 +413,7 @@ namespace ConsoleUI
             Console.WriteLine("7) Change an exsiting phenotype");
             Console.WriteLine("8) Add Mother from exsisting list of Persons");
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            int EditPersonMenuChoice = MenuUserInputInt(8);
+            int EditPersonMenuChoice = MenuUserInputInt(9);
             switch (EditPersonMenuChoice)
             {
                 case 0:
@@ -491,7 +494,7 @@ namespace ConsoleUI
             {
                 Console.WriteLine("Only biological males can be entered as biological fathers.");
             }
-            PersonScreen(selectedPerson, personRepository, genotypeRepository, rng);
+            
 
         }
         private static void changePhenotype(Person SelectedPerson)
@@ -511,6 +514,7 @@ namespace ConsoleUI
 
         private static void AddExsistingGenotype(Person SelectedPerson, GenotypeRepository genotypeRepository, PersonRepository personRepository, RealRandomNumberGenerator rng)//GeneticCounsellorDbContext Db
         {
+            Console.Clear();
             Console.WriteLine("Already exsisting Genotypes:");
             int num = 0;
             foreach (var g in genotypeRepository.ListGenotypes())
@@ -520,6 +524,8 @@ namespace ConsoleUI
             }
             Console.WriteLine("Select a genotype from list:");
             int genotypeIndex = Convert.ToInt32(Console.ReadLine());
+            var Allgenotypes = genotypeRepository.ListGenotypes();
+            SelectedPerson.AddGenotypeToPerson(Allgenotypes[genotypeIndex]);
             PersonScreen(SelectedPerson, personRepository, genotypeRepository, rng); //returns user to last menu
 
         }

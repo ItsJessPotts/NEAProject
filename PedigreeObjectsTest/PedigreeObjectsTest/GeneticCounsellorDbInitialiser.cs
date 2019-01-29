@@ -88,6 +88,8 @@ namespace PedigreeObjects
 
             ed.Phenotype.Traits.Add(p);
             ed.Phenotype.Traits.Add(c);
+            ed.Phenotype.TraitGenotypes.Add(cHet);
+            ed.Phenotype.TraitGenotypes.Add(pDom);
 
             sa.Phenotype.Traits.Add(p);
             sa.Phenotype.Traits.Add(c);
