@@ -22,7 +22,7 @@ namespace PedigreeObjects
 
             var ja = CreateNewPerson("John Adams", Sex.Male, true, "Colourblind", context); 
             
-            var ea = CreateNewPerson("Eliza Hamilton", Sex.Female, true, "Cystic Fibrosis", context);
+            var eh = CreateNewPerson("Eliza Hamilton", Sex.Female, true, "Cystic Fibrosis", context);
             
             var sa = CreateNewPerson("Samuel Adams", Sex.Male, true, "Heamophiliac", context);
       
@@ -36,7 +36,7 @@ namespace PedigreeObjects
 
             var ed = CreateNewPerson("Enid Dundy", Sex.Female, true, "Hemophiliac", context);
 
-            var jh = CreateNewPerson("Jonathan Hamitlon", Sex.Male, true, "Hemophiliac", context);
+            var jh = CreateNewPerson("Jonathan Hamilton", Sex.Male, true, "Hemophiliac", context);
 
 
 
@@ -76,15 +76,20 @@ namespace PedigreeObjects
             ja.Phenotype.Traits.Add(f);
             ja.Phenotype.TraitGenotypes.Add(cRec);
             ja.Phenotype.TraitGenotypes.Add(fDom);
-            ja.AddMotherToPerson(ea);
+            ja.AddMotherToPerson(eh);
             ja.AddFatherToPerson(sa);
 
-            ea.Phenotype.Traits.Add(p);
-            ea.Phenotype.Traits.Add(c);
-            ea.Phenotype.TraitGenotypes.Add(pDom);
-            ea.Phenotype.TraitGenotypes.Add(cHet);
-            ea.AddMotherToPerson(ed);
-            ea.AddFatherToPerson(jh);
+            eh.Phenotype.Traits.Add(p);
+            eh.Phenotype.Traits.Add(c);
+            eh.Phenotype.TraitGenotypes.Add(pDom);
+            eh.Phenotype.TraitGenotypes.Add(cHet);
+            eh.AddMotherToPerson(ed);
+            eh.AddFatherToPerson(jh);
+
+            jh.Phenotype.Traits.Add(p);
+            jh.Phenotype.Traits.Add(c);
+            jh.Phenotype.TraitGenotypes.Add(pDom);
+            jh.Phenotype.TraitGenotypes.Add(cDom);
 
             ed.Phenotype.Traits.Add(p);
             ed.Phenotype.Traits.Add(c);
@@ -95,6 +100,13 @@ namespace PedigreeObjects
             sa.Phenotype.Traits.Add(c);
             sa.Phenotype.TraitGenotypes.Add(pRec);
             sa.Phenotype.TraitGenotypes.Add(cHet);
+            sa.AddMotherToPerson(aa);
+            sa.AddFatherToPerson(jc);
+
+            aa.Phenotype.Traits.Add(p);
+            aa.Phenotype.Traits.Add(c);
+            aa.Phenotype.TraitGenotypes.Add(pRec);
+            aa.Phenotype.TraitGenotypes.Add(cHet);
 
             context.SaveChanges();
 
