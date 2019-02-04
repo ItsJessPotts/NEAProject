@@ -19,11 +19,11 @@ namespace PedigreeObjects
             }
         } //name of phenotype
 
-        private string GeneratePhenotypeName()
+        public string GeneratePhenotypeName()
         {
             string name = "";
             foreach (var genotype in TraitGenotypes)
-            {
+            {               
                 name = name + genotype.AlleleName;
             }
             return name;

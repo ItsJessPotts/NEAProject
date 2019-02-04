@@ -131,7 +131,7 @@ namespace PedigreeObjects
         }
         public static Genotype CreateNewGenotype(string AlleleName, Dominance Allele1, Dominance Allele2, GeneticCounsellorDbContext context)
         {
-            var g = new Genotype();
+            var g = new Genotype(AlleleName, Allele1, Allele2);
             g.AlleleName = AlleleName;
             g.Allele1 = Allele1;
             g.Allele2 = Allele2;

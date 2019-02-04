@@ -15,7 +15,21 @@ namespace PedigreeObjects
         public Dominance Allele2 { get; set; }
         public virtual List<Phenotype> PeopleWithGenotype { get; set; } = new List<Phenotype>();
 
+        public Genotype()
+        {
 
+        }
+       
+        public Genotype(string AlleleName, Dominance Allele1, Dominance Allele2)
+        {
+            
+            this.AlleleName = AlleleName;
+            this.Allele1 = Allele1;
+            this.Allele2 = Allele2;
+
+           
+            
+        }
         public override string ToString()
         {
             return  AlleleAsString(Allele1) + AlleleAsString(Allele2);

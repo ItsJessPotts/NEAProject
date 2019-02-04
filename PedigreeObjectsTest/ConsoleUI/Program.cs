@@ -504,7 +504,9 @@ namespace ConsoleUI
 
         private static void AddPhenotype(Person SelectedPerson)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Phenotype:");
+            SelectedPerson.Phenotype.GeneratePhenotypeName();
+            Console.WriteLine(SelectedPerson.Phenotype);
         }
 
         private static void changeGenotype(Person SelectedPerson)
