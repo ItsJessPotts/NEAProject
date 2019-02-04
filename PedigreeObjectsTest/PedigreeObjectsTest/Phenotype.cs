@@ -19,11 +19,33 @@ namespace PedigreeObjects
             }
         } //name of phenotype
 
+
         public string GeneratePhenotypeName()
         {
             string name = "";
             foreach (var genotype in TraitGenotypes)
-            {               
+            {
+               
+                foreach (var trait in Traits)
+                {
+                    //if (trait.AlleleName == genotype.AlleleName)
+                    {
+                        //if (trait.InheritanceType == Dominance.Recessive)
+                        {
+                            //if Allele1 == recessive AND Allele2 == recessive
+                            //Then
+                            //phenotype = "Has" + traitName
+                            //if Alelle1 ==  Dominant And Allele2 == Dominant
+                            //Then
+                            //Phenotype = "Not" + traitName
+                            //if Allele1 == Dominant AND Allele2 == recessive
+                            //Then
+                            //Phenotype = "Carrier of " + traitName
+
+                        }
+                    }
+                }
+
                 name = name + genotype.AlleleName;
             }
             return name;

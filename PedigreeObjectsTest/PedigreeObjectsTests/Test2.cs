@@ -13,9 +13,9 @@ namespace PedigreeObjectsTests
         {
             var p = new Phenotype();
             var pHet = new Genotype("P",Dominance.Dominant, Dominance.Recessive);           
-            var fullListgenotypes = new List<Genotype>();
-            fullListgenotypes.Add(pHet);
-            p.TraitGenotypes = fullListgenotypes;
+            var fullListOfgenotypes = new List<Genotype>();
+            fullListOfgenotypes.Add(pHet);
+            p.TraitGenotypes = fullListOfgenotypes;
             p.GeneratePhenotypeName();
             Assert.AreEqual(p.PhenotypeName, "Phenotype: Haemphilia carrier");
         }
