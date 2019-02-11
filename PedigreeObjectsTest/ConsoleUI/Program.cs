@@ -210,7 +210,7 @@ namespace ConsoleUI
             Console.WriteLine("Type of inheritance (currently Dominant or Recessive only)"); //Reccessive
             Dominance inputInheritanceType = (Dominance)Enum.Parse(typeof(Dominance),Console.ReadLine(),true); 
             Console.WriteLine("What letter should represent it?");// C
-            char inputAlelleName = Convert.ToChar(Console.ReadLine());
+            string inputAlelleName = Console.ReadLine();
 
            
             traitRepository.AddTrait(inputName, inputAlelleName, inputInheritanceType);
@@ -504,9 +504,9 @@ namespace ConsoleUI
 
         private static void AddPhenotype(Person SelectedPerson)
         {
-            Console.WriteLine("Phenotype:");
+            Console.WriteLine("Phenotype: ");
             SelectedPerson.Phenotype.GeneratePhenotypeName();
-            Console.WriteLine(SelectedPerson.Phenotype);
+            Console.WriteLine(SelectedPerson.Phenotype.PhenotypeName);
         }
 
         private static void changeGenotype(Person SelectedPerson)

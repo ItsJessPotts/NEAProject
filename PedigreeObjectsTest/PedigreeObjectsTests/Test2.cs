@@ -17,7 +17,7 @@ namespace PedigreeObjectsTests
             fullListOfgenotypes.Add(pHet);
             p.TraitGenotypes = fullListOfgenotypes;
             p.GeneratePhenotypeName();
-            Assert.AreEqual(p.PhenotypeName, "Phenotype: Haemphilia carrier");
+            Assert.AreEqual(p.PhenotypeName, "Haemphilia carrier");
         }
     }
 }

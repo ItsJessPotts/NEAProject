@@ -13,47 +13,64 @@ namespace PedigreeObjects
         public virtual List<Trait> Traits { get; set; } = new List<Trait>(); //Array of traits possessed by the person
         public string Environment { get; set; } //Array of environmental influences that could be effecting the phenotype
         public virtual List<Genotype> TraitGenotypes { get; set; } = new List<Genotype>(); // The actual genotypes possessed: Aa, BB, Cc, Dd, EE
-        public string PhenotypeName {
-            get {
-                return GeneratePhenotypeName();
-            }
-        } //name of phenotype
+        public string PhenotypeName { get; set; }
+            //name of phenotype
 
+       
 
-        public string GeneratePhenotypeName()
+        public void GeneratePhenotypeName()
         {
             string name = "";
             foreach (var genotype in TraitGenotypes)
             {
-               
+
                 foreach (var trait in Traits)
                 {
-                    //if (trait.AlleleName == genotype.AlleleName)
+                    
+                    if (trait.AlleleName.ToUpper() == genotype.AlleleName.ToUpper())
                     {
-                        //if (trait.InheritanceType == Dominance.Recessive)
+                        if (trait.InheritanceType == Dominance.Recessive)
                         {
-                            //if Allele1 == recessive AND Allele2 == recessive
-                            //Then
-                            //phenotype = "Has" + traitName
-                            //if Alelle1 ==  Dominant And Allele2 == Dominant
-                            //Then
-                            //Phenotype = "Not" + traitName
-                            //if Allele1 == Dominant AND Allele2 == recessive
-                            //Then
-                            //Phenotype = "Carrier of " + traitName
-
+                            
+                            if (genotype.Allele1 == Dominance.Recessive && genotype.Allele2 == Dominance.Recessive)
+                            {
+                                name += "Has " + trait.TraitName + " ";
+                            }
+                            if (genotype.Allele1 == Dominance.Dominant && genotype.Allele2 == Dominance.Dominant)
+                            {
+                                name += "Does not have " + trait.TraitName + " ";
+                            }
+                            if (genotype.Allele1 == Dominance.Dominant && genotype.Allele2 == Dominance.Recessive)
+                            {
+                                name += "Carrier of " + trait.TraitName + " ";
+                            }
+                        }
+                        if (trait.InheritanceType == Dominance.Dominant)
+                        {
+                            if (genotype.Allele1 == Dominance.Recessive && genotype.Allele2 == Dominance.Recessive)
+                            {
+                                name += "Does not have " + trait.TraitName + " ";
+                            }
+                            if (genotype.Allele1 == Dominance.Dominant && genotype.Allele2 == Dominance.Dominant)
+                            {
+                                name += "Has " + trait.TraitName + " ";
+                            }
+                            if (genotype.Allele1 == Dominance.Dominant && genotype.Allele2 == Dominance.Recessive)
+                            {
+                                name += "Has " + trait.TraitName + " ";
+                            }
                         }
                     }
                 }
 
-                name = name + genotype.AlleleName;
+                
             }
-            return name;
+            PhenotypeName = name;
         }
 
         public override string ToString()
         {
-            string summary = "Phenotype: " + PhenotypeName;
+            string summary = PhenotypeName;
             return summary;
         }
 

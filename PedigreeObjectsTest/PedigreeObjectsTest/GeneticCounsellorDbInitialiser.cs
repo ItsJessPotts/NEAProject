@@ -58,17 +58,17 @@ namespace PedigreeObjects
             context.SaveChanges();
 
            
-            var c = CreateNewTrait("Colourblindness", 'C', Dominance.Recessive, context);
+            var c = CreateNewTrait("Colourblindness", "C", Dominance.Recessive, context);
     
-            var f = CreateNewTrait("Cystic Fibrosis", 'F', Dominance.Recessive, context);
+            var f = CreateNewTrait("Cystic Fibrosis", "F", Dominance.Recessive, context);
          
-            var p = CreateNewTrait("Haemophilia", 'P', Dominance.Recessive, context);
+            var p = CreateNewTrait("Haemophilia", "P", Dominance.Recessive, context);
            
-            var H = CreateNewTrait("Huntington's Disease", 'H', Dominance.Dominant, context);
+            var H = CreateNewTrait("Huntington's Disease", "H", Dominance.Dominant, context);
             
-            var M = CreateNewTrait("Marfan's Syndrom", 'M', Dominance.Dominant, context);
+            var M = CreateNewTrait("Marfan's Syndrom", "M", Dominance.Dominant, context);
             
-            var T = CreateNewTrait("Tuberous Sclerosis", 'T', Dominance.Dominant, context);
+            var T = CreateNewTrait("Tuberous Sclerosis", "T", Dominance.Dominant, context);
             
             context.SaveChanges();
 
@@ -120,7 +120,7 @@ namespace PedigreeObjects
             context.Phenotypes.Add(p);
             return p;
         }
-        public static Trait CreateNewTrait(string TraitName, char AlleleName, Dominance InheritanceType,GeneticCounsellorDbContext context)
+        public static Trait CreateNewTrait(string TraitName, string AlleleName, Dominance InheritanceType,GeneticCounsellorDbContext context)
         {
             var t = new Trait();
             t.TraitName = TraitName;

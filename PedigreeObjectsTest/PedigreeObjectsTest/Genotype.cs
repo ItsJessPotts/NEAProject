@@ -10,7 +10,7 @@ namespace PedigreeObjects
     public class Genotype
     {
         public int GenotypeID { get; set; }        
-        public string AlleleName { get; set; } //eg C for colourblindness or A for asthma //TO DO:turn back to char
+        public string AlleleName { get; set; } //eg C for colourblindness or A for asthma (one letter) //TO DO:turn back to char
         public Dominance Allele1 { get; set; } //If dominant- inputted here
         public Dominance Allele2 { get; set; }
         public virtual List<Phenotype> PeopleWithGenotype { get; set; } = new List<Phenotype>();
@@ -26,9 +26,7 @@ namespace PedigreeObjects
             this.AlleleName = AlleleName;
             this.Allele1 = Allele1;
             this.Allele2 = Allele2;
-
-           
-            
+                       
         }
         public override string ToString()
         {

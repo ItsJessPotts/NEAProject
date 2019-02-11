@@ -16,7 +16,7 @@ namespace PedigreeObjects
             Db = db;
         }
 
-        public Trait AddTrait(string traitName, char alleleName, Dominance inheritanceType)
+        public Trait AddTrait(string traitName, string alleleName, Dominance inheritanceType)
         {
             var t = new Trait();
             t.TraitName = traitName;
