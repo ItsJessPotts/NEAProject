@@ -7,7 +7,9 @@ using System.Data.Entity;
 
 namespace PedigreeObjects
 {
-    public class GeneticCounsellorDbInitialiser:DropCreateDatabaseAlways<GeneticCounsellorDbContext> //DropCreateDatabaseIfModelChanges<GeneticCounsellorDbContext>
+    public class GeneticCounsellorDbInitialiser : DropCreateDatabaseIfModelChanges<GeneticCounsellorDbContext>         //DropCreateDatabaseAlways<GeneticCounsellorDbContext> 
+    
+       
     {
         protected override void Seed(GeneticCounsellorDbContext context)
         {
