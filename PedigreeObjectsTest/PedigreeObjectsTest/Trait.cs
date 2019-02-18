@@ -20,8 +20,22 @@ namespace PedigreeObjects
             string summary =  TraitName + " " + InheritanceType.ToString();
             return summary;
         }
+        public Trait()
+        {
 
+        }
 
+        public Trait(string TraitName, string AlleleName, Dominance InheritanceType)
+        {            
+            this.TraitName = TraitName;
+            this.AlleleName = AlleleName;
+            this.InheritanceType = InheritanceType;            
+        }
+
+        public GenotypeRepository GenerateGenotypesForATrait(string AlleleName)
+        {
+            
+        }
 
 
 
