@@ -252,6 +252,7 @@ namespace ConsoleUI
             }
             
         }
+
         private static void ListAllPersonsScreen(StringBuilder sb, PersonRepository personRepository, GenotypeRepository genotypeRepository)
         {
             Console.Clear();
@@ -276,6 +277,7 @@ namespace ConsoleUI
             }
             
         }
+
         private static Person FindPersonByIndex(PersonRepository personRepository)
         {
             Console.WriteLine("_________________________________________________");
@@ -300,7 +302,6 @@ namespace ConsoleUI
             }
             
         }
-
       
         private static void PersonScreen(TraitRepository traitRepository, Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
         {

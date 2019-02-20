@@ -32,9 +32,13 @@ namespace PedigreeObjects
             this.InheritanceType = InheritanceType;            
         }
 
-        public GenotypeRepository GenerateGenotypesForATrait(string AlleleName)
+        public void GenerateGenotypesForATrait(string AlleleName, GenotypeRepository genotypeRepository)
         {
-            
+           
+            genotypeRepository.AddGenotype(AlleleName, Dominance.Dominant, Dominance.Recessive);
+            genotypeRepository.AddGenotype(AlleleName, Dominance.Recessive, Dominance.Recessive);
+            genotypeRepository.AddGenotype(AlleleName, Dominance.Dominant, Dominance.Dominant);
+
         }
 
 
