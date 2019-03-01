@@ -228,7 +228,7 @@ namespace ConsoleUI
                 Console.WriteLine("Sex ( Male or Female ): ");
                 string inputtedSex = Console.ReadLine();
                 Sex inputSex = (Sex)Enum.Parse(typeof(Sex), inputtedSex, true);
-                if (inputSex == Sex.Female || inputSex == Sex.Male)
+                if (inputSex == Sex.Female || inputSex == Sex.Male || inputSex == Sex.Unknown)
                 {
                     Console.WriteLine("Living (true or false): ");
                     string acceptableTrueString = "true";
@@ -404,12 +404,26 @@ namespace ConsoleUI
                 Console.WriteLine(number + " " + genotype.ToString());
                 number++;
             }
-            
-            Console.WriteLine("Please input the index of genotype you want to combine");
-            int index = Convert.ToInt32(Console.ReadLine());
+            try
+            {
+                Console.WriteLine("Please input the index of genotype you want to combine");
+                int index = Convert.ToInt32(Console.ReadLine());
 
-            Genotype selectedPersonGenotype = listOfSelectedPersonGenotypes[index - 1];
-            return selectedPersonGenotype;
+                Genotype selectedPersonGenotype = listOfSelectedPersonGenotypes[index - 1];
+                return selectedPersonGenotype;
+                
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("There is no genotype located at that index. Please try again");
+                return GetSelectedPersonsGenotype(selectedPerson); //recursion?               
+                
+            }
+            
+           
+           
+            
 
         }
 
