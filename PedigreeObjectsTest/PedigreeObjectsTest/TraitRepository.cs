@@ -20,19 +20,22 @@ namespace PedigreeObjects
         {
             var t = new Trait();
             t.TraitName = traitName;
-            t.AlleleName = alleleName;
+            t.AlleleName = alleleName.ToUpper();
             t.InheritanceType = inheritanceType;
             Db.Traits.Add(t);
             Db.SaveChanges();
             return t;
         }
-
-
         public List<Trait> ListTraits()
         {
             return Db.Traits.ToList();
         }
-        
+        public void DeleteTrait(Trait t)
+        {
+            Db.Traits.Remove(t);
+            Db.SaveChanges();
+        }
+
 
 
     }   

@@ -125,6 +125,17 @@ namespace ConsoleUI
                     break;
                 case 4:
                     ListAllTraitsChoice(traitRepository);
+                    int ListAllTraitsScreenOption = MenuUserInputInt(1);
+                    switch (ListAllTraitsScreenOption)
+                    {
+                        case 0:
+                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename, rng);
+                            break;
+                        case 1:
+                            Trait selectedTraitToDelete = FindTraitByIndex(traitRepository); //DELETES A TRAIT
+                            traitRepository.DeleteTrait(selectedTraitToDelete);
+                            break;
+                    }
                     break;
                 case 5:
                     FamilyTreeScreen(personRepository, genotypeRepository);
@@ -135,24 +146,63 @@ namespace ConsoleUI
             }
         }
 
+        private static Trait FindTraitByIndex(TraitRepository traitRepository)
+        {
+            Console.WriteLine("_________________________________________________");
+            Console.Write("Enter a Trait Index No. :");
+            try
+            {
+                var ListOftraits = traitRepository.ListTraits();
+                int index = Convert.ToInt32(Console.ReadLine());
+                Trait SelectedTrait = ListOftraits[index - 1];
+                return SelectedTrait;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Console.WriteLine("Not a valid index");
+                return null;
+
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Not a number");
+                return null;
+            }
+        }
+
         private static void FamilyTreeScreen(PersonRepository personRepository, GenotypeRepository genotypeRepository)
         {
             StringBuilder sb = new StringBuilder();
             ListAllPersonsScreen(sb,personRepository,genotypeRepository);
+            string s = sb.ToString();
+            Console.Write(s);
             Person SelectedPerson = FindPersonByIndex(personRepository);
-            Console.WriteLine(SelectedPerson.Mother + "            " + SelectedPerson.Father);
-            Console.WriteLine("    |                                           |");
-            Console.WriteLine("    |                                           |");
-            Console.WriteLine("    |                                           |");
-            Console.WriteLine("    |                                           |");
-            Console.WriteLine("    --------------------|------------------------");
-            Console.WriteLine("                        |                     ");
-            Console.WriteLine("                        |                     ");
-            Console.WriteLine("                        |                     ");
-            Console.WriteLine("               " +SelectedPerson);
+            Console.WriteLine("How many generations should this system display?");
+            int numberOfGenerations = Convert.ToInt32(Console.ReadLine());
+            DrawGeneration(SelectedPerson, numberOfGenerations);
 
+        }
 
-            
+        private static void DrawGeneration(Person selectedPerson, int numberOfGenerations)
+        {
+            Person person = selectedPerson;
+            for (int i = 0; i < numberOfGenerations; i++)
+            {
+                
+                Console.WriteLine(person.Mother + "            " + person.Father);
+                Console.WriteLine("    |                                           |  ");
+                Console.WriteLine("    |                                           |  ");
+                Console.WriteLine("    |                                           |  ");
+                Console.WriteLine("    |                                           |  ");
+                Console.WriteLine("    --------------------|------------------------  ");
+                Console.WriteLine("                        |                          ");
+                Console.WriteLine("                        |                          ");
+                Console.WriteLine("                        |                          ");
+                Console.WriteLine("                                                   ");
+                Console.WriteLine("                     " + person + "                ");
+                person = selectedPerson.Father;
+                person = selectedPerson.Mother;
+            }
         }
 
         private static void ListAllPersonsChoice(PersonRepository personRepository,GenotypeRepository genotypeRepository)
@@ -162,12 +212,12 @@ namespace ConsoleUI
             string s = sb.ToString();
             Console.Write(s);
             Console.WriteLine("____________________________________________________");
-            {
+            
                 Console.WriteLine("-----------------------------------------------------");
                 Console.WriteLine("1) Select a Person");
                 Console.WriteLine("2) Delete a Person");
                 Console.WriteLine("-----------------------------------------------------");
-            }
+            
 
         }
 
@@ -178,6 +228,9 @@ namespace ConsoleUI
             string s2 = sb2.ToString();
             Console.Write(s2);
             Console.WriteLine("____________________________________________________");
+            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("1) Delete a trait");
+            Console.WriteLine("-----------------------------------------------------");
         }
 
         private static void ListAllTraitsScreen(StringBuilder sb2, TraitRepository traitRepository)
@@ -367,7 +420,7 @@ namespace ConsoleUI
                     EditPersonScreen(traitRepository, personRepository, selectedPerson, genotypeRepository, rng);
                     break;
                 case 2: //Combine Genotypes
-                    Genotype resultingGenotype = CombineGenotypesScreen(selectedPerson, personRepository, genotypeRepository,rng);
+                    Genotype resultingGenotype = CombineGenotypesScreen(selectedPerson, personRepository, genotypeRepository,rng, traitRepository);
                     Console.WriteLine(resultingGenotype.ToString()+" is the most likely genotype combination in offspring between these two persons");
                     Console.ReadKey();
                     break;
@@ -379,29 +432,40 @@ namespace ConsoleUI
             }
         }
 
-        private static Genotype CombineGenotypesScreen(Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng)//TO DO: Change Seed Data to be compatible with added Genotypes
+        private static Genotype CombineGenotypesScreen(Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng, TraitRepository traitRepository)//TO DO: Change Seed Data to be compatible with added Genotypes
         {
-            Genotype firstSelectedPerson = GetSelectedPersonsGenotype(selectedPerson); //Selected Genotypes            
+            Genotype firstSelectedPerson = GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository, rng); //Selected Genotypes            
             Console.WriteLine("Follow Instructions below to select a person to combine genotypes with:"); //Ensure only males and females are compatible 
             StringBuilder sb = new StringBuilder();
             ListAllPersonsScreen(sb, personRepository, genotypeRepository);
             string s = sb.ToString();
             Console.Write(s);
             Person otherPerson = FindPersonByIndex(personRepository);
-            Genotype otherSelectedPerson = GetSelectedPersonsGenotype(otherPerson);
+            Genotype otherSelectedPerson = GetSelectedPersonsGenotype(otherPerson, traitRepository, personRepository, genotypeRepository, rng);
             Genotype resultingGenotype = firstSelectedPerson.CombineGenotypes(otherSelectedPerson,genotypeRepository,rng);
             return resultingGenotype;
             
         }
 
-        private static Genotype GetSelectedPersonsGenotype(Person selectedPerson)
+        private static Genotype GetSelectedPersonsGenotype(Person selectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
         {
             var listOfSelectedPersonGenotypes = selectedPerson.Phenotype.TraitGenotypes;
             int number = 1;
+            if (number == 0)
+            {
+                PersonScreenMenu(traitRepository, personRepository, selectedPerson, genotypeRepository, rng);
+            }
+            if (selectedPerson.Phenotype.TraitGenotypes.Count == 0)
+            {
+                Console.Clear();
+                Console.WriteLine("This person does not have a genotypes");          
+                PersonScreen(traitRepository, selectedPerson, personRepository,genotypeRepository , rng);
+                PersonScreenMenu(traitRepository,personRepository,selectedPerson,genotypeRepository,rng);
+            }
             
             foreach (var genotype in selectedPerson.Phenotype.TraitGenotypes)
             {
-                Console.WriteLine(number + " " + genotype.ToString());
+                Console.WriteLine(number + ')' +" " + genotype.ToString());
                 number++;
             }
             try
@@ -417,7 +481,7 @@ namespace ConsoleUI
             catch (Exception)
             {
                 Console.WriteLine("There is no genotype located at that index. Please try again");
-                return GetSelectedPersonsGenotype(selectedPerson); //recursion?               
+                return GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository,rng); //recursion?               
                 
             }
             
@@ -489,7 +553,11 @@ namespace ConsoleUI
             Console.WriteLine("Select a trait from the list:");
             int traitIndex = Convert.ToInt32(Console.ReadLine());
             var allTraits = traitRepository.ListTraits();
-            selectedPerson.AddTraitToPerson(allTraits[traitIndex]);
+            Trait chosenTrait = allTraits[traitIndex];
+            selectedPerson.AddTraitToPerson(chosenTrait);
+            Console.WriteLine("Select which genotype to add to person:");
+            chosenTrait.GenerateGenotypesForATrait(chosenTrait.AlleleName, genotypeRepository);
+            AddExsistingGenotype(traitRepository,selectedPerson,genotypeRepository,personRepository,rng);
             PersonScreen(traitRepository, selectedPerson, personRepository, genotypeRepository, rng);
         }
 
