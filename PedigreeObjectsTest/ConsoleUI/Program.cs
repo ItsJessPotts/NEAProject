@@ -112,7 +112,10 @@ namespace ConsoleUI
                             break;
                         case 2:
                             Person selectedPersonToDelete = FindPersonByIndex(personRepository); //DELETES A PERSON
-                            personRepository.DeletePerson(selectedPersonToDelete); 
+                            personRepository.DeletePerson(selectedPersonToDelete);
+                            Console.WriteLine("#######################");
+                            Console.WriteLine("Person has been deleted.");
+                            Console.WriteLine("#######################");
                             break;
                         default:
                             throw new Exception("Invalid Menu input");
@@ -134,6 +137,9 @@ namespace ConsoleUI
                         case 1:
                             Trait selectedTraitToDelete = FindTraitByIndex(traitRepository); //DELETES A TRAIT
                             traitRepository.DeleteTrait(selectedTraitToDelete);
+                            Console.WriteLine("#######################");
+                            Console.WriteLine("Trait has been deleted.");
+                            Console.WriteLine("#######################");
                             break;
                     }
                     break;

@@ -28,7 +28,7 @@ namespace PedigreeObjects
         public Trait(string TraitName, string AlleleName, Dominance InheritanceType)
         {            
             this.TraitName = TraitName;
-            this.AlleleName = AlleleName;
+            this.AlleleName = AlleleName.ToUpper();
             this.InheritanceType = InheritanceType;            
         }
 
