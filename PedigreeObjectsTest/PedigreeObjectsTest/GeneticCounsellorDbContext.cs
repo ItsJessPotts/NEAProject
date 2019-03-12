@@ -17,8 +17,10 @@ namespace PedigreeObjects
         public DbSet<Genotype> Genotypes { get; set; }
         public DbSet<Trait> Traits { get; set; }
         public DbSet<Phenotype> Phenotypes { get; set; }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) //2 different relationships as a person
+                                                                             // can have one mother and one father
+        {                                                                    // but a person can be a parent to 
+                                                                             // multiple people
             modelBuilder.Entity<Person>()
                 .HasOptional(m => m.Mother)
                 .WithMany()

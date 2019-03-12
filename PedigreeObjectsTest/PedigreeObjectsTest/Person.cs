@@ -58,7 +58,8 @@ namespace PedigreeObjects
             if (father.Sex == Sex.Male)
             {
                 this.Father = father;
-            }           
+            } 
+            
         }
         public bool CanAddFather(Person father)
         {

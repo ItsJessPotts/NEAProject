@@ -57,24 +57,24 @@ namespace ConsoleUI
 
         private static void GeneticCounsellor()
         {
-            GeneticCounsellorDbContext Db = null;
-            using (Db = new GeneticCounsellorDbContext("Jess1"))
+            GeneticCounsellorDbContext context = null;
+            using (context = new GeneticCounsellorDbContext("Jess1"))
             {
 
-                var traitRepository = new TraitRepository(Db);
-                var personRepository = new PersonRepository(Db);
-                var genotypeRepository = new GenotypeRepository(Db);
+                var traitRepository = new TraitRepository(context);
+                var personRepository = new PersonRepository(context);
+                var genotypeRepository = new GenotypeRepository(context);
                 var rng = new RealRandomNumberGenerator(); 
 
                 string personFilename = @"C:\Users\potts\Desktop\PersonsSeedData.txt";
                 string traitFilename = @"C:\Users\potts\Desktop\TraitSeedData.txt";
 
-                geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename, rng);
+                geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename, rng, context);
             }
                                                         
         }
 
-        private static void geneticCounsellorScreen( GenotypeRepository genotypeRepository,TraitRepository traitRepository, PersonRepository personRepository, string personFilename, string traitFilename,RealRandomNumberGenerator rng)
+        private static void geneticCounsellorScreen( GenotypeRepository genotypeRepository,TraitRepository traitRepository, PersonRepository personRepository, string personFilename, string traitFilename,RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             Console.Clear();
             Console.WriteLine("____________________________________________________");
@@ -95,7 +95,7 @@ namespace ConsoleUI
                     break;
                 case 1:
                     AddPersonScreen(personRepository, genotypeRepository);
-                    geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename,rng);
+                    geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename,rng, context);
                     break;
                 case 2:
                     ListAllPersonsChoice(personRepository,genotypeRepository);
@@ -104,11 +104,11 @@ namespace ConsoleUI
                     switch (ListAllPersonsScreenOption)
                     {
                         case 0:
-                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename,rng);
+                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename,rng, context);
                             break;
                         case 1:
                             Person selectedPerson = FindPersonByIndex(personRepository);
-                            PersonScreen(traitRepository,selectedPerson, personRepository, genotypeRepository,rng); //SELECTS A PERSON
+                            PersonScreen(traitRepository,selectedPerson, personRepository, genotypeRepository,rng, context); //SELECTS A PERSON
                             break;
                         case 2:
                             Person selectedPersonToDelete = FindPersonByIndex(personRepository); //DELETES A PERSON
@@ -119,7 +119,7 @@ namespace ConsoleUI
                             break;
                         case 3:
                             AddPersonScreen(personRepository, genotypeRepository);
-                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename, rng);
+                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename, rng, context);
                             break;
                         default:
                             throw new Exception("Invalid Menu input");
@@ -136,7 +136,7 @@ namespace ConsoleUI
                     switch (ListAllTraitsScreenOption)
                     {
                         case 0:
-                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename, rng);
+                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename, rng, context);
                             break;
                         case 1:
                             Trait selectedTraitToDelete = FindTraitByIndex(traitRepository); //DELETES A TRAIT
@@ -368,12 +368,13 @@ namespace ConsoleUI
             
         }
       
-        private static void PersonScreen(TraitRepository traitRepository, Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        private static void PersonScreen(TraitRepository traitRepository, Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             Console.Clear();
             
             Console.WriteLine("Name: " + SelectedPerson.Name);
             Console.WriteLine("Sex: " + SelectedPerson.Sex);
+            Console.WriteLine("Living Status:" + SelectedPerson.Living);
             
             string traitOutput = "";
             foreach (var traits in SelectedPerson.Phenotype.Traits)
@@ -409,11 +410,11 @@ namespace ConsoleUI
             }
            
                         
-            PersonScreenMenu(traitRepository, personRepository,SelectedPerson,genotypeRepository,rng);
+            PersonScreenMenu(traitRepository, personRepository,SelectedPerson,genotypeRepository,rng, context);
                       
         }
 
-        private static void PersonScreenMenu(TraitRepository traitRepository, PersonRepository personRepository, Person selectedPerson, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng )
+        private static void PersonScreenMenu(TraitRepository traitRepository, PersonRepository personRepository, Person selectedPerson, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng, GeneticCounsellorDbContext context )
         {
             Console.WriteLine("-----------------------------------------------------");
             Console.WriteLine("1) Edit Person");
@@ -429,10 +430,10 @@ namespace ConsoleUI
                     ListAllPersonsScreen(sb, personRepository,genotypeRepository);
                     break;
                 case 1://Edit Person
-                    EditPersonScreen(traitRepository, personRepository, selectedPerson, genotypeRepository, rng);
+                    EditPersonScreen(traitRepository, personRepository, selectedPerson, genotypeRepository, rng, context);
                     break;
                 case 2: //Combine Genotypes
-                    Genotype resultingGenotype = CombineGenotypesScreen(selectedPerson, personRepository, genotypeRepository,rng, traitRepository);
+                    Genotype resultingGenotype = CombineGenotypesScreen(selectedPerson, personRepository, genotypeRepository,rng, traitRepository, context);
                     Console.WriteLine(resultingGenotype.ToString()+" is the most likely genotype combination in offspring between these two persons");
                     Console.ReadKey();
                     break;
@@ -444,35 +445,35 @@ namespace ConsoleUI
             }
         }
 
-        private static Genotype CombineGenotypesScreen(Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng, TraitRepository traitRepository)//TO DO: Change Seed Data to be compatible with added Genotypes
+        private static Genotype CombineGenotypesScreen(Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng, TraitRepository traitRepository, GeneticCounsellorDbContext context)//TO DO: Change Seed Data to be compatible with added Genotypes
         {
-            Genotype firstSelectedPerson = GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository, rng); //Selected Genotypes            
+            Genotype firstSelectedPerson = GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository, rng, context); //Selected Genotypes            
             Console.WriteLine("Follow Instructions below to select a person to combine genotypes with:"); //Ensure only males and females are compatible 
             StringBuilder sb = new StringBuilder();
             ListAllPersonsScreen(sb, personRepository, genotypeRepository);
             string s = sb.ToString();
             Console.Write(s);
             Person otherPerson = FindPersonByIndex(personRepository);
-            Genotype otherSelectedPerson = GetSelectedPersonsGenotype(otherPerson, traitRepository, personRepository, genotypeRepository, rng);
+            Genotype otherSelectedPerson = GetSelectedPersonsGenotype(otherPerson, traitRepository, personRepository, genotypeRepository, rng, context);
             Genotype resultingGenotype = firstSelectedPerson.CombineGenotypes(otherSelectedPerson,genotypeRepository,rng);
             return resultingGenotype;
             
         }
 
-        private static Genotype GetSelectedPersonsGenotype(Person selectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        private static Genotype GetSelectedPersonsGenotype(Person selectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             var listOfSelectedPersonGenotypes = selectedPerson.Phenotype.TraitGenotypes;
             int number = 1;
             if (number == 0)
             {
-                PersonScreenMenu(traitRepository, personRepository, selectedPerson, genotypeRepository, rng);
+                PersonScreenMenu(traitRepository, personRepository, selectedPerson, genotypeRepository, rng, context);
             }
             if (selectedPerson.Phenotype.TraitGenotypes.Count == 0)
             {
                 Console.Clear();
                 Console.WriteLine("This person does not have a genotypes");          
-                PersonScreen(traitRepository, selectedPerson, personRepository,genotypeRepository , rng);
-                PersonScreenMenu(traitRepository,personRepository,selectedPerson,genotypeRepository,rng);
+                PersonScreen(traitRepository, selectedPerson, personRepository,genotypeRepository , rng, context);
+                PersonScreenMenu(traitRepository,personRepository,selectedPerson,genotypeRepository,rng, context);
             }
             
             foreach (var genotype in selectedPerson.Phenotype.TraitGenotypes)
@@ -493,7 +494,7 @@ namespace ConsoleUI
             catch (Exception)
             {
                 Console.WriteLine("There is no genotype located at that index. Please try again");
-                return GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository,rng); //recursion?               
+                return GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository,rng, context);               
                 
             }
             
@@ -503,7 +504,7 @@ namespace ConsoleUI
 
         }
 
-        private static void EditPersonScreen(TraitRepository traitRepository, PersonRepository personRepository, Person selectedPerson, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        private static void EditPersonScreen(TraitRepository traitRepository, PersonRepository personRepository, Person selectedPerson, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             Console.WriteLine("1) Change Name");
             Console.WriteLine("2) Change Sex");
@@ -519,40 +520,40 @@ namespace ConsoleUI
             switch (EditPersonMenuChoice)
             {
                 case 0:
-                    PersonScreenMenu(traitRepository, personRepository, selectedPerson, genotypeRepository, rng);
+                    PersonScreenMenu(traitRepository, personRepository, selectedPerson, genotypeRepository, rng, context);
                     break;
                 case 1:
-                    ChangeName(traitRepository,selectedPerson, personRepository, genotypeRepository, rng); 
+                    ChangeName(traitRepository,selectedPerson, personRepository, genotypeRepository, rng, context); 
                     break;
                 case 2:
-                    ChangeSex(traitRepository,selectedPerson, personRepository, genotypeRepository, rng);
+                    ChangeSex(traitRepository,selectedPerson, personRepository, genotypeRepository, rng, context);
                     break;
                 case 3:
-                    changeLiving(traitRepository,selectedPerson, personRepository, genotypeRepository, rng);
+                    changeLiving(traitRepository,selectedPerson, personRepository, genotypeRepository, rng, context);
                     break;
                 case 4:
                     StringBuilder sb = new StringBuilder();
                     ListAllPersonsScreen(sb, personRepository,genotypeRepository);
                     string s = sb.ToString();
                     Console.Write(s);                    
-                    AddExsistingGenotype(traitRepository, selectedPerson, genotypeRepository, personRepository, rng);
+                    AddExsistingGenotype(traitRepository, selectedPerson, genotypeRepository, personRepository, rng, context);
                     break;
                 case 5:
                     ChangeGenotype(selectedPerson);
                     break;
                 case 6:
-                    AddExsistingTrait(selectedPerson, traitRepository,  personRepository, genotypeRepository, rng);
+                    AddExsistingTrait(selectedPerson, traitRepository,  personRepository, genotypeRepository, rng, context);
                     break;
                 case 7:
-                    AddMother(traitRepository, selectedPerson, personRepository, genotypeRepository, rng);
+                    AddMother(traitRepository, selectedPerson, personRepository, genotypeRepository, rng, context);
                     break;
                 case 8:
-                    AddFather(traitRepository,selectedPerson, personRepository, genotypeRepository, rng);
+                    AddFather(traitRepository,selectedPerson, personRepository, genotypeRepository, rng, context);
                     break;                
             }
         }
 
-        private static void AddExsistingTrait(Person selectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        private static void AddExsistingTrait(Person selectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             Console.Clear();
             Console.WriteLine("Already exsisting Traits:");
@@ -569,11 +570,11 @@ namespace ConsoleUI
             selectedPerson.AddTraitToPerson(chosenTrait);
             Console.WriteLine("Select which genotype to add to person:");
             chosenTrait.GenerateGenotypesForATrait(chosenTrait.AlleleName, genotypeRepository);
-            AddExsistingGenotype(traitRepository,selectedPerson,genotypeRepository,personRepository,rng);
-            PersonScreen(traitRepository, selectedPerson, personRepository, genotypeRepository, rng);
+            AddExsistingGenotype(traitRepository,selectedPerson,genotypeRepository,personRepository,rng, context);
+            PersonScreen(traitRepository, selectedPerson, personRepository, genotypeRepository, rng, context);
         }
 
-        private static void AddMother(TraitRepository traitRepository, Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        private static void AddMother(TraitRepository traitRepository, Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             StringBuilder sb = new StringBuilder();
             ListAllPersonsScreen(sb, personRepository,genotypeRepository);
@@ -584,17 +585,18 @@ namespace ConsoleUI
             if (can)
             {
                 selectedPerson.AddMotherToPerson(personToBeMother);
-                PersonScreen(traitRepository,selectedPerson, personRepository, genotypeRepository, rng);
+                context.SaveChanges();
+                PersonScreen(traitRepository,selectedPerson, personRepository, genotypeRepository, rng, context);
 
             }
             else
             {
                 Console.WriteLine("Only biological females can be entered as biological mothers");
             }            
-            PersonScreen(traitRepository ,selectedPerson,personRepository, genotypeRepository, rng); //returns user to last menu
+            PersonScreen(traitRepository ,selectedPerson,personRepository, genotypeRepository, rng, context); //returns user to last menu
         }
 
-        private static void AddFather(TraitRepository traitRepository, Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        private static void AddFather(TraitRepository traitRepository, Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             StringBuilder sb = new StringBuilder();
             ListAllPersonsScreen(sb, personRepository,genotypeRepository);
@@ -605,7 +607,7 @@ namespace ConsoleUI
             if (can)
             {
                 selectedPerson.AddFatherToPerson(personToBeFather);
-                PersonScreen(traitRepository, selectedPerson, personRepository, genotypeRepository, rng);
+                PersonScreen(traitRepository, selectedPerson, personRepository, genotypeRepository, rng, context);
             }
             else
             {
@@ -626,7 +628,7 @@ namespace ConsoleUI
          
         }
 
-        private static void AddExsistingGenotype(TraitRepository traitRepository, Person SelectedPerson, GenotypeRepository genotypeRepository, PersonRepository personRepository, RealRandomNumberGenerator rng)//GeneticCounsellorDbContext Db
+        private static void AddExsistingGenotype(TraitRepository traitRepository, Person SelectedPerson, GenotypeRepository genotypeRepository, PersonRepository personRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             Console.Clear();
             Console.WriteLine("Already exsisting Genotypes:");
@@ -640,11 +642,11 @@ namespace ConsoleUI
             int genotypeIndex = Convert.ToInt32(Console.ReadLine());
             var Allgenotypes = genotypeRepository.ListGenotypes();
             SelectedPerson.AddGenotypeToPerson(Allgenotypes[genotypeIndex]);
-            PersonScreen(traitRepository, SelectedPerson, personRepository, genotypeRepository, rng); //returns user to last menu
+            PersonScreen(traitRepository, SelectedPerson, personRepository, genotypeRepository, rng, context); //returns user to last menu
 
         }
 
-        private static void changeLiving(TraitRepository traitRepository, Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        private static void changeLiving(TraitRepository traitRepository, Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             Console.WriteLine("Please input a new Living status (True, False)");            
             string acceptableTrueString = "true";
@@ -655,20 +657,20 @@ namespace ConsoleUI
                 bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
                 SelectedPerson.Living = inputLiving;
             }
-            PersonScreen(traitRepository,SelectedPerson, personRepository, genotypeRepository, rng); //returns user to last menu
+            PersonScreen(traitRepository,SelectedPerson, personRepository, genotypeRepository, rng, context); //returns user to last menu
         }
 
-        private static void ChangeSex(TraitRepository traitRepository, Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        private static void ChangeSex(TraitRepository traitRepository, Person SelectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             Console.WriteLine("Please input a new sex (Male, Female or Unknown)");
             string inputtedSex = Console.ReadLine();
             Sex newSex = (Sex)Enum.Parse(typeof(Sex), inputtedSex, true);
 
             SelectedPerson.Sex = newSex;
-            PersonScreen(traitRepository, SelectedPerson,personRepository, genotypeRepository, rng); //returns user to last menu
+            PersonScreen(traitRepository, SelectedPerson,personRepository, genotypeRepository, rng, context); //returns user to last menu
         }
 
-        private static void ChangeName(TraitRepository traitRepository,Person SelectedPerson,PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng)
+        private static void ChangeName(TraitRepository traitRepository,Person SelectedPerson,PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
             
             Console.WriteLine("Please input a new full name");
@@ -679,7 +681,7 @@ namespace ConsoleUI
             }
           
             SelectedPerson.Name = newName;
-            PersonScreen(traitRepository,SelectedPerson, personRepository, genotypeRepository, rng);           
+            PersonScreen(traitRepository,SelectedPerson, personRepository, genotypeRepository, rng, context);           
         }
 
         private static int MenuUserInputInt(int max)
