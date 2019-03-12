@@ -11,7 +11,7 @@ namespace PedigreeObjects
     {
         public GeneticCounsellorDbContext(string databaseName):base(databaseName)
         {
-            Database.SetInitializer(new GeneticCounsellorDbInitialiser());
+           Database.SetInitializer(new GeneticCounsellorDbInitialiser());
         }
         public DbSet<Person> Persons { get; set; } //Defining the types that have a table
         public DbSet<Genotype> Genotypes { get; set; }

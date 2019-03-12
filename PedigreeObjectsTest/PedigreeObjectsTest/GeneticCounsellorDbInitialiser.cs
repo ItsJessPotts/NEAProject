@@ -7,9 +7,10 @@ using System.Data.Entity;
 
 namespace PedigreeObjects
 {
-    public class GeneticCounsellorDbInitialiser : DropCreateDatabaseIfModelChanges<GeneticCounsellorDbContext>         //DropCreateDatabaseAlways<GeneticCounsellorDbContext> 
-    
-       
+    public class GeneticCounsellorDbInitialiser : DropCreateDatabaseIfModelChanges<GeneticCounsellorDbContext> //DropCreateDatabaseAlways<GeneticCounsellorDbContext> //DropCreateDatabaseIfModelChanges<GeneticCounsellorDbContext>         
+
+
+
     {
         protected override void Seed(GeneticCounsellorDbContext context)
         {
@@ -22,95 +23,95 @@ namespace PedigreeObjects
             //var mf = CreateNewPhenotype("Marfans", context);
             //var ts = CreateNewPhenotype("Tuberous Sclerosis", context);
 
-            var ja = CreateNewPerson("John Adams", Sex.Male, true, "Colourblind", context); 
+            //var ja = CreateNewPerson("John Adams", Sex.Male, true, "Colourblind", context); 
             
-            var eh = CreateNewPerson("Eliza Hamilton", Sex.Female, true, "Cystic Fibrosis", context);
+            //var eh = CreateNewPerson("Eliza Hamilton", Sex.Female, true, "Cystic Fibrosis", context);
             
-            var sa = CreateNewPerson("Samuel Adams", Sex.Male, true, "Heamophiliac", context);
+            //var sa = CreateNewPerson("Samuel Adams", Sex.Male, true, "Heamophiliac", context);
       
-            var pr = CreateNewPerson("Paul Revere", Sex.Male, true, "Huntingtons",context);
+            //var pr = CreateNewPerson("Paul Revere", Sex.Male, true, "Huntingtons",context);
           
-            var ca = CreateNewPerson("Crispus Attucks", Sex.Male, false, "Marfans",context);
+            //var ca = CreateNewPerson("Crispus Attucks", Sex.Male, false, "Marfans",context);
         
-            var aa = CreateNewPerson("Abigail Adams",Sex.Female,true, "Tuberous Sclerosis", context);
+            //var aa = CreateNewPerson("Abigail Adams",Sex.Female,true, "Tuberous Sclerosis", context);
 
-            var jc = CreateNewPerson("James Cook", Sex.Male, true, "Heamophiliac", context);
+            //var jc = CreateNewPerson("James Cook", Sex.Male, true, "Heamophiliac", context);
 
-            var ed = CreateNewPerson("Enid Dundy", Sex.Female, true, "Hemophiliac", context);
+            //var ed = CreateNewPerson("Enid Dundy", Sex.Female, true, "Hemophiliac", context);
 
-            var jh = CreateNewPerson("Jonathan Hamilton", Sex.Male, true, "Hemophiliac", context);
+            //var jh = CreateNewPerson("Jonathan Hamilton", Sex.Male, true, "Hemophiliac", context);
 
 
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
-            //The Gene Pool
-            var cDom = CreateNewGenotype("C",Dominance.Dominant,Dominance.Dominant, context);
+            ////The Gene Pool
+            //var cDom = CreateNewGenotype("C",Dominance.Dominant,Dominance.Dominant, context);
       
-            var cHet = CreateNewGenotype("C", Dominance.Dominant, Dominance.Recessive, context);
+            //var cHet = CreateNewGenotype("C", Dominance.Dominant, Dominance.Recessive, context);
             
-            var cRec = CreateNewGenotype("c", Dominance.Recessive, Dominance.Recessive, context);
+            //var cRec = CreateNewGenotype("c", Dominance.Recessive, Dominance.Recessive, context);
 
-            var fDom = CreateNewGenotype("F", Dominance.Dominant, Dominance.Dominant, context);
+            //var fDom = CreateNewGenotype("F", Dominance.Dominant, Dominance.Dominant, context);
 
-            var pDom = CreateNewGenotype("P", Dominance.Dominant, Dominance.Dominant, context);
+            //var pDom = CreateNewGenotype("P", Dominance.Dominant, Dominance.Dominant, context);
 
-            var pRec = CreateNewGenotype("p", Dominance.Recessive, Dominance.Recessive, context);
+            //var pRec = CreateNewGenotype("p", Dominance.Recessive, Dominance.Recessive, context);
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
            
-            var c = CreateNewTrait("Colourblindness", "C", Dominance.Recessive, context);
+            //var c = CreateNewTrait("Colourblindness", "C", Dominance.Recessive, context);
     
-            var f = CreateNewTrait("Cystic Fibrosis", "F", Dominance.Recessive, context);
+            //var f = CreateNewTrait("Cystic Fibrosis", "F", Dominance.Recessive, context);
          
-            var p = CreateNewTrait("Haemophilia", "P", Dominance.Recessive, context);
+            //var p = CreateNewTrait("Haemophilia", "P", Dominance.Recessive, context);
            
-            var H = CreateNewTrait("Huntington's Disease", "H", Dominance.Dominant, context);
+            //var H = CreateNewTrait("Huntington's Disease", "H", Dominance.Dominant, context);
             
-            var M = CreateNewTrait("Marfan's Syndrom", "M", Dominance.Dominant, context);
+            //var M = CreateNewTrait("Marfan's Syndrom", "M", Dominance.Dominant, context);
             
-            var T = CreateNewTrait("Tuberous Sclerosis", "T", Dominance.Dominant, context);
+            //var T = CreateNewTrait("Tuberous Sclerosis", "T", Dominance.Dominant, context);
             
-            context.SaveChanges();
+            //context.SaveChanges();
 
-            ja.Phenotype.Traits.Add(c);
-            ja.Phenotype.Traits.Add(f);
-            ja.Phenotype.TraitGenotypes.Add(cRec);
-            ja.Phenotype.TraitGenotypes.Add(fDom);
-            ja.AddMotherToPerson(eh);
-            ja.AddFatherToPerson(sa);
+            //ja.Phenotype.Traits.Add(c);
+            //ja.Phenotype.Traits.Add(f);
+            //ja.Phenotype.TraitGenotypes.Add(cRec);
+            //ja.Phenotype.TraitGenotypes.Add(fDom);
+            //ja.AddMotherToPerson(eh);
+            //ja.AddFatherToPerson(sa);
 
-            eh.Phenotype.Traits.Add(p);
-            eh.Phenotype.Traits.Add(c);
-            eh.Phenotype.TraitGenotypes.Add(pDom);
-            eh.Phenotype.TraitGenotypes.Add(cHet);
-            eh.AddMotherToPerson(ed);
-            eh.AddFatherToPerson(jh);
+            //eh.Phenotype.Traits.Add(p);
+            //eh.Phenotype.Traits.Add(c);
+            //eh.Phenotype.TraitGenotypes.Add(pDom);
+            //eh.Phenotype.TraitGenotypes.Add(cHet);
+            //eh.AddMotherToPerson(ed);
+            //eh.AddFatherToPerson(jh);
 
-            jh.Phenotype.Traits.Add(p);
-            jh.Phenotype.Traits.Add(c);
-            jh.Phenotype.TraitGenotypes.Add(pDom);
-            jh.Phenotype.TraitGenotypes.Add(cDom);
+            //jh.Phenotype.Traits.Add(p);
+            //jh.Phenotype.Traits.Add(c);
+            //jh.Phenotype.TraitGenotypes.Add(pDom);
+            //jh.Phenotype.TraitGenotypes.Add(cDom);
 
-            ed.Phenotype.Traits.Add(p);
-            ed.Phenotype.Traits.Add(c);
-            ed.Phenotype.TraitGenotypes.Add(cHet);
-            ed.Phenotype.TraitGenotypes.Add(pDom);
+            //ed.Phenotype.Traits.Add(p);
+            //ed.Phenotype.Traits.Add(c);
+            //ed.Phenotype.TraitGenotypes.Add(cHet);
+            //ed.Phenotype.TraitGenotypes.Add(pDom);
 
-            sa.Phenotype.Traits.Add(p);
-            sa.Phenotype.Traits.Add(c);
-            sa.Phenotype.TraitGenotypes.Add(pRec);
-            sa.Phenotype.TraitGenotypes.Add(cHet);
-            sa.AddMotherToPerson(aa);
-            sa.AddFatherToPerson(jc);
+            //sa.Phenotype.Traits.Add(p);
+            //sa.Phenotype.Traits.Add(c);
+            //sa.Phenotype.TraitGenotypes.Add(pRec);
+            //sa.Phenotype.TraitGenotypes.Add(cHet);
+            //sa.AddMotherToPerson(aa);
+            //sa.AddFatherToPerson(jc);
 
-            aa.Phenotype.Traits.Add(p);
-            aa.Phenotype.Traits.Add(c);
-            aa.Phenotype.TraitGenotypes.Add(pRec);
-            aa.Phenotype.TraitGenotypes.Add(cHet);
+            //aa.Phenotype.Traits.Add(p);
+            //aa.Phenotype.Traits.Add(c);
+            //aa.Phenotype.TraitGenotypes.Add(pRec);
+            //aa.Phenotype.TraitGenotypes.Add(cHet);
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
 
 

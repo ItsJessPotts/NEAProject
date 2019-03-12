@@ -99,7 +99,7 @@ namespace ConsoleUI
                     break;
                 case 2:
                     ListAllPersonsChoice(personRepository,genotypeRepository);
-                    int ListAllPersonsScreenOption = MenuUserInputInt(2);
+                    int ListAllPersonsScreenOption = MenuUserInputInt(3);
 
                     switch (ListAllPersonsScreenOption)
                     {
@@ -116,6 +116,10 @@ namespace ConsoleUI
                             Console.WriteLine("#######################");
                             Console.WriteLine("Person has been deleted.");
                             Console.WriteLine("#######################");
+                            break;
+                        case 3:
+                            AddPersonScreen(personRepository, genotypeRepository);
+                            geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename, rng);
                             break;
                         default:
                             throw new Exception("Invalid Menu input");
@@ -222,6 +226,7 @@ namespace ConsoleUI
                 Console.WriteLine("-----------------------------------------------------");
                 Console.WriteLine("1) Select a Person");
                 Console.WriteLine("2) Delete a Person");
+                Console.WriteLine("3) Add a person");
                 Console.WriteLine("-----------------------------------------------------");
             
 
@@ -243,7 +248,7 @@ namespace ConsoleUI
         {
             Console.Clear();
             var ListOfTraits = traitRepository.ListTraits();
-
+            int i = 0;
             if (ListOfTraits.Count == 0)
             {
                 sb2.AppendLine("There are no Traits in this system, please add one.");
@@ -253,7 +258,8 @@ namespace ConsoleUI
             {
                 foreach (var t in ListOfTraits)
                 {
-                    sb2.AppendLine(t.ToString());
+                    i++;
+                    sb2.AppendLine(i+ ") " + t.ToString());
                 }
             }
         }
@@ -284,6 +290,7 @@ namespace ConsoleUI
                 {
                     throw new Exception();
                 }
+                
                 Console.WriteLine("Sex ( Male or Female ): ");
                 string inputtedSex = Console.ReadLine();
                 Sex inputSex = (Sex)Enum.Parse(typeof(Sex), inputtedSex, true);
@@ -321,9 +328,8 @@ namespace ConsoleUI
             if (ListOfPersons.Count == 0)
             {
                 sb.AppendLine("There are no Persons in this system, please add one.");
-                sb.AppendLine("____________________________________________________");
-                Console.ReadKey();
-                AddPersonScreen(personRepository, genotypeRepository);
+                Console.ReadLine();
+                
             }
             else
             {
