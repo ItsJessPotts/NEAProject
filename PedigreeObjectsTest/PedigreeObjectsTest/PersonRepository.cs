@@ -41,6 +41,10 @@ namespace PedigreeObjects
         {
             return Db.Persons.ToList();
         }
+        public Person FindPersonByID(int Id) //Select * FROM persons WHERE personId = index
+        {
+            return Db.Persons.Where(p => p.PersonID == Id).FirstOrDefault();        
+        }
         public List<Person> FindPersonsByTrait(Trait trait)
         {
 

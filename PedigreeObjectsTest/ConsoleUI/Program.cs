@@ -1,6 +1,7 @@
 ﻿using HardyWeinbergTest;
 using PedigreeObjects;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ConsoleUI
@@ -195,24 +196,52 @@ namespace ConsoleUI
 
         private static void DrawGeneration(Person selectedPerson, int numberOfGenerations)
         {
-            Person person = selectedPerson;
+            var pedTree = new List<List<Person>>();
             for (int i = 0; i < numberOfGenerations; i++)
             {
-                
-                Console.WriteLine(person.Mother + "            " + person.Father);
-                Console.WriteLine("    |                                           |  ");
-                Console.WriteLine("    |                                           |  ");
-                Console.WriteLine("    |                                           |  ");
-                Console.WriteLine("    |                                           |  ");
-                Console.WriteLine("    --------------------|------------------------  ");
-                Console.WriteLine("                        |                          ");
-                Console.WriteLine("                        |                          ");
-                Console.WriteLine("                        |                          ");
-                Console.WriteLine("                                                   ");
-                Console.WriteLine("                     " + person + "                ");
-                person = selectedPerson.Father;
-                person = selectedPerson.Mother;
+                pedTree.Add(new List<Person>()); //initialising the list
+
             }
+            pedTree[0].Add(selectedPerson);
+
+            for (int i = 0; i < numberOfGenerations-1; i++)
+            {
+                var layer = pedTree[i];
+                foreach (Person p in layer)
+                {
+                    Person father = p.Father;
+                    Person mother = p.Mother;
+                    pedTree[i + 1].Add(mother);
+                    pedTree[i + 1].Add(father);
+                }
+            }
+
+            foreach (var layer in pedTree)
+            {
+
+                foreach (Person p in layer)
+                {
+                    //string gap = CalculateGap();
+                    Console.Write(p);
+                }
+                Console.WriteLine();
+            }
+
+           
+            
+
+
+
+        }
+
+        private static string CalculateGap(int layer)
+        {
+            string gap = "                  ";
+            for (int i = 0; i < layer; i++)
+            {
+                gap = gap + gap;
+            }
+            return gap;
         }
 
         private static void ListAllPersonsChoice(PersonRepository personRepository,GenotypeRepository genotypeRepository)
@@ -349,10 +378,11 @@ namespace ConsoleUI
             Console.Write("Enter a Person Index No. :");
             try
             {
-                var ListOfPersons = personRepository.ListPersons();
+                //var ListOfPersons = personRepository.ListPersons();
                 int index = Convert.ToInt32(Console.ReadLine());
-                Person SelectedPerson = ListOfPersons[index - 1];
-                return SelectedPerson;
+                //Person SelectedPerson = ListOfPersons[index - 1];
+                //return SelectedPerson;
+                return personRepository.FindPersonByID(index);
             }
             catch (IndexOutOfRangeException)
             {
@@ -483,7 +513,7 @@ namespace ConsoleUI
             }
             try
             {
-                Console.WriteLine("Please input the index of genotype you want to combine");
+                Console.WriteLine("Please input the index of genotype you want to use");
                 int index = Convert.ToInt32(Console.ReadLine());
 
                 Genotype selectedPersonGenotype = listOfSelectedPersonGenotypes[index - 1];
@@ -539,7 +569,7 @@ namespace ConsoleUI
                     AddExsistingGenotype(traitRepository, selectedPerson, genotypeRepository, personRepository, rng, context);
                     break;
                 case 5:
-                    ChangeGenotype(selectedPerson);
+                    DeleteGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository, rng, context);
                     break;
                 case 6:
                     AddExsistingTrait(selectedPerson, traitRepository,  personRepository, genotypeRepository, rng, context);
@@ -571,6 +601,7 @@ namespace ConsoleUI
             Console.WriteLine("Select which genotype to add to person:");
             chosenTrait.GenerateGenotypesForATrait(chosenTrait.AlleleName, genotypeRepository);
             AddExsistingGenotype(traitRepository,selectedPerson,genotypeRepository,personRepository,rng, context);
+            context.SaveChanges();
             PersonScreen(traitRepository, selectedPerson, personRepository, genotypeRepository, rng, context);
         }
 
@@ -607,6 +638,7 @@ namespace ConsoleUI
             if (can)
             {
                 selectedPerson.AddFatherToPerson(personToBeFather);
+                context.SaveChanges();
                 PersonScreen(traitRepository, selectedPerson, personRepository, genotypeRepository, rng, context);
             }
             else
@@ -623,9 +655,13 @@ namespace ConsoleUI
             Console.WriteLine("Phenotype:" + SelectedPerson.Phenotype.PhenotypeName);
         }
 
-        private static void ChangeGenotype(Person SelectedPerson)
+        private static void DeleteGenotype(Person SelectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
-         
+            Genotype genotypeToBeDeleted = GetSelectedPersonsGenotype(SelectedPerson, traitRepository, personRepository, genotypeRepository, rng, context);
+            SelectedPerson.Phenotype.TraitGenotypes.Remove(genotypeToBeDeleted);
+            context.SaveChanges();
+
+           // context.Genotypes.Remove(); HOW TO REMOVE FROM THE DATABASE
         }
 
         private static void AddExsistingGenotype(TraitRepository traitRepository, Person SelectedPerson, GenotypeRepository genotypeRepository, PersonRepository personRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
@@ -642,6 +678,7 @@ namespace ConsoleUI
             int genotypeIndex = Convert.ToInt32(Console.ReadLine());
             var Allgenotypes = genotypeRepository.ListGenotypes();
             SelectedPerson.AddGenotypeToPerson(Allgenotypes[genotypeIndex]);
+            context.SaveChanges();
             PersonScreen(traitRepository, SelectedPerson, personRepository, genotypeRepository, rng, context); //returns user to last menu
 
         }
@@ -657,6 +694,7 @@ namespace ConsoleUI
                 bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
                 SelectedPerson.Living = inputLiving;
             }
+            context.SaveChanges();
             PersonScreen(traitRepository,SelectedPerson, personRepository, genotypeRepository, rng, context); //returns user to last menu
         }
 
@@ -667,6 +705,7 @@ namespace ConsoleUI
             Sex newSex = (Sex)Enum.Parse(typeof(Sex), inputtedSex, true);
 
             SelectedPerson.Sex = newSex;
+            context.SaveChanges();
             PersonScreen(traitRepository, SelectedPerson,personRepository, genotypeRepository, rng, context); //returns user to last menu
         }
 
@@ -681,7 +720,8 @@ namespace ConsoleUI
             }
           
             SelectedPerson.Name = newName;
-            PersonScreen(traitRepository,SelectedPerson, personRepository, genotypeRepository, rng, context);           
+            context.SaveChanges();
+            PersonScreen(traitRepository,SelectedPerson, personRepository, genotypeRepository, rng, context);//returns user to last menu           
         }
 
         private static int MenuUserInputInt(int max)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PedigreeObjects
 {
-    public class GenotypeRepository //Referred to as traits on the user interface
+    public class GenotypeRepository 
                                     //Stored in Repos as Homozygous
     {
         
@@ -49,6 +49,11 @@ namespace PedigreeObjects
                 where genotype.AlleleName == AlelleName
                 select genotype;
                 return genotypeQuery.ToList();
+        }
+        public void DeleteGenotype(Genotype g)
+        {
+            Db.Genotypes.Remove(g);
+            Db.SaveChanges();
         }
     }
 }
