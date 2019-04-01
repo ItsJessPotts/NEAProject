@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PedigreeObjects
 {
-    public enum Dominance
+    public enum Dominance //types of alleles
     {
         Dominant, Recessive, Unknown 
     }

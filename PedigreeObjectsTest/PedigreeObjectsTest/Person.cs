@@ -12,10 +12,8 @@ namespace PedigreeObjects
         public string Name { get; set; }// clarity's sake
         public Sex Sex { get; set; } //male or female = circle or square
         public bool Living { get; set; } //dead or alive
-        //public List<Genotype> Genotypes { get; set; }
         public virtual Phenotype Phenotype { get; set; }//is colourblind, heamophiliac, Has cystic fibrosis etc  
-        public int PhenotypeID { get; set; }
-        //public object Gametes { get; set; }// 'A, a, B, b'or ' A,b
+        public int PhenotypeID { get; set; }        
         public virtual Person Mother { get; set; }
         public virtual int? MotherID { get; set; }
         public virtual Person Father { get; set; }

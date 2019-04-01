@@ -45,15 +45,7 @@ namespace PedigreeObjects
         {
             return Db.Persons.Where(p => p.PersonID == Id).FirstOrDefault();        
         }
-        public List<Person> FindPersonsByTrait(Trait trait)
-        {
-
-            //IQueryable<Person> personQuery =
-            //from p in Db.Persons
-            //from t in Db.Traits
-            return null;
-               
-        }
+        
 
 
 

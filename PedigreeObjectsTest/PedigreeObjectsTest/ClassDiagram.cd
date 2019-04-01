@@ -1,31 +1,112 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="PedigreeObjects.GenotypeRepository">
-    <Position X="2.75" Y="2.25" Width="2.25" />
+    <Position X="15" Y="4.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAMAAAAAEAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAQMAAAAAEAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>GenotypeRepository.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Db" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="PedigreeObjects.PhenotypeRepository">
-    <Position X="2.5" Y="4.75" Width="2.5" />
+    <Position X="9.5" Y="4.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAEAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>PhenotypeRepository.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Db" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="PedigreeObjects.TraitRepository">
-    <Position X="0.5" Y="2.5" Width="1.75" />
+    <Position X="12.25" Y="6.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAIEAAAAAA=</HashCode>
       <FileName>TraitRepository.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Db" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="PedigreeObjects.PersonRepository">
-    <Position X="7.25" Y="3.25" Width="2" />
+    <Position X="12.25" Y="2.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAEAAAAAAAAAAAAAAAAAAAAAgBAEA=</HashCode>
+      <HashCode>AAAAAAAAAAAAIAAAEAAAAAAAAAAAAAAAAAAAAAgBAMA=</HashCode>
       <FileName>PersonRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Db" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PedigreeObjects.GeneticCounsellorDbContext" Collapsed="true">
+    <Position X="12" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAgEAAAAAAEAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>GeneticCounsellorDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PedigreeObjects.Genotype" Collapsed="true">
+    <Position X="6.5" Y="2.75" Width="1.25" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="PeopleWithGenotype" Type="PedigreeObjects.Phenotype" FixedFromPoint="true">
+      <Path>
+        <Point X="7.08" Y="3.312" />
+        <Point X="7.08" Y="4.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>RAAAAAQAAAAAAAQEAEAAAAASAAAAAgAAAAAAAAAAEAA=</HashCode>
+      <FileName>Genotype.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="PeopleWithGenotype" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="PedigreeObjects.Trait" Collapsed="true">
+    <Position X="6.5" Y="6.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAIJAAAAAAAEAAAAAAAAAAACAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Trait.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="PhenotypesWithTrait" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="PedigreeObjects.Person" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.25" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QAAAAAEQAAAADAAkAAAAAIQAAAAAAkBIDAQBEAAAAAA=</HashCode>
+      <FileName>Person.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Phenotype" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PedigreeObjects.Phenotype" Collapsed="true">
+    <Position X="6.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAACAAEgQAAAIAAAAAAAAABAAACAAIAAAA=</HashCode>
+      <FileName>Phenotype.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

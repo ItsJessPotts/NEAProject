@@ -70,23 +70,58 @@ namespace PedigreeObjects
                 default:
                     throw new Exception("Invalid Choice");
             }
-            //Create Genotype given the two alelles
-            //var gt = new Genotype(this.AlleleName, resultingAllele1, resultingAllele2);
+
             var gt = genotypeRepository.AddGenotype(this.AlleleName, resultingAllele1, resultingAllele2);
             return gt;
         }
 
-
-        // THESE METHODS BELOW MAY NOT BE SUITED TO THIS CLASS..
-
-        public int CalculateGenotypicRatio(Genotype gt)
+                
+        public List<Genotype> CalculateParentalGenotypes(Genotype g, GenotypeRepository genotypeRepository, IRandomNumberGenerator RNG)
         {
-            return 0;
-        } 
-        
-        public GenotypeRepository CalculateParentalGenotypes()
-        {
-            return null;
+            List<Genotype> PossibleParentalGenotypes = new List<Genotype>();
+            string letter = g.AlleleName;            
+            Genotype hetG = new Genotype(g.AlleleName, Dominance.Dominant, Dominance.Recessive);
+            Genotype domG = new Genotype(g.AlleleName, Dominance.Dominant, Dominance.Dominant);
+            Genotype recG = new Genotype(g.AlleleName, Dominance.Recessive, Dominance.Recessive);
+            Genotype resultOfHetGAndDomG = hetG.CombineGenotypes(domG, genotypeRepository, RNG);
+            Genotype resultOfHetGAndRecG = hetG.CombineGenotypes(recG, genotypeRepository, RNG);
+            Genotype resultOfHetGAndHetG = hetG.CombineGenotypes(hetG,genotypeRepository, RNG);
+            Genotype resultOfDomGAndDomG = domG.CombineGenotypes(domG, genotypeRepository, RNG);
+            Genotype resultOfDomGAndRecG = domG.CombineGenotypes(recG, genotypeRepository, RNG);
+            Genotype resultOfRecGAndRecG = recG.CombineGenotypes(recG, genotypeRepository, RNG);
+
+            if (g == resultOfDomGAndDomG)
+            {
+                PossibleParentalGenotypes.Add(domG);
+                PossibleParentalGenotypes.Add(domG);
+
+            }
+            if (g == resultOfDomGAndRecG)
+            {
+                PossibleParentalGenotypes.Add(domG);
+                PossibleParentalGenotypes.Add(recG);
+            }
+            if (g == resultOfHetGAndDomG)
+            {
+                PossibleParentalGenotypes.Add(domG);
+                PossibleParentalGenotypes.Add(hetG);
+            }
+            if (g == resultOfHetGAndHetG)
+            {
+                PossibleParentalGenotypes.Add(hetG);
+                PossibleParentalGenotypes.Add(hetG);
+            }
+            if (g == resultOfHetGAndRecG)
+            {
+                PossibleParentalGenotypes.Add(recG);
+                PossibleParentalGenotypes.Add(hetG);
+            }
+            if (g == resultOfRecGAndRecG)
+            {
+                PossibleParentalGenotypes.Add(recG);
+                PossibleParentalGenotypes.Add(recG);
+            }           
+            return PossibleParentalGenotypes;
         }
         
 

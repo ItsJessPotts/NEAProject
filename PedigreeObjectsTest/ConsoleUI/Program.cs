@@ -215,33 +215,76 @@ namespace ConsoleUI
                     pedTree[i + 1].Add(father);
                 }
             }
-
+            int layerNumber = 0;
             foreach (var layer in pedTree)
-            {
-
+            {                
+                layerNumber++;
                 foreach (Person p in layer)
                 {
-                    //string gap = CalculateGap();
-                    Console.Write(p);
+                    string LeftGap = CalculateLeftGap(layerNumber, layer,p, numberOfGenerations);
+                    string RightGap = CalculateRightGap(layerNumber, layer,p, numberOfGenerations);
+                    Console.Write(LeftGap + p + RightGap);
                 }
                 Console.WriteLine();
+                Console.WriteLine();
             }
+                      
+        }
 
-           
+        private static string CalculateRightGap(int layerNumber, List<Person> layer, Person p, int numberOfGenerations)
+        {
+            string gap = "|-------R-------|"; //|-------R-------|
+            string FinishedGap = "";
+            if (layerNumber == 1)
+            {
+                FinishedGap = gap;
+                return FinishedGap;
+            }
+            else
+            {
+                int personIndex =layer.IndexOf(p);
+                int modulo = personIndex % 2;
+                if (modulo == 0)// Determines if the index is even or 0 (women in a full parental set)
+                {
+                    for (int i = 0; i < numberOfGenerations - layerNumber; i++)
+                    {
+                        FinishedGap = FinishedGap + gap;
+                    }
+                    return FinishedGap = FinishedGap + gap;
+                }
+                else
+                {
+                    return gap;
+                }
+            }
             
-
-
 
         }
 
-        private static string CalculateGap(int layer)
+        private static string CalculateLeftGap(int layerNumber, List<Person> layer, Person p, int NumberOfGenerations)
         {
-            string gap = "                  ";
-            for (int i = 0; i < layer; i++)
+            string gap = "|-------L-------|"; //|-------L-------|
+            string FinishedGap = "";
+            if (layerNumber == 1)
             {
-                gap = gap + gap;
+                
+                for (int i = 0; i < NumberOfGenerations; i++)
+                {
+                    FinishedGap = FinishedGap + gap;
+                }
+                return FinishedGap;
             }
-            return gap;
+            else
+            
+            {
+                
+                    for (int i = 0; i < NumberOfGenerations - layerNumber; i++)
+                    {
+                        FinishedGap = FinishedGap + gap;
+                    }
+                    return FinishedGap;
+            }
+       
         }
 
         private static void ListAllPersonsChoice(PersonRepository personRepository,GenotypeRepository genotypeRepository)
@@ -327,7 +370,7 @@ namespace ConsoleUI
                 {
                     Console.WriteLine("Living (true or false): ");
                     string acceptableTrueString = "true";
-                    string acceptableFalseString = "False";
+                    string acceptableFalseString = "false";
                     string inputtedLiving = Console.ReadLine();
                     if (inputtedLiving == acceptableTrueString || inputtedLiving == acceptableFalseString)
                     {
@@ -378,11 +421,11 @@ namespace ConsoleUI
             Console.Write("Enter a Person Index No. :");
             try
             {
-                //var ListOfPersons = personRepository.ListPersons();
+                var ListOfPersons = personRepository.ListPersons();
                 int index = Convert.ToInt32(Console.ReadLine());
-                //Person SelectedPerson = ListOfPersons[index - 1];
-                //return SelectedPerson;
-                return personRepository.FindPersonByID(index);
+                Person SelectedPerson = ListOfPersons[index - 1];
+                return SelectedPerson;
+                //return personRepository.FindPersonByID(index);
             }
             catch (IndexOutOfRangeException)
             {
@@ -450,8 +493,9 @@ namespace ConsoleUI
             Console.WriteLine("1) Edit Person");
             Console.WriteLine("2) Combine Genotype with other person");
             Console.WriteLine("3) Update Phenotype");
+            Console.WriteLine("4) Calculate Parental Genotypes");
             Console.WriteLine("-----------------------------------------------------");
-            int PersonMenuChoice = MenuUserInputInt(3);
+            int PersonMenuChoice = MenuUserInputInt(4);
             switch (PersonMenuChoice)
             {
                 case 0:
@@ -464,25 +508,46 @@ namespace ConsoleUI
                     break;
                 case 2: //Combine Genotypes
                     Genotype resultingGenotype = CombineGenotypesScreen(selectedPerson, personRepository, genotypeRepository,rng, traitRepository, context);
+                    Console.Clear();
+                    Console.WriteLine("______________________________________________________________________________________________________________");
                     Console.WriteLine(resultingGenotype.ToString()+" is the most likely genotype combination in offspring between these two persons");
+                    Console.WriteLine("______________________________________________________________________________________________________________");
                     Console.ReadKey();
                     break;
                 case 3: //update Phenotype
                     UpdatePhenotype(selectedPerson);
+                    break;
+                case 4:
+                    CalculateParentalGenotypes(selectedPerson, traitRepository, personRepository,genotypeRepository, rng, context);
                     break;
                 default:
                     throw new Exception("Invalid Menu input");
             }
         }
 
+        private static void CalculateParentalGenotypes(Person selectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
+        {
+            Genotype genotypeToTrace = GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository, rng, context);
+            List<Genotype> parentalGenotypes = genotypeToTrace.CalculateParentalGenotypes(genotypeToTrace, genotypeRepository, rng);
+            Console.WriteLine("Here are the potential parental genotypes:");
+            foreach (var genotype in parentalGenotypes)
+            {
+                Console.WriteLine(genotype);
+            }
+        }
+
         private static Genotype CombineGenotypesScreen(Person selectedPerson, PersonRepository personRepository, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng, TraitRepository traitRepository, GeneticCounsellorDbContext context)//TO DO: Change Seed Data to be compatible with added Genotypes
         {
+            Console.Clear();
             Genotype firstSelectedPerson = GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository, rng, context); //Selected Genotypes            
-            Console.WriteLine("Follow Instructions below to select a person to combine genotypes with:"); //Ensure only males and females are compatible 
+             //Ensure only males and females are compatible 
             StringBuilder sb = new StringBuilder();
             ListAllPersonsScreen(sb, personRepository, genotypeRepository);
             string s = sb.ToString();
-            Console.Write(s);
+            Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++");
+            Console.WriteLine("Please select a person to combine genotypes with:");
+            Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++");
+            Console.Write(s);          
             Person otherPerson = FindPersonByIndex(personRepository);
             Genotype otherSelectedPerson = GetSelectedPersonsGenotype(otherPerson, traitRepository, personRepository, genotypeRepository, rng, context);
             Genotype resultingGenotype = firstSelectedPerson.CombineGenotypes(otherSelectedPerson,genotypeRepository,rng);
@@ -492,12 +557,7 @@ namespace ConsoleUI
 
         private static Genotype GetSelectedPersonsGenotype(Person selectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
         {
-            var listOfSelectedPersonGenotypes = selectedPerson.Phenotype.TraitGenotypes;
-            int number = 1;
-            if (number == 0)
-            {
-                PersonScreenMenu(traitRepository, personRepository, selectedPerson, genotypeRepository, rng, context);
-            }
+            var listOfSelectedPersonGenotypes = selectedPerson.Phenotype.TraitGenotypes;            
             if (selectedPerson.Phenotype.TraitGenotypes.Count == 0)
             {
                 Console.Clear();
@@ -505,33 +565,29 @@ namespace ConsoleUI
                 PersonScreen(traitRepository, selectedPerson, personRepository,genotypeRepository , rng, context);
                 PersonScreenMenu(traitRepository,personRepository,selectedPerson,genotypeRepository,rng, context);
             }
-            
+            int number = 1;
             foreach (var genotype in selectedPerson.Phenotype.TraitGenotypes)
             {
-                Console.WriteLine(number + ')' +" " + genotype.ToString());
-                number++;
+                Console.WriteLine(number + ") " + genotype.ToString());
+                number = number + 1;
             }
             try
             {
-                Console.WriteLine("Please input the index of genotype you want to use");
+                Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                Console.WriteLine("Please input the index of genotype you want to use: ");
+               
                 int index = Convert.ToInt32(Console.ReadLine());
 
                 Genotype selectedPersonGenotype = listOfSelectedPersonGenotypes[index - 1];
-                return selectedPersonGenotype;
-                
-
+                return selectedPersonGenotype;                
             }
             catch (Exception)
             {
                 Console.WriteLine("There is no genotype located at that index. Please try again");
                 return GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository,rng, context);               
-                
+               
             }
-            
-           
-           
-            
-
+                                             
         }
 
         private static void EditPersonScreen(TraitRepository traitRepository, PersonRepository personRepository, Person selectedPerson, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
