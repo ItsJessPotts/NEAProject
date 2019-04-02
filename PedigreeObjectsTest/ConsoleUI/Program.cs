@@ -284,13 +284,22 @@ namespace ConsoleUI
 
         private static string CalculateNamePadding(Person p)
         {
-            string name = p.Name;
+            string name = "";
+            if (p == null)
+            {
+                name = "unknown";
+            }
+            else
+            {
+                name = p.Name;                
+            }
             string paddedName = name + "                  ";
             int constant = 18;
             string Name18 = paddedName.Substring(0, constant);
             string NameBox = "|" + Name18 + "|";
             return NameBox;
         }
+
         private static string CalculateLeftGap(int layerNumber, List<Person> layer, int NumberOfGenerations)
         {            
             int width = 210;
