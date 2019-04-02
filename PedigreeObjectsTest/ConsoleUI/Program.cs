@@ -208,14 +208,14 @@ namespace ConsoleUI
             Person SelectedPerson = FindPersonByIndex(personRepository);
             Console.WriteLine("How many generations should this system display?");
             int numberOfGenerations = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             DrawGeneration(SelectedPerson, numberOfGenerations);
-            Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            
 
         }
 
         private static void DrawGeneration(Person selectedPerson, int numberOfGenerations)
         {
+            
             var pedTree = new List<List<Person>>();
             for (int i = 0; i < numberOfGenerations; i++)
             {
@@ -236,51 +236,87 @@ namespace ConsoleUI
             }
             int layerNumber = -1;
             foreach (var layer in pedTree)
-            {                
+            {
                 layerNumber++;
-                foreach (Person p in layer)
-                {                    
-                    string LeftGap = CalculateLeftGap(layerNumber, layer, p, numberOfGenerations);
-                    string Person = CalculateNamePadding(p);
-                    Console.Write(LeftGap + Person);
-                }
+                OutputBoxLine(layerNumber,layer,numberOfGenerations);
+                OutputNames(pedTree, numberOfGenerations, layerNumber, layer);
                 Console.WriteLine();
+                OutputBoxLine(layerNumber, layer,numberOfGenerations);
                 Console.WriteLine();
-                Console.WriteLine();
+                OutputArrow(layerNumber, layer, numberOfGenerations);
+                
             }
+            
+        }
+
+        private static void OutputArrow(int layerNumber, List<Person> layer, int numberOfGenerations )
+        {
+            foreach (Person p in layer)
+            {
+                string LeftGap = CalculateLeftGap(layerNumber, layer, numberOfGenerations);
+                string arrow = "         |          ";
+                Console.Write(LeftGap + arrow);
+            }
+            Console.WriteLine();
+        }
+
+        private static void OutputNames(List<List<Person>> pedTree,  int numberOfGenerations, int layerNumber, List<Person> layer)
+        {
+            foreach (Person p in layer)
+            {
+                string LeftGap = CalculateLeftGap(layerNumber, layer,  numberOfGenerations);
+                string Person = CalculateNamePadding(p);
+                Console.Write(LeftGap + Person);
+            }
+        }
+
+        private static void OutputBoxLine(int layerNumber, List<Person> layer, int numberOfGenerations)
+        {
+            foreach (Person p in layer)
+            {
+                string LeftGap = CalculateLeftGap(layerNumber, layer, numberOfGenerations);
+                string line = "--------------------";//20 lines
+                Console.Write(LeftGap + line);
+            }
+            Console.WriteLine();
                       
         }
 
         private static string CalculateNamePadding(Person p)
         {
             string name = p.Name;
-            string paddedName = name + "                    ";
-            int constant = 20;
-            string Name20 = paddedName.Substring(0, constant);
-            return Name20;
-
+            string paddedName = name + "                  ";
+            int constant = 18;
+            string Name18 = paddedName.Substring(0, constant);
+            string NameBox = "|" + Name18 + "|";
+            return NameBox;
         }
-
-        private static string CalculateLeftGap(int layerNumber, List<Person> layer, Person p, int NumberOfGenerations)
-        {
-            string gap = "                         "; //"|-----------------------|"
+        private static string CalculateLeftGap(int layerNumber, List<Person> layer, int NumberOfGenerations)
+        {            
+            int width = 210;
+            int numberOfNames = layer.Count;
+            int numberOfGaps = numberOfNames + 1;
+            int NameLength = 20;
             string FinishedGap = "";
-            if (layerNumber ==0)//Person is top of tree
+            string gap = " ";
+            if (layerNumber == 0)
             {
-                for (int i = 0; i < NumberOfGenerations; i++)
+                int GapLength = ((width - NameLength) / numberOfGaps);
+                for (int i = 0; i < GapLength; i++)
                 {
                     FinishedGap = FinishedGap + gap;
                 }
                 return FinishedGap;
             }
-            else
+            else //(layerNumber >= 1)
             {
-                for (int i = 0; i < NumberOfGenerations - layerNumber - 1; i++)
+                int GapLength = (width - (numberOfNames * NameLength)) / numberOfGaps;
+                for (int i = 0; i < GapLength; i++)
                 {
                     FinishedGap = FinishedGap + gap;
                 }
-                return FinishedGap = FinishedGap + gap;
-            }
+                return FinishedGap;
+            }            
         }
 
         private static void ListAllPersonsChoice(PersonRepository personRepository,GenotypeRepository genotypeRepository)
