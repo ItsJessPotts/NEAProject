@@ -140,6 +140,9 @@ namespace ConsoleUI
                             geneticCounsellorScreen(genotypeRepository, traitRepository, personRepository, personFilename, traitFilename, rng, context);
                             break;
                         case 1:
+                            CreateTraitScreen(traitRepository);
+                            break;
+                        case 2:
                             Trait selectedTraitToDelete = FindTraitByIndex(traitRepository); //DELETES A TRAIT
                             traitRepository.DeleteTrait(selectedTraitToDelete);
                             Console.WriteLine("#######################");
@@ -215,7 +218,7 @@ namespace ConsoleUI
                     pedTree[i + 1].Add(father);
                 }
             }
-            int layerNumber = 0;
+            int layerNumber = -1;
             foreach (var layer in pedTree)
             {                
                 layerNumber++;
@@ -223,7 +226,7 @@ namespace ConsoleUI
                 {
                     string LeftGap = CalculateLeftGap(layerNumber, layer,p, numberOfGenerations);
                     string RightGap = CalculateRightGap(layerNumber, layer,p, numberOfGenerations);
-                    Console.Write(LeftGap + p + RightGap);
+                    Console.Write(LeftGap + p.Name + RightGap);
                 }
                 Console.WriteLine();
                 Console.WriteLine();
@@ -235,18 +238,18 @@ namespace ConsoleUI
         {
             string gap = "|-------R-------|"; //|-------R-------|
             string FinishedGap = "";
-            if (layerNumber == 1)
+            if (layerNumber == 0)
             {
                 FinishedGap = gap;
                 return FinishedGap;
             }
             else
             {
-                int personIndex =layer.IndexOf(p);
+                int personIndex = layer.IndexOf(p);
                 int modulo = personIndex % 2;
-                if (modulo == 0)// Determines if the index is even or 0 (women in a full parental set)
+                if (modulo == 0)/// Determines if the index is even or 0 (women in a full parental set)
                 {
-                    for (int i = 0; i < numberOfGenerations - layerNumber; i++)
+                    for (int i = 0; i < numberOfGenerations - layerNumber - 1; i++)
                     {
                         FinishedGap = FinishedGap + gap;
                     }
@@ -254,37 +257,45 @@ namespace ConsoleUI
                 }
                 else
                 {
-                    return gap;
+                    return FinishedGap;
                 }
             }
-            
-
         }
 
         private static string CalculateLeftGap(int layerNumber, List<Person> layer, Person p, int NumberOfGenerations)
         {
             string gap = "|-------L-------|"; //|-------L-------|
             string FinishedGap = "";
-            if (layerNumber == 1)
+            if (layerNumber == 0)
             {
-                
-                for (int i = 0; i < NumberOfGenerations; i++)
+
+                for (int i = -1; i < NumberOfGenerations; i++)
                 {
                     FinishedGap = FinishedGap + gap;
                 }
                 return FinishedGap;
             }
             else
-            
             {
-                
+                int personIndex = layer.IndexOf(p);
+                int modulo = personIndex % 2;
+                if (modulo == 0)/// Determines if the index is even or 0 (women in a full parental set)
+                {
                     for (int i = 0; i < NumberOfGenerations - layerNumber; i++)
                     {
                         FinishedGap = FinishedGap + gap;
                     }
-                    return FinishedGap;
+                    return FinishedGap = FinishedGap + gap;
+                }
+                else
+                {
+                    for (int i = 0; i < NumberOfGenerations - layerNumber - 1; i++)
+                    {
+                        FinishedGap = FinishedGap + gap;
+                    }
+                    return FinishedGap = FinishedGap + gap;
+                }
             }
-       
         }
 
         private static void ListAllPersonsChoice(PersonRepository personRepository,GenotypeRepository genotypeRepository)
@@ -312,7 +323,8 @@ namespace ConsoleUI
             Console.Write(s2);
             Console.WriteLine("____________________________________________________");
             Console.WriteLine("-----------------------------------------------------");
-            Console.WriteLine("1) Delete a trait");
+            Console.WriteLine("1) Add a trait");
+            Console.WriteLine("2) Delete a trait");
             Console.WriteLine("-----------------------------------------------------");
         }
 
@@ -338,16 +350,26 @@ namespace ConsoleUI
 
         private static void CreateTraitScreen(TraitRepository traitRepository) 
         {
-            Console.Clear();
-            Console.WriteLine("Name of trait:");// Colourblindness
-            string inputName = Console.ReadLine();
-            Console.WriteLine("Type of inheritance (currently Dominant or Recessive only)"); //Reccessive
-            Dominance inputInheritanceType = (Dominance)Enum.Parse(typeof(Dominance),Console.ReadLine(),true); 
-            Console.WriteLine("What letter should represent it?");// C
-            string inputAlelleName = Console.ReadLine();
+            try
+            {
+                Console.Clear();
+                Console.WriteLine("Name of trait:");// Colourblindness
+                string inputName = Console.ReadLine();
+                Console.WriteLine("Type of inheritance (currently Dominant or Recessive only)"); //Reccessive
+                Dominance inputInheritanceType = (Dominance)Enum.Parse(typeof(Dominance), Console.ReadLine(), true);
+                Console.WriteLine("What letter should represent it?");// C
+                string inputAlelleName = Console.ReadLine();
 
-           
-            traitRepository.AddTrait(inputName, inputAlelleName, inputInheritanceType);
+
+                traitRepository.AddTrait(inputName, inputAlelleName, inputInheritanceType);
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("Input not recognised- Please try again");
+                CreateTraitScreen(traitRepository);
+            }
+            
             
         }
         
@@ -489,12 +511,12 @@ namespace ConsoleUI
 
         private static void PersonScreenMenu(TraitRepository traitRepository, PersonRepository personRepository, Person selectedPerson, GenotypeRepository genotypeRepository,RealRandomNumberGenerator rng, GeneticCounsellorDbContext context )
         {
-            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("----------------------------------------------------------------------------------------------------------");
             Console.WriteLine("1) Edit Person");
             Console.WriteLine("2) Combine Genotype with other person");
             Console.WriteLine("3) Update Phenotype");
             Console.WriteLine("4) Calculate Parental Genotypes");
-            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("----------------------------------------------------------------------------------------------------------");
             int PersonMenuChoice = MenuUserInputInt(4);
             switch (PersonMenuChoice)
             {
@@ -511,8 +533,7 @@ namespace ConsoleUI
                     Console.Clear();
                     Console.WriteLine("______________________________________________________________________________________________________________");
                     Console.WriteLine(resultingGenotype.ToString()+" is the most likely genotype combination in offspring between these two persons");
-                    Console.WriteLine("______________________________________________________________________________________________________________");
-                    Console.ReadKey();
+                    Console.WriteLine("______________________________________________________________________________________________________________");                   
                     break;
                 case 3: //update Phenotype
                     UpdatePhenotype(selectedPerson);
@@ -530,6 +551,7 @@ namespace ConsoleUI
             Genotype genotypeToTrace = GetSelectedPersonsGenotype(selectedPerson, traitRepository, personRepository, genotypeRepository, rng, context);
             List<Genotype> parentalGenotypes = genotypeToTrace.CalculateParentalGenotypes(genotypeToTrace, genotypeRepository, rng);
             Console.WriteLine("Here are the potential parental genotypes:");
+            Console.WriteLine("====================================================");
             foreach (var genotype in parentalGenotypes)
             {
                 Console.WriteLine(genotype);
@@ -552,6 +574,7 @@ namespace ConsoleUI
             Genotype otherSelectedPerson = GetSelectedPersonsGenotype(otherPerson, traitRepository, personRepository, genotypeRepository, rng, context);
             Genotype resultingGenotype = firstSelectedPerson.CombineGenotypes(otherSelectedPerson,genotypeRepository,rng);
             return resultingGenotype;
+            
             
         }
 

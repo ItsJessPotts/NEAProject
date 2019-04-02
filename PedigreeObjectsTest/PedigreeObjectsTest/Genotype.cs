@@ -90,38 +90,41 @@ namespace PedigreeObjects
             Genotype resultOfDomGAndRecG = domG.CombineGenotypes(recG, genotypeRepository, RNG);
             Genotype resultOfRecGAndRecG = recG.CombineGenotypes(recG, genotypeRepository, RNG);
 
-            if (g == resultOfDomGAndDomG)
+            if (g.ToString() == resultOfDomGAndDomG.ToString())
             {
                 PossibleParentalGenotypes.Add(domG);
                 PossibleParentalGenotypes.Add(domG);
 
             }
-            if (g == resultOfDomGAndRecG)
+            if (g.ToString() == resultOfDomGAndRecG.ToString())
             {
                 PossibleParentalGenotypes.Add(domG);
                 PossibleParentalGenotypes.Add(recG);
             }
-            if (g == resultOfHetGAndDomG)
+            if (g.ToString() == resultOfHetGAndDomG.ToString())
             {
                 PossibleParentalGenotypes.Add(domG);
                 PossibleParentalGenotypes.Add(hetG);
             }
-            if (g == resultOfHetGAndHetG)
+            if (g.ToString() == resultOfHetGAndHetG.ToString())
             {
                 PossibleParentalGenotypes.Add(hetG);
                 PossibleParentalGenotypes.Add(hetG);
             }
-            if (g == resultOfHetGAndRecG)
+            if (g.ToString() == resultOfHetGAndRecG.ToString())
             {
                 PossibleParentalGenotypes.Add(recG);
                 PossibleParentalGenotypes.Add(hetG);
             }
-            if (g == resultOfRecGAndRecG)
+            if (g.ToString() == resultOfRecGAndRecG.ToString())
             {
                 PossibleParentalGenotypes.Add(recG);
                 PossibleParentalGenotypes.Add(recG);
-            }           
+            }
+
             return PossibleParentalGenotypes;
+           
+            
         }
         
 
