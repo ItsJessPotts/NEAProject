@@ -71,7 +71,7 @@ namespace PedigreeObjects
                     throw new Exception("Invalid Choice");
             }
 
-            var gt = genotypeRepository.AddGenotype(this.AlleleName, resultingAllele1, resultingAllele2);
+            var gt = new Genotype(this.AlleleName, resultingAllele1, resultingAllele2);
             return gt;
         }
 

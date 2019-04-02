@@ -112,11 +112,7 @@ namespace ConsoleUI
                             PersonScreen(traitRepository,selectedPerson, personRepository, genotypeRepository,rng, context); //SELECTS A PERSON
                             break;
                         case 2:
-                            Person selectedPersonToDelete = FindPersonByIndex(personRepository); //DELETES A PERSON
-                            personRepository.DeletePerson(selectedPersonToDelete);
-                            Console.WriteLine("#######################");
-                            Console.WriteLine("Person has been deleted.");
-                            Console.WriteLine("#######################");
+                            DeletePerson(personRepository,genotypeRepository);                            
                             break;
                         case 3:
                             AddPersonScreen(personRepository, genotypeRepository);
@@ -160,6 +156,25 @@ namespace ConsoleUI
             }
         }
 
+        private static void DeletePerson(PersonRepository personRepository, GenotypeRepository genotypeRepository)
+        {
+            Console.WriteLine("Are you sure you wish to delete this person? Yes/No");
+            string answer = Console.ReadLine();
+            if (answer == "Yes" || answer == "yes")
+            {
+                Person selectedPersonToDelete = FindPersonByIndex(personRepository); //DELETES A PERSON
+                personRepository.DeletePerson(selectedPersonToDelete);
+                Console.WriteLine("#########################");
+                Console.WriteLine("Person has been deleted.");
+                Console.WriteLine("#########################");
+            }
+            else
+            {
+                ListAllPersonsChoice(personRepository,genotypeRepository);    
+            }
+            
+        }
+
         private static Trait FindTraitByIndex(TraitRepository traitRepository)
         {
             Console.WriteLine("_________________________________________________");
@@ -193,7 +208,9 @@ namespace ConsoleUI
             Person SelectedPerson = FindPersonByIndex(personRepository);
             Console.WriteLine("How many generations should this system display?");
             int numberOfGenerations = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             DrawGeneration(SelectedPerson, numberOfGenerations);
+            Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
         }
 
@@ -203,7 +220,6 @@ namespace ConsoleUI
             for (int i = 0; i < numberOfGenerations; i++)
             {
                 pedTree.Add(new List<Person>()); //initialising the list
-
             }
             pedTree[0].Add(selectedPerson);
 
@@ -223,53 +239,35 @@ namespace ConsoleUI
             {                
                 layerNumber++;
                 foreach (Person p in layer)
-                {
-                    string LeftGap = CalculateLeftGap(layerNumber, layer,p, numberOfGenerations);
-                    string RightGap = CalculateRightGap(layerNumber, layer,p, numberOfGenerations);
-                    Console.Write(LeftGap + p.Name + RightGap);
+                {                    
+                    string LeftGap = CalculateLeftGap(layerNumber, layer, p, numberOfGenerations);
+                    string Person = CalculateNamePadding(p);
+                    Console.Write(LeftGap + Person);
                 }
+                Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine();
             }
                       
         }
 
-        private static string CalculateRightGap(int layerNumber, List<Person> layer, Person p, int numberOfGenerations)
+        private static string CalculateNamePadding(Person p)
         {
-            string gap = "|-------R-------|"; //|-------R-------|
-            string FinishedGap = "";
-            if (layerNumber == 0)
-            {
-                FinishedGap = gap;
-                return FinishedGap;
-            }
-            else
-            {
-                int personIndex = layer.IndexOf(p);
-                int modulo = personIndex % 2;
-                if (modulo == 0)/// Determines if the index is even or 0 (women in a full parental set)
-                {
-                    for (int i = 0; i < numberOfGenerations - layerNumber - 1; i++)
-                    {
-                        FinishedGap = FinishedGap + gap;
-                    }
-                    return FinishedGap = FinishedGap + gap;
-                }
-                else
-                {
-                    return FinishedGap;
-                }
-            }
+            string name = p.Name;
+            string paddedName = name + "                    ";
+            int constant = 20;
+            string Name20 = paddedName.Substring(0, constant);
+            return Name20;
+
         }
 
         private static string CalculateLeftGap(int layerNumber, List<Person> layer, Person p, int NumberOfGenerations)
         {
-            string gap = "|-------L-------|"; //|-------L-------|
+            string gap = "                         "; //"|-----------------------|"
             string FinishedGap = "";
-            if (layerNumber == 0)
+            if (layerNumber ==0)//Person is top of tree
             {
-
-                for (int i = -1; i < NumberOfGenerations; i++)
+                for (int i = 0; i < NumberOfGenerations; i++)
                 {
                     FinishedGap = FinishedGap + gap;
                 }
@@ -277,24 +275,11 @@ namespace ConsoleUI
             }
             else
             {
-                int personIndex = layer.IndexOf(p);
-                int modulo = personIndex % 2;
-                if (modulo == 0)/// Determines if the index is even or 0 (women in a full parental set)
+                for (int i = 0; i < NumberOfGenerations - layerNumber - 1; i++)
                 {
-                    for (int i = 0; i < NumberOfGenerations - layerNumber; i++)
-                    {
-                        FinishedGap = FinishedGap + gap;
-                    }
-                    return FinishedGap = FinishedGap + gap;
+                    FinishedGap = FinishedGap + gap;
                 }
-                else
-                {
-                    for (int i = 0; i < NumberOfGenerations - layerNumber - 1; i++)
-                    {
-                        FinishedGap = FinishedGap + gap;
-                    }
-                    return FinishedGap = FinishedGap + gap;
-                }
+                return FinishedGap = FinishedGap + gap;
             }
         }
 
@@ -359,9 +344,13 @@ namespace ConsoleUI
                 Dominance inputInheritanceType = (Dominance)Enum.Parse(typeof(Dominance), Console.ReadLine(), true);
                 Console.WriteLine("What letter should represent it?");// C
                 string inputAlelleName = Console.ReadLine();
-
-
                 traitRepository.AddTrait(inputName, inputAlelleName, inputInheritanceType);
+                Console.Clear();
+                StringBuilder sb2 = new StringBuilder();
+                ListAllTraitsScreen(sb2, traitRepository);
+                string s2 = sb2.ToString();
+                Console.Write(s2);
+
             }
             catch (Exception)
             {
@@ -584,7 +573,7 @@ namespace ConsoleUI
             if (selectedPerson.Phenotype.TraitGenotypes.Count == 0)
             {
                 Console.Clear();
-                Console.WriteLine("This person does not have a genotypes");          
+                Console.WriteLine("This person does not have any genotypes");          
                 PersonScreen(traitRepository, selectedPerson, personRepository,genotypeRepository , rng, context);
                 PersonScreenMenu(traitRepository,personRepository,selectedPerson,genotypeRepository,rng, context);
             }
@@ -597,7 +586,7 @@ namespace ConsoleUI
             try
             {
                 Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                Console.WriteLine("Please input the index of genotype you want to use: ");
+                Console.WriteLine("Please input the index of genotype you want to select: ");
                
                 int index = Convert.ToInt32(Console.ReadLine());
 
@@ -619,8 +608,9 @@ namespace ConsoleUI
             Console.WriteLine("2) Change Sex");
             Console.WriteLine("3) Change Living");
             Console.WriteLine("4) Add an exsisting Genotype from database");
-            Console.WriteLine("5) Change an exsisting Genotype ");
+            Console.WriteLine("5) Delete a Genotype from Person ");
             Console.WriteLine("6) Add an exsisting Trait from database");
+            Console.WriteLine("7) Delete a Trait from person");
             Console.WriteLine("7) Add Mother from exsisting list of Persons");
             Console.WriteLine("8) Add Father from exsisting list of Persons");
            
@@ -654,11 +644,55 @@ namespace ConsoleUI
                     AddExsistingTrait(selectedPerson, traitRepository,  personRepository, genotypeRepository, rng, context);
                     break;
                 case 7:
-                    AddMother(traitRepository, selectedPerson, personRepository, genotypeRepository, rng, context);
+                    DeleteTrait(selectedPerson, traitRepository, personRepository, genotypeRepository, rng, context);
                     break;
                 case 8:
+                    AddMother(traitRepository, selectedPerson, personRepository, genotypeRepository, rng, context);
+                    break;
+                case 9:
                     AddFather(traitRepository,selectedPerson, personRepository, genotypeRepository, rng, context);
                     break;                
+            }
+        }
+
+        private static void DeleteTrait(Person selectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
+        {
+            Trait traitToBeDeleted = GetSelectedPersonsTrait(selectedPerson, traitRepository, personRepository, genotypeRepository, rng, context);
+            selectedPerson.Phenotype.Traits.Remove(traitToBeDeleted);
+            context.SaveChanges();
+        }
+
+        private static Trait GetSelectedPersonsTrait(Person selectedPerson, TraitRepository traitRepository, PersonRepository personRepository, GenotypeRepository genotypeRepository, RealRandomNumberGenerator rng, GeneticCounsellorDbContext context)
+        {
+            var listOfSelectedPersonTraits = selectedPerson.Phenotype.Traits;
+            if (selectedPerson.Phenotype.Traits.Count == 0)
+            {
+                Console.Clear();
+                Console.WriteLine("This person does not have any Traits");
+                PersonScreen(traitRepository, selectedPerson, personRepository, genotypeRepository, rng, context);
+                PersonScreenMenu(traitRepository, personRepository, selectedPerson, genotypeRepository, rng, context);
+            }
+            int number = 1;
+            foreach (var trait in selectedPerson.Phenotype.Traits)
+            {
+                Console.WriteLine(number + ") " + trait.ToString());
+                number = number + 1;
+            }
+            try
+            {
+                Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                Console.WriteLine("Please input the index of trait you want to select: ");
+
+                int index = Convert.ToInt32(Console.ReadLine());
+
+                Trait selectedPersonTrait = listOfSelectedPersonTraits[index - 1];
+                return selectedPersonTrait;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("There is no Trait located at that index. Please try again");
+                return GetSelectedPersonsTrait(selectedPerson, traitRepository, personRepository, genotypeRepository, rng, context);
+
             }
         }
 
