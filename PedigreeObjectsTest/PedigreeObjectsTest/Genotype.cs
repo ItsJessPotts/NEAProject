@@ -10,7 +10,7 @@ namespace PedigreeObjects
     public class Genotype
     {
         public int GenotypeID { get; set; }        
-        public string AlleleName { get; set; } //eg C for colourblindness or A for asthma (one letter) //TO DO:turn back to char
+        public string AlleleName { get; set; } //eg C for colourblindness or A for asthma (one letter) 
         public Dominance Allele1 { get; set; } //If dominant- inputted here
         public Dominance Allele2 { get; set; }
         public virtual List<Phenotype> PeopleWithGenotype { get; set; } = new List<Phenotype>();
@@ -43,89 +43,200 @@ namespace PedigreeObjects
                 return AlleleName.ToString().ToLower();
             }
         }
-        public Genotype CombineGenotypes(Genotype other, GenotypeRepository genotypeRepository, IRandomNumberGenerator RNG)
-        {
-            
+        public Genotype CombineGenotypes(Genotype other, GenotypeRepository genotypeRepository, IRandomNumberGenerator RNG) //########FIX THIS#########
+        {                        
             var choice = RNG.Next(0, 4);
-            Dominance resultingAllele1;
-            Dominance resultingAllele2;
-            switch (choice)
+            var g = new Genotype();
+            g.AlleleName = AlleleName;
+
+            if (choice == 0)
             {
-                case 0:
-                    resultingAllele1 = this.Allele1;
-                    resultingAllele2 = other.Allele1;
-                    break;
-                case 1:
-                    resultingAllele1 = this.Allele2;
-                    resultingAllele2 = other.Allele1;
-                    break;
-                case 2:
-                    resultingAllele1 = this.Allele1;
-                    resultingAllele2 = other.Allele2;
-                    break;
-                case 3:
-                    resultingAllele1 = this.Allele2;
-                    resultingAllele2 = other.Allele2;
-                    break;
-                default:
-                    throw new Exception("Invalid Choice");
+                g.Allele1 = this.Allele1;
+                g.Allele2 = other.Allele1;
             }
-
-            var gt = new Genotype(this.AlleleName, resultingAllele1, resultingAllele2);
-            return gt;
-        }
-
+            if (choice == 1)
+            {
+                g.Allele1 = this.Allele2;
+                g.Allele2 = other.Allele1;
                 
-        public List<Genotype> CalculateParentalGenotypes(Genotype g, GenotypeRepository genotypeRepository, IRandomNumberGenerator RNG)
-        {
-            List<Genotype> PossibleParentalGenotypes = new List<Genotype>();
-            string letter = g.AlleleName;            
-            Genotype hetG = new Genotype(g.AlleleName, Dominance.Dominant, Dominance.Recessive);
-            Genotype domG = new Genotype(g.AlleleName, Dominance.Dominant, Dominance.Dominant);
-            Genotype recG = new Genotype(g.AlleleName, Dominance.Recessive, Dominance.Recessive);
-            Genotype resultOfHetGAndDomG = hetG.CombineGenotypes(domG, genotypeRepository, RNG);
-            Genotype resultOfHetGAndRecG = hetG.CombineGenotypes(recG, genotypeRepository, RNG);
-            Genotype resultOfHetGAndHetG = hetG.CombineGenotypes(hetG,genotypeRepository, RNG);
-            Genotype resultOfDomGAndDomG = domG.CombineGenotypes(domG, genotypeRepository, RNG);
-            Genotype resultOfDomGAndRecG = domG.CombineGenotypes(recG, genotypeRepository, RNG);
-            Genotype resultOfRecGAndRecG = recG.CombineGenotypes(recG, genotypeRepository, RNG);
-
-            if (g.ToString() == resultOfDomGAndDomG.ToString())
+            }
+            if (choice == 2)
             {
-                PossibleParentalGenotypes.Add(domG);
-                PossibleParentalGenotypes.Add(domG);
+                g.Allele1 = this.Allele1;
+                g.Allele2 = other.Allele2;
+                
+            }
+            if (choice == 3)
+            {
+                g.Allele1 = this.Allele2;
+                g.Allele2 = other.Allele2;
 
             }
-            if (g.ToString() == resultOfDomGAndRecG.ToString())
-            {
-                PossibleParentalGenotypes.Add(domG);
-                PossibleParentalGenotypes.Add(recG);
-            }
-            if (g.ToString() == resultOfHetGAndDomG.ToString())
-            {
-                PossibleParentalGenotypes.Add(domG);
-                PossibleParentalGenotypes.Add(hetG);
-            }
-            if (g.ToString() == resultOfHetGAndHetG.ToString())
-            {
-                PossibleParentalGenotypes.Add(hetG);
-                PossibleParentalGenotypes.Add(hetG);
-            }
-            if (g.ToString() == resultOfHetGAndRecG.ToString())
-            {
-                PossibleParentalGenotypes.Add(recG);
-                PossibleParentalGenotypes.Add(hetG);
-            }
-            if (g.ToString() == resultOfRecGAndRecG.ToString())
-            {
-                PossibleParentalGenotypes.Add(recG);
-                PossibleParentalGenotypes.Add(recG);
-            }
+                 
+            return g;
 
-            return PossibleParentalGenotypes;
-           
-            
         }
+
+        public Genotype MostLikelyGenotype(Genotype other, GenotypeRepository genotypeRepository, IRandomNumberGenerator RNG)
+        {
+            string letter = AlleleName;
+            List<Genotype> GenericGenotypes = CreateGenericGenotypes(AlleleName);
+            Genotype hetG = GenericGenotypes[0];
+            Genotype domG = GenericGenotypes[1];
+            Genotype recG = GenericGenotypes[2];
+            Genotype hetG2 = GenericGenotypes[3];
+
+            int hetGTally = 0;
+            int domGTally = 0;
+            int recGTally = 0;
+            int hetG2Tally = 0;
+
+
+            for (int i = 0; i < 100; i++)// CANNOT COMPARE GENOTYPES
+            {
+                Genotype g = CombineGenotypes(other, genotypeRepository, RNG);
+                if (g.ToString() == hetG.ToString())
+                {
+                    hetGTally++;
+                }
+                if (g.ToString() == domG.ToString())
+                {
+                    domGTally++;
+                }
+                if (g.ToString() == recG.ToString())
+                {
+                    recGTally++;
+                }
+                if (g.ToString() == hetG2.ToString())
+                {
+                    hetG2Tally++;
+                }
+                
+
+
+            }
+            if (domGTally > recGTally || domGTally > hetGTally || hetGTally > hetG2Tally)
+            {
+                return domG;
+            }
+            if (recGTally > domGTally || recGTally > domGTally || hetGTally > hetG2Tally)
+            {
+                return recG;
+            }
+            if (hetGTally > domGTally || hetGTally > recGTally || hetGTally > hetG2Tally)
+            {
+                return hetG;
+            }
+            if (hetG2Tally > domGTally || hetG2Tally > recGTally || hetG2Tally > hetGTally)
+            {
+                return hetG2;
+            }
+            {
+                return other;
+            }
+        }    
+
+            public List<Genotype> CreateGenericGenotypes(string AlleleName)
+            {
+
+                    Genotype hetG = new Genotype(AlleleName, Dominance.Dominant, Dominance.Recessive);
+                    Genotype domG = new Genotype(AlleleName, Dominance.Dominant, Dominance.Dominant);
+                    Genotype recG = new Genotype(AlleleName, Dominance.Recessive, Dominance.Recessive);
+                    Genotype hetG2 = new Genotype(AlleleName,Dominance.Recessive, Dominance.Dominant);
+
+                    List<Genotype> GenericGenotypes = new List<Genotype>();
+                    GenericGenotypes.Add(hetG);
+                    GenericGenotypes.Add(domG);
+                    GenericGenotypes.Add(recG);
+                    GenericGenotypes.Add(hetG2);
+                    return GenericGenotypes;
+
+
+            }
+
+
+            public List<Genotype> CalculateParentalGenotypes(GenotypeRepository genotypeRepository, IRandomNumberGenerator RNG)
+            {
+                    List<Genotype> PossibleParentalGenotypes = new List<Genotype>();
+                    string letter = AlleleName;
+                    List<Genotype> GenericGenotypes = CreateGenericGenotypes(AlleleName);
+                    Genotype hetG = GenericGenotypes[0];
+                    Genotype domG = GenericGenotypes[1];
+                    Genotype recG = GenericGenotypes[2];
+                    Genotype hetG2 = GenericGenotypes[3];
+
+                    Genotype resultOfHetGAndDomG = hetG.CombineGenotypes(domG, genotypeRepository, RNG);
+                    Genotype resultOfHetGAndRecG = hetG.CombineGenotypes(recG, genotypeRepository, RNG);
+                    Genotype resultOfHetGAndHetG = hetG.CombineGenotypes(hetG, genotypeRepository, RNG);
+
+                    Genotype resultOfDomGAndDomG = domG.CombineGenotypes(domG, genotypeRepository, RNG);
+                    Genotype resultOfDomGAndRecG = domG.CombineGenotypes(recG, genotypeRepository, RNG);
+
+                    Genotype resultOfRecGAndRecG = recG.CombineGenotypes(recG, genotypeRepository, RNG);
+
+                    Genotype resultOfhetG2AndRecG = hetG2.CombineGenotypes(recG, genotypeRepository, RNG);
+                    Genotype resultOfhetG2AndDomG = hetG2.CombineGenotypes(domG, genotypeRepository, RNG);
+                    Genotype resultOfhetG2AndHetG = hetG2.CombineGenotypes(hetG, genotypeRepository, RNG);
+                    Genotype resultOfhetG2AndhetG2 = hetG2.CombineGenotypes(hetG2, genotypeRepository, RNG);
+
+
+
+                        if (ToString() == resultOfDomGAndDomG.ToString()) //AA X AA
+                        {
+                            PossibleParentalGenotypes.Add(domG);
+                            PossibleParentalGenotypes.Add(domG);
+
+                        }
+                        if (ToString() == resultOfDomGAndRecG.ToString()) // AA X aa
+                        {
+                            PossibleParentalGenotypes.Add(domG);
+                            PossibleParentalGenotypes.Add(recG);
+                        }
+                        if (ToString() == resultOfHetGAndDomG.ToString()) // Aa X AA
+                        {
+                            PossibleParentalGenotypes.Add(domG);
+                            PossibleParentalGenotypes.Add(hetG);
+                        }
+                        if (ToString() == resultOfHetGAndHetG.ToString()) // Aa X Aa
+                        {
+                            PossibleParentalGenotypes.Add(hetG);
+                            PossibleParentalGenotypes.Add(hetG);
+                        }
+                        if (ToString() == resultOfHetGAndRecG.ToString())//Aa X aa
+                        {
+                            PossibleParentalGenotypes.Add(recG);
+                            PossibleParentalGenotypes.Add(hetG);
+                        }
+                        if (ToString() == resultOfRecGAndRecG.ToString())// aa X aa
+                        {
+                            PossibleParentalGenotypes.Add(recG);
+                            PossibleParentalGenotypes.Add(recG);
+                        }
+                        if (ToString() == resultOfhetG2AndRecG.ToString())// aA X aa
+                        {
+                            PossibleParentalGenotypes.Add(hetG); //not HG2 as HG2 is actually the same as hetG as aA = Aa
+                            PossibleParentalGenotypes.Add(recG);
+                        }
+                        if (ToString() == resultOfhetG2AndDomG.ToString()) //aA X AA
+                        {
+                            PossibleParentalGenotypes.Add(hetG);
+                            PossibleParentalGenotypes.Add(domG);
+                        }
+                        if (ToString() == resultOfhetG2AndHetG.ToString()) //aA X Aa
+                        {
+                            PossibleParentalGenotypes.Add(hetG);
+                            PossibleParentalGenotypes.Add(hetG);
+                        }
+                        if (ToString() == resultOfhetG2AndhetG2.ToString()) //aA X aA
+                        {
+                            PossibleParentalGenotypes.Add(hetG);
+                            PossibleParentalGenotypes.Add(hetG);
+                        }
+
+
+                return PossibleParentalGenotypes;
+                
+            }
         
 
     }

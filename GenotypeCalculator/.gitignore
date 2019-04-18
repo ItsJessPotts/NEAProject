@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/FamilyTree/obj
+/GenotypeCalculator/bin/Debug/netcoreapp1.1
+/GenotypeCalculator/obj
+/GenotypeCalculatorTests/bin/Debug
+/GenotypeCalculatorTests/obj

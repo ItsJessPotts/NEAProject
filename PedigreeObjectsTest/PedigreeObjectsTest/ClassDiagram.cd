@@ -45,7 +45,7 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAEAAAAAAAAAAAAAAAAAAAAAgBAMA=</HashCode>
+      <HashCode>AAAAAAAAAAAAIAAAEAAAAAAAAAAAAAAAAAAAAAgAAMA=</HashCode>
       <FileName>PersonRepository.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -71,7 +71,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>RAAAAAQAAAAAAAQEAEAAAAASAAAAAgAAAAAAAAAAEAA=</HashCode>
+      <HashCode>BAAAAAQAAAAAAAQEAEAAAAASAAAAAgAAAAAAAAAAEAA=</HashCode>
       <FileName>Genotype.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -79,7 +79,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PedigreeObjects.Trait" Collapsed="true">
-    <Position X="6.5" Y="6.75" Width="1.25" />
+    <Position X="6.5" Y="6.75" Width="2" />
     <TypeIdentifier>
       <HashCode>BAAAAAIJAAAAAAAEAAAAAAAAAAACAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Trait.cs</FileName>
@@ -105,7 +105,7 @@
   <Class Name="PedigreeObjects.Phenotype" Collapsed="true">
     <Position X="6.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAACAAEgQAAAIAAAAAAAAABAAACAAIAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAACAAEgAAAAIAAAAAAAAABAAACAAAAAAA=</HashCode>
       <FileName>Phenotype.cs</FileName>
     </TypeIdentifier>
   </Class>

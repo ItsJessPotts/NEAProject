@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenotypeCalculator", "GenotypeCalculator\GenotypeCalculator.csproj", "{4369AEEF-3681-4915-8017-77D66C6D66FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenotypeCalculator.Tests", "GenotypeCalculatorTests\GenotypeCalculator.Tests.csproj", "{8852E627-A693-4B1B-A7FD-A5233DA88B64}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4369AEEF-3681-4915-8017-77D66C6D66FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4369AEEF-3681-4915-8017-77D66C6D66FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4369AEEF-3681-4915-8017-77D66C6D66FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4369AEEF-3681-4915-8017-77D66C6D66FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8852E627-A693-4B1B-A7FD-A5233DA88B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8852E627-A693-4B1B-A7FD-A5233DA88B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8852E627-A693-4B1B-A7FD-A5233DA88B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8852E627-A693-4B1B-A7FD-A5233DA88B64}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A6D672B-5775-47B7-B7C1-557D0EA3AB98}
+	EndGlobalSection
+EndGlobal
