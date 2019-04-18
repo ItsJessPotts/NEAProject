@@ -92,7 +92,7 @@ namespace PedigreeObjects
             int hetG2Tally = 0;
 
 
-            for (int i = 0; i < 100; i++)// CANNOT COMPARE GENOTYPES
+            for (int i = 0; i < 100; i++)
             {
                 Genotype g = CombineGenotypes(other, genotypeRepository, RNG);
                 if (g.ToString() == hetG.ToString())
@@ -129,7 +129,7 @@ namespace PedigreeObjects
             }
             if (hetG2Tally > domGTally || hetG2Tally > recGTally || hetG2Tally > hetGTally)
             {
-                return hetG2;
+                return hetG;// aA is not correct biological term= is always dominant followed by reccessive so returns hetG or Aa
             }
             {
                 return other;

@@ -539,7 +539,6 @@ namespace ConsoleUI
             }
             catch (Exception)
             {
-
                 Console.WriteLine("Incomplete parents inputted.");
             }
            
@@ -703,7 +702,6 @@ namespace ConsoleUI
                 Console.Clear();
                 Console.WriteLine("This person does not have any genotypes");          
                 PersonScreen(traitRepository, selectedPerson, personRepository,genotypeRepository , rng, context);
-                PersonScreenMenu(traitRepository,personRepository,selectedPerson,genotypeRepository,rng, context);
             }
             int number = 1;
             foreach (var genotype in selectedPerson.Phenotype.TraitGenotypes)
