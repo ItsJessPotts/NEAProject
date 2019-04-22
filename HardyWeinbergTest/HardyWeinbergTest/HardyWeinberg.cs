@@ -20,14 +20,19 @@ namespace HardyWeinbergTest
             double FrequencyOfRecessiveSnails = CalculateFrequencyOfRecessiveSnails(FrequencyOfRecessiveAlelles);
             double FrequencyOfDominantSnails = CalculateFrequencyOfDominantSnails(FrequencyOfDominantAlelles);
             double FrequencyOfHeterozygousSnails = CalculateFrequencyOfHeterozygousSnails(FrequencyOfRecessiveAlelles,FrequencyOfDominantAlelles);
+            double DominantChancesResult = FrequencyOfDominantSnails + FrequencyOfDominantSnails * 100;
+            double RecessiveChancesResult = FrequencyOfRecessiveSnails + FrequencyOfRecessiveSnails * 100;
+            double HeterozygouseChancesResult = FrequencyOfHeterozygousSnails + FrequencyOfHeterozygousSnails * 100;
 
-            Console.WriteLine("AA = "+ "\t  %" + FrequencyOfDominantSnails +  FrequencyOfDominantSnails*100 +" chance of homozygous dominant.");
-            Console.WriteLine("aa = " + "\t  %" + FrequencyOfRecessiveSnails+ FrequencyOfRecessiveSnails * 100+ " chance of being homozygous recessive.");
-            Console.WriteLine("Aa = " + "\t  %" + FrequencyOfHeterozygousSnails+ FrequencyOfHeterozygousSnails * 100+ " chance of being a carrier.");
+
+            Console.WriteLine("AA = "+ "\t  " + Math.Round(DominantChancesResult) +"% chance of homozygous dominant.");
+            Console.WriteLine("aa = " + "\t  " + Math.Round(RecessiveChancesResult) + "% chance of being homozygous recessive.");
+            Console.WriteLine("Aa = " + "\t  " + Math.Round(HeterozygouseChancesResult) + "% chance of being a carrier.");
            
             Console.ReadKey();
             
         }
+        
         public static double AskUserForPopulation()
         {
             Console.WriteLine("Please input the total number individuals:");
