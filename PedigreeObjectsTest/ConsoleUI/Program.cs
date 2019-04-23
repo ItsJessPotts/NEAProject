@@ -419,13 +419,17 @@ namespace ConsoleUI
             {
                 Console.WriteLine("Name (first and last): ");
                 string inputName = Console.ReadLine();
-                if (inputName == "")
+                if (inputName == null || inputName == " ") 
                 {
                     throw new Exception();
                 }
                 
                 Console.WriteLine("Sex ( Male or Female ): ");
                 string inputtedSex = Console.ReadLine();
+                if (inputtedSex == null)
+                {
+                    throw new Exception();
+                }
                 Sex inputSex = (Sex)Enum.Parse(typeof(Sex), inputtedSex, true);
                 if (inputSex == Sex.Female || inputSex == Sex.Male || inputSex == Sex.Unknown)
                 {
@@ -438,6 +442,10 @@ namespace ConsoleUI
                         bool inputLiving = (bool)Convert.ToBoolean(inputtedLiving);
                         personRepository.AddPerson(inputName, inputSex, inputLiving, "unaffected");
                     }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }                
                 else
                 {
@@ -446,7 +454,8 @@ namespace ConsoleUI
             }
             catch (Exception)
             {
-                Console.WriteLine("Input was not valid, please try again.");
+                Console.WriteLine("Input was not valid, press any button to try again.");
+                Console.ReadLine();
                 AddPersonScreen(personRepository, genotypeRepository);
             }
             
@@ -658,8 +667,8 @@ namespace ConsoleUI
             Console.WriteLine("5) Delete a Genotype from Person ");
             Console.WriteLine("6) Add an exsisting Trait from database");
             Console.WriteLine("7) Delete a Trait from person");
-            Console.WriteLine("7) Add Mother from exsisting list of Persons");
-            Console.WriteLine("8) Add Father from exsisting list of Persons");
+            Console.WriteLine("8) Add Mother from exsisting list of Persons");
+            Console.WriteLine("9) Add Father from exsisting list of Persons");
            
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             int EditPersonMenuChoice = MenuUserInputInt(9);

@@ -32,7 +32,7 @@ namespace PedigreeObjectsTests
         [TestMethod]
         public void CanCompareGenotypes()
         {
-            var a = new Genotype("A", Dominance.Dominant, Dominance.Recessive);
+            var a = new Genotype("A", Dominance.Dominant, Dominance.Recessive); 
             var a2 = new Genotype("A", Dominance.Dominant, Dominance.Recessive);
             int result;
 
@@ -46,6 +46,20 @@ namespace PedigreeObjectsTests
             }
 
             Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void TestCombineGenotypes()
+        {
+            var f = new GenoTypeTestFixture();
+            f.SetUp();
+            var a = new Genotype("A", Dominance.Dominant, Dominance.Recessive);
+            var a2 = new Genotype("A", Dominance.Dominant, Dominance.Dominant);
+            var expected = new Genotype("A", Dominance.Dominant, Dominance.Dominant);
+
+             var result = a.MostLikelyGenotype(a2, f.genotypeRepository,f.rng);
+
+            Assert.AreEqual(expected.ToString(),result.ToString());
         }
         
     }
