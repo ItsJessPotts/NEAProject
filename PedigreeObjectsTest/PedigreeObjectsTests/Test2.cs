@@ -10,25 +10,7 @@ namespace PedigreeObjectsTests
     public class Test2
     {
 
-        [TestMethod]
-        public void CcShouldReturn6ParentsWithAny()
-        {
-            //Arrange
-            var f = new GenoTypeTestFixture();
-            f.SetUp();
-
-
-            var g = new Genotype("C", Dominance.Dominant, Dominance.Recessive);
-            //var gr = new GenotypeRepository();
-
-            //Act
-            var result = g.CalculateParentalGenotypes(f.genotypeRepository, f.rng);
-
-
-            //Assert            
-            //Assert.IsTrue(result.Any.Where(g => g);
-
-        }
+        
         [TestMethod]
         public void CanCompareGenotypes()
         {
@@ -60,6 +42,34 @@ namespace PedigreeObjectsTests
              var result = a.MostLikelyGenotype(a2, f.genotypeRepository,f.rng);
 
             Assert.AreEqual(expected.ToString(),result.ToString());
+        }
+        [TestMethod]
+        public void TestGenerateGenericGenotypesForAGenotype()
+        {
+            var f = new GenoTypeTestFixture();
+            f.SetUp();
+
+            var expected = new List<Genotype>();
+            Genotype tDom = new Genotype("T", Dominance.Dominant, Dominance.Dominant);
+            Genotype tHet = new Genotype("T", Dominance.Dominant, Dominance.Recessive);
+            Genotype tRec = new Genotype("T", Dominance.Recessive, Dominance.Recessive);
+            Genotype tHet2 = new Genotype("T", Dominance.Recessive, Dominance.Dominant);
+
+            expected.Add(tHet);
+            expected.Add(tDom);
+            expected.Add(tRec);
+            expected.Add(tHet2);
+
+            Genotype tgenotype = new Genotype("T", Dominance.Recessive, Dominance.Recessive);
+
+            List<Genotype> genericGenotypes = tgenotype.CreateGenericGenotypes();
+
+                      
+            Assert.AreEqual(expected[0].ToString(),genericGenotypes[0].ToString());
+            Assert.AreEqual(expected[1].ToString(), genericGenotypes[1].ToString());
+            Assert.AreEqual(expected[2].ToString(), genericGenotypes[2].ToString());
+            Assert.AreEqual(expected[3].ToString(), genericGenotypes[3].ToString());
+
         }
         
     }

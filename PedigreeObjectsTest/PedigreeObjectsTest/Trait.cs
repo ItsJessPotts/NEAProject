@@ -9,9 +9,9 @@ namespace PedigreeObjects
     public class Trait 
     {
         public int TraitID { get; set; }
-        public string TraitName { get; set; }// Colourblindness
+        public string TraitName { get; set; }// e.gColourblindness
         public string AlleleName { get; set; }//eg C for colourblindness or A for asthma
-        public Dominance InheritanceType { get; set; }// Dominant/ Recessive/ Autosomal/ Dihybrid/ Epistasis   // Maybe make it an enum
+        public Dominance InheritanceType { get; set; }// Dominant/ Recessive 
         public virtual List<Phenotype> PhenotypesWithTrait { get; set; } = new List<Phenotype>(); //People whom have the trait
 
         
@@ -32,7 +32,7 @@ namespace PedigreeObjects
             this.InheritanceType = InheritanceType;            
         }
 
-        public void GenerateGenotypesForATrait(string AlleleName, GenotypeRepository genotypeRepository)
+        public void GenerateGenotypesForATrait(GenotypeRepository genotypeRepository)
         {
             
             genotypeRepository.AddGenotype(AlleleName, Dominance.Dominant, Dominance.Recessive);

@@ -23,11 +23,11 @@ namespace ConsoleUI
                 Console.WriteLine("1) Genetic Counsellor");
                 Console.WriteLine("2) Hardy Weinberg Calculator");
                 Console.WriteLine("3) Quit");
-                Console.WriteLine("Enter 0 to return to a previous menu at any screen");
+                Console.WriteLine("Enter 0 to return to a previous menu at any screen"); // Allows user to go back to screen so can return to any menu once completed a function or task
                 Console.WriteLine("____________________________________________________");
                 int mainMenuChoice = MenuUserInputInt(3);
 
-                switch (mainMenuChoice)
+                switch (mainMenuChoice) //Allows user to navigate to different aspects of the system easily
                 {
                     case 0:
                         MainMenuScreen();
@@ -497,15 +497,17 @@ namespace ConsoleUI
                 return SelectedPerson;
                 //return personRepository.FindPersonByID(index);
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
-                Console.WriteLine("Not a valid index");                
+                Console.WriteLine("Not a valid index");
+                Console.ReadLine();
                 return null;
                
             }
             catch (FormatException)
             {
                 Console.WriteLine("Not a number");
+                Console.ReadLine();
                 return null;
             }
             
@@ -768,7 +770,7 @@ namespace ConsoleUI
             Trait chosenTrait = allTraits[traitIndex];
             selectedPerson.AddTraitToPerson(chosenTrait);
             Console.WriteLine("Select which genotype to add to person:");
-            chosenTrait.GenerateGenotypesForATrait(chosenTrait.AlleleName, genotypeRepository);
+            chosenTrait.GenerateGenotypesForATrait( genotypeRepository);
             AddExsistingGenotype(traitRepository,selectedPerson,genotypeRepository,personRepository,rng, context);
             context.SaveChanges();
             PersonScreen(traitRepository, selectedPerson, personRepository, genotypeRepository, rng, context);
@@ -792,6 +794,7 @@ namespace ConsoleUI
             else
             {
                 Console.WriteLine("Only biological females can be entered as biological mothers");
+                Console.ReadLine();
             }            
             PersonScreen(traitRepository ,selectedPerson,personRepository, genotypeRepository, rng, context); //returns user to last menu
         }
@@ -813,6 +816,7 @@ namespace ConsoleUI
             else
             {
                 Console.WriteLine("Only biological males can be entered as biological fathers.");
+                Console.ReadLine();
             }
             
 

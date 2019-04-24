@@ -20,15 +20,19 @@ namespace HardyWeinbergTest
             double FrequencyOfRecessiveSnails = CalculateFrequencyOfRecessiveSnails(FrequencyOfRecessiveAlelles);
             double FrequencyOfDominantSnails = CalculateFrequencyOfDominantSnails(FrequencyOfDominantAlelles);
             double FrequencyOfHeterozygousSnails = CalculateFrequencyOfHeterozygousSnails(FrequencyOfRecessiveAlelles,FrequencyOfDominantAlelles);
-            double DominantChancesResult = FrequencyOfDominantSnails + FrequencyOfDominantSnails * 100;
-            double RecessiveChancesResult = FrequencyOfRecessiveSnails + FrequencyOfRecessiveSnails * 100;
-            double HeterozygouseChancesResult = FrequencyOfHeterozygousSnails + FrequencyOfHeterozygousSnails * 100;
+            double DominantChancesResult = Math.Round((FrequencyOfDominantSnails + FrequencyOfDominantSnails / 100),2);
+            double RecessiveChancesResult = Math.Round((FrequencyOfRecessiveSnails + FrequencyOfRecessiveSnails / 100),2);
+            double HeterozygouseChancesResult = Math.Round((FrequencyOfHeterozygousSnails + FrequencyOfHeterozygousSnails / 100),2);
 
 
-            Console.WriteLine("AA = "+ "\t  " + ( Math.Round(DominantChancesResult) - 1) +"% chance of homozygous dominant.");
-            Console.WriteLine("aa = " + "\t  " + Math.Round(RecessiveChancesResult) + "% chance of being homozygous recessive.");
-            Console.WriteLine("Aa = " + "\t  " + Math.Round(HeterozygouseChancesResult) + "% chance of being a carrier.");
-           
+            Console.WriteLine("AA = "+ "\t  " +   DominantChancesResult +" frequency of homozygous dominant.");
+            Console.WriteLine("aa = " + "\t  " + RecessiveChancesResult + " frequencyof being homozygous recessive.");
+            Console.WriteLine("Aa = " + "\t  " + HeterozygouseChancesResult + " frequency of being a carrier.");
+
+            Console.WriteLine("Number of homozygous dominant individuals: " + DominantChancesResult * population);
+            Console.WriteLine("Number of homozygous recessive individuals: " + RecessiveChancesResult * population);
+            Console.WriteLine("Number of heterozygous individuals: " + HeterozygouseChancesResult * population);
+
             Console.ReadKey();
             
         }

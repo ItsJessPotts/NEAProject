@@ -80,7 +80,7 @@ namespace PedigreeObjects
         public Genotype MostLikelyGenotype(Genotype other, GenotypeRepository genotypeRepository, IRandomNumberGenerator RNG)
         {
             string letter = AlleleName;
-            List<Genotype> GenericGenotypes = CreateGenericGenotypes(AlleleName);
+            List<Genotype> GenericGenotypes = CreateGenericGenotypes();
             Genotype hetG = GenericGenotypes[0];
             Genotype domG = GenericGenotypes[1];
             Genotype recG = GenericGenotypes[2];
@@ -136,7 +136,7 @@ namespace PedigreeObjects
             }
         }    
 
-            public List<Genotype> CreateGenericGenotypes(string AlleleName)
+            public List<Genotype> CreateGenericGenotypes()
             {
 
                     Genotype hetG = new Genotype(AlleleName, Dominance.Dominant, Dominance.Recessive);
@@ -159,7 +159,7 @@ namespace PedigreeObjects
             {
                     List<Genotype> PossibleParentalGenotypes = new List<Genotype>();
                     string letter = AlleleName;
-                    List<Genotype> GenericGenotypes = CreateGenericGenotypes(AlleleName);
+                    List<Genotype> GenericGenotypes = CreateGenericGenotypes();
                     Genotype hetG = GenericGenotypes[0];
                     Genotype domG = GenericGenotypes[1];
                     Genotype recG = GenericGenotypes[2];

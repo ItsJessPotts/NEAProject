@@ -24,8 +24,7 @@ namespace PedigreeObjectsTests
                 genotypeRepository = new GenotypeRepository(context);
                 rng = new RealRandomNumberGenerator();
 
-                string personFilename = @"C:\Users\potts\Desktop\PersonsSeedData.txt";
-                string traitFilename = @"C:\Users\potts\Desktop\TraitSeedData.txt";
+                
 
             }
         }
