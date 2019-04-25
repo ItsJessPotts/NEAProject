@@ -20,6 +20,7 @@ namespace HardyWeinbergTest
             double FrequencyOfRecessiveSnails = CalculateFrequencyOfRecessiveSnails(FrequencyOfRecessiveAlelles);
             double FrequencyOfDominantSnails = CalculateFrequencyOfDominantSnails(FrequencyOfDominantAlelles);
             double FrequencyOfHeterozygousSnails = CalculateFrequencyOfHeterozygousSnails(FrequencyOfRecessiveAlelles,FrequencyOfDominantAlelles);
+
             double DominantChancesResult = Math.Round((FrequencyOfDominantSnails + FrequencyOfDominantSnails / 100),2);
             double RecessiveChancesResult = Math.Round((FrequencyOfRecessiveSnails + FrequencyOfRecessiveSnails / 100),2);
             double HeterozygouseChancesResult = Math.Round((FrequencyOfHeterozygousSnails + FrequencyOfHeterozygousSnails / 100),2);

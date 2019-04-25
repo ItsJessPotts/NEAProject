@@ -56,7 +56,7 @@ namespace ConsoleUI
             
         }
 
-        private static void GeneticCounsellor()
+        private static void GeneticCounsellor() //Reads in all database information into Repositoriesand context
         {
             GeneticCounsellorDbContext context = null;
             using (context = new GeneticCounsellorDbContext("Jess1"))
@@ -88,7 +88,7 @@ namespace ConsoleUI
 
             int geneticCounsellorMenuOption = MenuUserInputInt(5);
 
-            switch (geneticCounsellorMenuOption)
+            switch (geneticCounsellorMenuOption)//Allows user to navigate menu using integer keyboard inputs
             {
                 case 0:
                     Console.Clear();
@@ -129,7 +129,7 @@ namespace ConsoleUI
                     break;
                 case 4:
                     ListAllTraitsChoice(traitRepository);
-                    int ListAllTraitsScreenOption = MenuUserInputInt(1);
+                    int ListAllTraitsScreenOption = MenuUserInputInt(2);
                     switch (ListAllTraitsScreenOption)
                     {
                         case 0:
@@ -175,7 +175,7 @@ namespace ConsoleUI
             
         }
 
-        private static Trait FindTraitByIndex(TraitRepository traitRepository)
+        private static Trait FindTraitByIndex(TraitRepository traitRepository) //Ru-used in multiple aspects of the code: very important 
         {
             Console.WriteLine("_________________________________________________");
             Console.Write("Enter a Trait Index No. :");
@@ -199,7 +199,7 @@ namespace ConsoleUI
             }
         }
 
-        private static void FamilyTreeScreen(PersonRepository personRepository, GenotypeRepository genotypeRepository)
+        private static void FamilyTreeScreen(PersonRepository personRepository, GenotypeRepository genotypeRepository)//Screen for user to interact with for family tree
         {
             StringBuilder sb = new StringBuilder();
             ListAllPersonsScreen(sb,personRepository,genotypeRepository);
@@ -213,7 +213,7 @@ namespace ConsoleUI
 
         }
 
-        private static void DrawGeneration(Person selectedPerson, int numberOfGenerations)
+        private static void DrawGeneration(Person selectedPerson, int numberOfGenerations) //Reads in person information and their parent
         {
             
             var pedTree = new List<List<Person>>();
